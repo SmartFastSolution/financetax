@@ -1,0 +1,62 @@
+
+{ 
+    "menu" :[
+        {
+            "url"  : "",
+            "name" : "Administración",
+            "icon" : "shield",
+            "can"  : "administracion",
+              "submenu" :[
+                  {
+                   
+                    "route" : "admin.control.permisos",
+                    "url"   : "admin/control-permisos",
+                    "name"  : "Lista de Roles",
+                    "can"   :"roles"
+
+                  },
+                  {
+
+                    "route" : "admin.usuario.index",
+                    "url"   : "admin/lista-usuarios",
+                    "name"  : "Lista de Usuarios",
+                    "can"   :"usuarios"
+                  }
+              ]
+
+        },
+        {
+            "url"  : "",
+            "name" : "Servicios",
+            "icon" : "command",
+            "can"  : "servicios",
+            "submenu":[
+
+                {
+                   
+                    "route" : "admin.actividades",
+                    "url"   : "admin/actividades-online",
+                    "name"  : "Lista de Actividades",
+                    "can"   :"actividades"
+
+                },
+                {
+                   
+                    "route" : "admin.post",
+                    "url"   : "admin/post-online",
+                    "name"  : "Lista de Publicaciones",
+                    "can"   :"post"
+
+                }
+            ]
+
+        }
+    ]
+
+
+}
+
+
+
+
+
