@@ -5,7 +5,7 @@
 
     }
      iziToast.success({
-                title: 'Ripzer',
+                title: 'SolutionFinanceTax',
                 message: data.mensaje,
                 position: 'topRight'
               });
@@ -17,7 +17,7 @@ Livewire.on('info', function (data) {
 
     }
      iziToast.info({
-                title: 'Ripzer',
+                title: 'SolutionFinanceTax',
                 message: data.mensaje,
                 position: 'topRight'
               });
@@ -28,7 +28,7 @@ Livewire.on('error', function(data) {
         $(data.modal).modal('hide');
     }
     iziToast.success({
-        title: 'Ripzer',
+        title: 'SolutionFinanceTax',
         message: data.mensaje,
         position: 'topRight'
     });
@@ -41,7 +41,7 @@ Livewire.on('warning', function(data) {
         $(data.modal).modal('hide');
     }
     iziToast.success({
-        title: 'Ripzer',
+        title: 'SolutionFinanceTax',
         message: data.mensaje,
         position: 'topRight'
     });
