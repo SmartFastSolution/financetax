@@ -58,6 +58,16 @@ class Publicaciones extends Component
                 ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage);
 
+        // $data = Post::join('users', 'users.id' ,'=', 'posts.user_id')
+        //                     ->where('user_id', Auth::user()->id)
+        // ->where(function($query){
+        // $query->where('posts.titulo', 'like', '%' .$this->search.'%');
+        // })
+        // ->where(fn($query) =>$this->filter ? $query->where('users.name', $this->filter) : '')
+        // ->select('posts.*', 'users.name as user') 
+        // ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
+        // ->paginate($this->perPage);
+
         return view('livewire.post.publicaciones', compact('data'));
     }
 

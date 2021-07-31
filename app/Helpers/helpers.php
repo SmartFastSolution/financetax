@@ -7,6 +7,8 @@
 
 use Illuminate\Support\Facades\Request;
 
+use Illuminate\Support\Str;
+
 if (!function_exists('active')) {
      function active($url){
             return Request::is($url) ? 'active' : '';
@@ -55,6 +57,14 @@ if (!function_exists('ActiveAll')) {
                }
         }
  }
+
+
+//  if(!function_exists('Separador')){
+//         function Separador()
+//         {
+//                return Str::slug("");
+//         }
+//  }
 
 
 

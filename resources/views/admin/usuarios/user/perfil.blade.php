@@ -44,6 +44,14 @@
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
+                                        Cédula
+                                    </span>
+                                    <span class="float-right text-muted">
+                                        {{ Auth::user()->cedula }}
+                                    </span>
+                                </p>
+                                <p class="clearfix">
+                                    <span class="float-left">
                                         Telefóno
                                     </span>
                                     <span class="float-right text-muted">
@@ -64,6 +72,14 @@
                                     </span>
                                     <span class="float-right text-muted">
                                         {{ Auth::user()->ciudad }}
+                                    </span>
+                                </p>
+                                <p class="clearfix">
+                                    <span class="float-left">
+                                        Genero
+                                    </span>
+                                    <span class="float-right text-muted">
+                                        {{ Auth::user()->genero }}
                                     </span>
                                 </p>
                             </div>

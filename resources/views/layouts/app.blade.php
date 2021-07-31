@@ -109,6 +109,17 @@
                                 <a href="{{ url('/admin/mi-perfil') }}" class="dropdown-item has-icon"> <i class="far
                                             fa-user"></i> Perfil
                                 </a>
+                                <a href="{{ url('/admin/mis-empresas') }}" class="dropdown-item has-icon"> <i class="fas fa-building"></i>
+                                    Mis Empresas
+                                   
+                                  </a> 
+                                  <a href="{{ url('/admin/mis-tarjetas-credito') }}"  class="dropdown-item has-icon"> <i class="fas fa-money-check"></i>
+                                    Tarjeta Credito
+                                  </a>
+                                  <a href="" class="dropdown-item has-icon"> <i class="fas fa-gem"></i>
+                                   Mis Planes
+                                  </a>
+                                  <div class="dropdown-divider"></div>
                                 <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"
                                     onclick="event.preventDefault();
                                  document.getElementById('logout-form').submit();">
