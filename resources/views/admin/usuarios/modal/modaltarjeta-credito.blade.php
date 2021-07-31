@@ -38,8 +38,8 @@
 
                             <div class="row ">
                                 <div class="col-md-12">
-                                    <input wire:model.defer="n_tarjeta" type="text" class="form-control"
-                                        @error('n_tarjeta') is-invalid @enderror" placeholder="Numero de Tarjeta" />
+                                    <input wire:model.defer="n_tarjeta" type="text" class="form-control purchase-code" 
+                                        @error('n_tarjeta') is-invalid @enderror"  placeholder="ASDF-GHIJ-KLMN-OPQR" />
                                     @error('n_tarjeta')
                                         <p class="error-message text-danger font-small-bold">{{ $message }}</p>
                                     @enderror
@@ -113,4 +113,6 @@
             </div>
         </div>
     </div>
+
 </div>
+

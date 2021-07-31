@@ -8,16 +8,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SOLUTIONFINANCETAX</title>
     <!-- General CSS Files -->
-
+   
+     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">
+    <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/components.css') }}">
-    <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/bundles/izitoast/css/iziToast.min.css') }}">
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <!-- Template CSS -->
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
-   
     @yield('style')
 
     @livewireStyles
@@ -181,18 +180,23 @@
             </footer>
         </div>
     </div>
+    @livewireScripts
+   
     <!-- General JS Scripts -->
     <script src="{{ asset('aegis/source/light/assets/js/app.min.js') }}"></script>
     <script src="{{ asset('aegis/source/light/assets/js/scripts.js') }}"></script>
-
-    @livewireScripts
+    <script src="{{ asset('aegis/source/light/assets/bundles/cleave-js/dist/cleave.min.js') }}"></script>
+      <!-- JS Libraies -->
+    <script src="{{ asset('aegis/source/light/assets/bundles/cleave-js/dist/addons/cleave-phone.us.js') }}"></script>
+    <script src="{{ asset('aegis/source/light/assets/js/page/forms-advanced-forms.js') }}"></script>
     <!-- Evento de Modales -->
+    
+  
     <script src="{{ asset('js/eventos.js') }}"></script>
     <!-- Custom JS File -->
     <script src="{{ asset('aegis/source/light/assets/js/custom.js') }}"></script>
     <script src="{{ asset('aegis/source/light/assets/bundles/izitoast/js/iziToast.min.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="{{ asset('aegis/source/light/assets/bundles/upload-preview/assets/js/jquery.uploadPreview.min.js') }}">
     </script>
 
 </body>

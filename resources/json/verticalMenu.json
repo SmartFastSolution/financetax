@@ -28,7 +28,7 @@
         {
             "url"  : "",
             "name" : "Servicios",
-            "icon" : "command",
+            "icon" : "grid",
             "can"  : "servicios",
             "submenu":[
 
@@ -46,6 +46,30 @@
                     "url"   : "admin/post-online",
                     "name"  : "Lista de Publicaciones",
                     "can"   :"post"
+
+                },
+                {
+                   
+                    "route" : "servicios.tipo.planes",
+                    "url"   : "servicios/tipo-planes",
+                    "name"  : "Lista de Tipo Planes",
+                    "can"   :"tipo_plan"
+
+                },
+                {
+                   
+                    "route" : "servicios.planes",
+                    "url"   : "servicios/planes",
+                    "name"  : "Lista de Planes",
+                    "can"   :"tipo_plan"
+
+                },
+                {
+                   
+                    "route" : "servicios.servicio",
+                    "url"   : "servicios/servicios",
+                    "name"  : "Lista de Servicios",
+                    "can"   : "servicio"
 
                 }
             ]

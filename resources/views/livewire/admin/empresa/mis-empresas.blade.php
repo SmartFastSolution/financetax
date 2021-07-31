@@ -135,10 +135,18 @@
                                     </p>
                                 </td>
                             </tr>
-
                         @endif
                     </tbody>
                 </table>
+            </div>
+            <div class="row">
+                <div class="col">
+                    {{ $data->links() }}
+                </div>
+                <div class="col text-right text-muted">
+                    Mostrar {{ $data->firstItem() }} a {{ $data->lastItem() }} de
+                    {{ $data->total() }} registros
+                </div>
             </div>
         </div>
     </div>

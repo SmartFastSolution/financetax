@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.14"
     },
     "dependencies": {
+        "cleave.js": "^1.6.0",
         "laravel-echo": "^1.11.0",
         "pusher-js": "^7.0.3"
     }
