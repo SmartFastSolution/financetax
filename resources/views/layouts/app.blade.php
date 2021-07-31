@@ -188,10 +188,8 @@
     <script src="{{ asset('aegis/source/light/assets/bundles/cleave-js/dist/cleave.min.js') }}"></script>
       <!-- JS Libraies -->
     <script src="{{ asset('aegis/source/light/assets/bundles/cleave-js/dist/addons/cleave-phone.us.js') }}"></script>
-    <script src="{{ asset('aegis/source/light/assets/js/page/forms-advanced-forms.js') }}"></script>
-    <!-- Evento de Modales -->
-    
-  
+   
+    <!-- Evento de Modales -->  
     <script src="{{ asset('js/eventos.js') }}"></script>
     <!-- Custom JS File -->
     <script src="{{ asset('aegis/source/light/assets/js/custom.js') }}"></script>
