@@ -55,7 +55,7 @@
                              </td>
                              <td width="10px">
                                  <button class="btn btn-danger"
-                                     wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar este Tipo Plan?','EliminarTipoPlan', {{ $p->id }})">
+                                     wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar este Tipo Plan?','eliminarTipoPlan', {{ $p->id }})">
                                      Eliminar
                                  </button>
                              </td>

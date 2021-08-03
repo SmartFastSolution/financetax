@@ -22,6 +22,6 @@ class ServicioController extends Controller
     public function Servicio(){
         return view('cruds.Servicios.Servicios.servicio');
     }
-
+  
 
 }

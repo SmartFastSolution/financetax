@@ -34,14 +34,6 @@
 
                 {
                    
-                    "route" : "admin.actividades",
-                    "url"   : "admin/actividades-online",
-                    "name"  : "Lista de Actividades",
-                    "can"   :"actividades"
-
-                },
-                {
-                   
                     "route" : "admin.post",
                     "url"   : "admin/post-online",
                     "name"  : "Lista de Publicaciones",
@@ -69,6 +61,14 @@
                     "route" : "servicios.servicio",
                     "url"   : "servicios/servicios",
                     "name"  : "Lista de Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
+                   
+                    "route" : "servicios.subservicio.index",
+                    "url"   : "servicios/sub-servicios",
+                    "name"  : "Lista de Sub Servicios",
                     "can"   : "servicio"
 
                 }
