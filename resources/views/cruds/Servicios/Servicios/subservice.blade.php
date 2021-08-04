@@ -3,8 +3,8 @@
 @section('content')
 
     <h1 class="text-center font-weight-bold">Sub Servicio</h1>
-    <br>
-    <div id="subservicio">
+
+<div id="subservicio">
     <section class="section">
         <div class="section-body">
                 <div class="row">

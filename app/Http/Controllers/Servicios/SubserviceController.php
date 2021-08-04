@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 class SubserviceController extends Controller
 {
     use SubservicioTrait;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
    
    public function index (){
     return view('cruds.Servicios.Servicios.subserviceindex');

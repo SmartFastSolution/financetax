@@ -24,4 +24,10 @@ class Subservice extends Model
     }
     
 
+    public function planes(){
+        return $this->hasMany('App\Servicios\Plan');
+    }
+
+
+
 }

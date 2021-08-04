@@ -3,7 +3,10 @@
 @section('content')
 
 <h1 class="text-center font-weight-bold">Administración de Planes</h1>
-<br>
+
+<div class="card-body">
+    <a type="button" class="btn btn-primary" href="{{route('servicios.planes.create')}}" > Crear Plan</a>
+</div>
 
 @livewire('servicios.planes.planes')
 @endsection

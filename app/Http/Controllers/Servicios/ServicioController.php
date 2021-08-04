@@ -11,14 +11,12 @@ class ServicioController extends Controller
     {
         $this->middleware('auth');
     }
-
+        // redireccion de tipo de planes vista 
     public function TipoPlanes(){
         return view('cruds.Servicios.TipoPlanes.index');
     }
-    public function Planes(){
-        return view('cruds.Servicios.TipoPlanes.Planes');
-    }
-
+  
+        // redireccion de servicios vista
     public function Servicio(){
         return view('cruds.Servicios.Servicios.servicio');
     }
