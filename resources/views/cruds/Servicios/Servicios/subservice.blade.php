@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1 class="text-center font-weight-bold">Crear un Sub Servicios</h1>
+    <h1 class="text-center font-weight-bold">Sub Servicio</h1>
     <br>
     <div id="subservicio">
     <section class="section">
@@ -45,7 +45,8 @@
                             </div>
                             <div class="card-footer">
                                 <button class="btn btn-primary btn-sm" :disabled="buttonDisable"
-                                @click.prevent="validaciones('activo')">Crear Subservicio</button>
+                                @click.prevent="validaciones('activo')">Guardar Subservicio</button>
+                               
                             </div>
                         </div>
                     </div>
@@ -177,7 +178,13 @@
             return datos;
          },
 
-
+         editSubservice(subservices){
+            this.nombre = subservices.nombre;
+            this.descripcion = subservices.descripcion;
+            this.service_id = subservices.service_id;
+            this.editMode = true;
+            this.subservice_id = subservices.id;
+        },
         storeSubservice(data) {
             let set = this;
             axios.post(data.url, data.data, data.config)
@@ -194,14 +201,18 @@
                     }
                     set.buttonDisable = false;
                 });
+
         }
+
+       
 
 
 
      },      
   });
-        @if (Request::has('subservice'))
-                 subservicio.editSubservice(@json($subservice))
+        @if(Request::has('subservices'))
+                 console.log(@json($subservices))
+                 subservicio.editSubservice(@json($subservices))
         @endif
 </script>
 

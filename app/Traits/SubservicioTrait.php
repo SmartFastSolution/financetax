@@ -38,7 +38,7 @@ trait SubservicioTrait
 
     public function UpdateSubservicio($request){
 
-        $s                  = Subservice::find($request->subservicie_id);
+        $s                  = Subservice::find($request->subservice_id);
         $s->nombre          = $request->nombre;
         $s->service_id      = $request->service_id;
         $s->descripcion     = $request->descripcion;

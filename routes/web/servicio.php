@@ -15,7 +15,7 @@ Route::prefix('servicios')->group(function(){
           //RUTAS DE LOS TIPOS DE PLANES Y PLANES
           Route::get('/servicios', 'Servicios\ServicioController@Servicio')->name('servicios.servicio'); //ruta de servicios 
           Route::get('/sub-servicios', 'Servicios\SubserviceController@Index')->name('servicios.subservicio.index'); //indice de un subservicio
-          Route::get('/sub-servicios/create', 'Servicios\SubserviceController@Sub_service')->name('servicios.subservicio.create'); //creacion de un subservicio
+          Route::get('/subservicios', 'Servicios\SubserviceController@Sub_service')->name('servicios.subservicio.create'); //creacion de un subservicio
           Route::post('/store-subservicios', 'Servicios\SubserviceController@store')->name('servicios.subservicio.store'); //store de un subservicio
 
    });

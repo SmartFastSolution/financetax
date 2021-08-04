@@ -18,13 +18,13 @@ class SubserviceController extends Controller
    
     public function Sub_service(Request $request){
 
-      $servicios = Service::where('estado', 'activo')->get();
-      if ($request->has('subservice')) {
-          $subservice = Subservice::with(['servicio','servicio.nombre'])->firstOrFail($request->get('subservice')); 
+             $servicios = Service::where('estado', 'activo')->get();
 
-          return view('cruds.Servicios.Servicios.subservice', compact('servicios', 'subservice'));  
-        }else {
-           
+        if ($request->has('subservices')) {
+            $subservices = Subservice::with(['servicio','servicio.nombre'])->findOrFail($request->get('subservices')); 
+            //dd($subservices);
+            return view('cruds.Servicios.Servicios.subservice', compact('servicios', 'subservices'));  
+        } else{
             return view('cruds.Servicios.Servicios.subservice', compact('servicios'));
         }
         
