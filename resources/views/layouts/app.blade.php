@@ -10,17 +10,16 @@
     <!-- General CSS Files -->
    
     
-   
+    @livewireStyles
    
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">  
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
   
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/components.css') }}">
-   
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/bundles/izitoast/css/iziToast.min.css') }}">
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <!-- Template CSS -->
-    @livewireStyles
+  
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
     @yield('style')
 
@@ -256,14 +255,15 @@
  
     
     <script src="{{ asset('js/app.js') }}"></script>
-      
+    @livewireScripts
     <!-- General JS Scripts -->
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
-     @livewireScripts
-    <script src="{{ asset('js/eventos.js') }}"></script>
-    <script src="{{ asset('assets/bundles/izitoast/js/iziToast.min.js') }}"></script>
+    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js') }}"></script>
     <script src="{{ asset('//cdn.jsdelivr.net/npm/sweetalert2@11') }}"></script>
+  
+    <script src="{{ asset('js/eventos.js') }}"></script>
+   
     @yield('js')
     
 </body>

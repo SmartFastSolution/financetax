@@ -29,11 +29,15 @@ class UserSeeder extends Seeder
           $role7 = Role::create(['name'  => 'invitado' ]);
           $role8 = Role::create(['name'  => 'cliente' ]);
   
+          Permission::create(['name' => 'administracion']);
+          Permission::create(['name' => 'servicios']);
+          Permission::create(['name' => 'roles']);
           Permission::create(['name' => 'usuarios']);
           Permission::create(['name' => 'post']);
-          Permission::create(['name' => 'departamentos']);
-          Permission::create(['name' => 'actividades']);
-          Permission::create(['name' => 'roles']);
+          Permission::create(['name' => 'tipo_plan']);
+          Permission::create(['name' => 'servicio']);
+         
+         
       
       
       

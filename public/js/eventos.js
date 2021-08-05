@@ -16,7 +16,7 @@ Livewire.on('info', function (data) {
      $(data.modal).modal('hide');
 
     }
-     iziToast.info({
+     iziToast.success({
                 title: 'SolutionFinanceTax',
                 message: data.mensaje,
                 position: 'topRight'
