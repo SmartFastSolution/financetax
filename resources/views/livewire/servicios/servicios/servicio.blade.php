@@ -1,11 +1,4 @@
 <div>
-    @include('cruds.Servicios.Servicios.modal.modalservicio')
-
-    <div class="card-body">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createService"> Crear un
-            Servicio</button>
-    </div>
-
     <div class="card">
         <div class="card-body">
 
@@ -29,6 +22,13 @@
                     <thead>
                         <tr>
                             <th class="px-4 py-2 text-center ">
+                                Tipo Servicio
+                                <a class="text-primary" wire:click.prevent="sortBy('tipo')" role="button">
+
+                                    @include('includes._sort-icon', ['field' => 'tipo'])
+                                </a>
+                            </th>
+                            <th class="px-4 py-2 text-center ">
                                 Servicio
                                 <a class="text-primary" wire:click.prevent="sortBy('nombre')" role="button">
 
@@ -50,6 +50,7 @@
                         @if ($data->isNotEmpty())
                             @foreach ($data as $p)
                                 <tr>
+                                    <td class="text-center ">{{ $p->tipo }}</td>
                                     <td class="text-center ">{{ $p->nombre }}</td>
                                     <td class="text-center ">{{ $p->descripcion }}</td>
                                     <td class="text-center ">
@@ -61,7 +62,7 @@
                                     </td>
                                     <td width="10px">
                                         <button class="btn btn-success" data-toggle="modal" data-target="#createService"
-                                            wire:click.prevent="editService({{ $p->id }})">
+                                            wire:click.prevent="editSer({{ $p->id }})">
                                             Editar
                                         </button>
                                     </td>

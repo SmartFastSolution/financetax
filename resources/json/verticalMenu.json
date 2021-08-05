@@ -57,6 +57,14 @@
 
                 },
                 {
+                 
+                    "route" : "servicios.tiposervicio",
+                    "url"   : "servicios/tipo-servicios",
+                    "name"  : "Lista de Tipo Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
                    
                     "route" : "servicios.servicio",
                     "url"   : "servicios/servicios",
@@ -74,6 +82,16 @@
                 }
             ]
 
+        },
+        {
+            
+            "url"  : "",
+            "name" : "Lista Servicios",
+            "icon" : "grid",
+            "can"  : "lista_Servicios",
+            "submenu" :[
+
+            ]
         }
     ]
 

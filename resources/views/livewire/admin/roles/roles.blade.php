@@ -43,8 +43,8 @@
                         @if ($roles->isNotEmpty())
                         @foreach ($roles as $r)
                         <tr>
-                            <td width="100" class="p-1 text-center  text-dark">{{ $r->id }}</td>
-                            <td class="p-1 text-center  text-dark">{{ $r->name }}</td>
+                            <td width="100" class="p-1 text-center ">{{ $r->id }}</td>
+                            <td class="p-1 text-center  ">{{ $r->name }}</td>
                             <td class="p-1  text-dark">
                                 @foreach ($r->permissions as $permisio)
                                 <div class="badge badge-dark">{{ $permisio->name }}</div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateServicesTable extends Migration
+class CreateTiposerviciosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateServicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('tiposervicios', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
-            $table->string('descripcion')->nullable();
             $table->enum('estado',['activo','inactivo'])->nullable();
-            $table->unsignedBigInteger('tiposervicio_id')->nullable();
-            $table->foreign('tiposervicio_id')->references('id')->on('tiposervicios')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateServicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('tiposervicios');
     }
 }
