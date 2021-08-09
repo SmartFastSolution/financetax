@@ -28,4 +28,9 @@ class Plan extends Model
            return $this->belongsTo('App\Servicios\Subservice');
        }
 
+       public function scopePlanes($query, $id)
+       {
+           return $query->where('tipoplan_id',$id)->get();
+       }
+
 }
