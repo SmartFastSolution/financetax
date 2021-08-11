@@ -17,17 +17,49 @@
         },
         {
             "url"  : "",
-            "name" : "Servicios",
+            "name" : "Mantenimiento(s)",
             "icon" : "grid",
             "can"  : "servicios",
             "submenu":[
 
                 {
 
-                    "route" : "admin.post",
-                    "url"   : "admin/post-online",
-                    "name"  : "Lista de Publicaciones",
-                    "can"   :"post"
+                    "route" : "servicios.tipo.planes",
+                    "url"   : "servicios/tipo-planes",
+                    "name"  : "Lista de Tipo Planes",
+                    "can"   :"tipo_plan"
+
+                },
+                {
+
+                    "route" : "servicios.planes",
+                    "url"   : "servicios/planes",
+                    "name"  : "Lista de Planes",
+                    "can"   :"tipo_plan"
+
+                },
+                {
+
+                    "route" : "servicios.tiposervicio",
+                    "url"   : "servicios/tipo-servicios",
+                    "name"  : "Lista de Tipo Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
+
+                    "route" : "servicios.servicio",
+                    "url"   : "servicios/servicios",
+                    "name"  : "Lista de Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
+
+                    "route" : "servicios.subservicio.index",
+                    "url"   : "servicios/sub-servicios",
+                    "name"  : "Lista de Sub Servicios",
+                    "can"   : "servicio"
 
                 },
                 {
@@ -81,16 +113,7 @@
             ]
 
         },
-        {
 
-            "url"  : "",
-            "name" : "Lista Servicios",
-            "icon" : "grid",
-            "can"  : "lista_Servicios",
-            "submenu" :[
-
-            ]
-        },
         {
             "url"  : "",
             "name" : "Ingreso de Facturas",
@@ -109,6 +132,34 @@
                     "name"  : "Ingreso Manual",
                     "can"   :"usuarios"
                 }
+
+            ]
+        },
+        {
+
+            "url"  : "#",
+            "name" : "Planes",
+            "icon" : "list",
+            "can"  : "lista_Servicios",
+            "submenu" :[
+
+                {
+
+                    "route" : "tienda.index",
+                    "url"   : "tienda/tienda-solution",
+                    "name"  : "Servicios",
+                    "can"   : "tienda"
+
+                },
+                {
+
+                    "route" : "servicios.subservicio.index",
+                    "url"   : "servicios/sub-servicios",
+                    "name"  : "Mis Servicios",
+                    "can"   : "servicio"
+
+                }
+
             ]
         }
     ]

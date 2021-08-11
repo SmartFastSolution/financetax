@@ -29,11 +29,15 @@
     @yield('style')
 
 
+
+    <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
+    @yield('style')
+
+
 </head>
 
 <body>
     <div class="loader"></div>
-
         <div class="main-wrapper main-wrapper-1">
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">

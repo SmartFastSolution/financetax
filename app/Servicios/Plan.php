@@ -22,10 +22,15 @@ class Plan extends Model
        {
            return $this->morphOne('App\Document', 'documentable');
        }
-   
-   
+
+
        public function subservicio(){
            return $this->belongsTo('App\Servicios\Subservice');
+       }
+
+       public function scopePlanes($query, $id)
+       {
+           return $query->where('tipoplan_id',$id)->get();
        }
 
 }

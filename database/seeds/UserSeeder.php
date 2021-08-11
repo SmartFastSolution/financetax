@@ -18,24 +18,27 @@ class UserSeeder extends Seeder
     public function run()
     {
 
-        //resetea el cache de roles y permisos antes de exportar
-        app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        $role1 = Role::create(['name'  => 'super-admin']);
-        $role2 = Role::create(['name'  => 'admin']);
-        $role3 = Role::create(['name'  => 'contador' ]);
-        $role4 = Role::create(['name'  => 'financiero' ]);
-        $role5 = Role::create(['name'  => 'marketing' ]);
-        $role6 = Role::create(['name'  => 'abogado' ]);
-        $role7 = Role::create(['name'  => 'invitado' ]);
-        $role8 = Role::create(['name'  => 'cliente' ]);
+          //resetea el cache de roles y permisos antes de exportar
+          app()[PermissionRegistrar::class]->forgetCachedPermissions();
+          $role1 = Role::create(['name'  => 'super-admin']);
+          $role2 = Role::create(['name'  => 'admin']);
+          $role3 = Role::create(['name'  => 'contador' ]);
+          $role4 = Role::create(['name'  => 'financiero' ]);
+          $role5 = Role::create(['name'  => 'marketing' ]);
+          $role6 = Role::create(['name'  => 'abogado' ]);
+          $role7 = Role::create(['name'  => 'invitado' ]);
+          $role8 = Role::create(['name'  => 'cliente' ]);
 
-        Permission::create(['name' => 'administracion']);
-        Permission::create(['name' => 'servicios']);
-        Permission::create(['name' => 'roles']);
-        Permission::create(['name' => 'usuarios']);
-        Permission::create(['name' => 'post']);
-        Permission::create(['name' => 'tipo_plan']);
-        Permission::create(['name' => 'servicio']);
+          Permission::create(['name' => 'administracion']);
+          Permission::create(['name' => 'servicios']);
+          Permission::create(['name' => 'roles']);
+          Permission::create(['name' => 'usuarios']);
+          Permission::create(['name' => 'post']);
+          Permission::create(['name' => 'tipo_plan']);
+          Permission::create(['name' => 'servicio']);
+
+
+
 
         /*DB::table('users')->insert([
             'name'         => 'José Magallanes',
