@@ -27,19 +27,11 @@
         },
         {
             "url"  : "",
-            "name" : "Servicios",
+            "name" : "Mantenimiento(s)",
             "icon" : "grid",
             "can"  : "servicios",
             "submenu":[
 
-                {
-                   
-                    "route" : "admin.post",
-                    "url"   : "admin/post-online",
-                    "name"  : "Lista de Publicaciones",
-                    "can"   :"post"
-
-                },
                 {
                    
                     "route" : "servicios.tipo.planes",
@@ -85,12 +77,29 @@
         },
         {
             
-            "url"  : "",
-            "name" : "Lista Servicios",
-            "icon" : "grid",
+            "url"  : "#",
+            "name" : "Planes",
+            "icon" : "list",
             "can"  : "lista_Servicios",
             "submenu" :[
 
+                {
+                   
+                    "route" : "tienda.index",
+                    "url"   : "tienda/tienda-solution",
+                    "name"  : "Servicios",
+                    "can"   : "tienda"
+
+                },
+                {
+                   
+                    "route" : "servicios.subservicio.index",
+                    "url"   : "servicios/sub-servicios",
+                    "name"  : "Mis Servicios",
+                    "can"   : "servicio"
+
+                }
+                
             ]
         }
     ]

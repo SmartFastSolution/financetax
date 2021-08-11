@@ -52,6 +52,7 @@ class ShopController extends Controller
         $tipoplan = Tipoplan::join('plans','plans.tipoplan_id','=','tipoplans.id')
                     ->where('plans.subservice_id',$id)
                     ->where('plans.estado', 'activo') 
+                    ->where('tipoplans.estado', 'activo') 
                    
         ->get(); 
         
