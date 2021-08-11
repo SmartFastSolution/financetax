@@ -12,7 +12,14 @@
                     "url"   : "admin/control-permisos",
                     "name"  : "Lista de Roles",
                     "can"   :"roles"
-                }
+                },
+                {
+
+                    "route" : "admin.usuario.index",
+                    "url"   : "admin/lista-usuarios",
+                    "name"  : "Lista de Usuarios",
+                    "can"   :"usuarios"
+                  }
             ]
         },
         {
@@ -59,54 +66,6 @@
                     "route" : "servicios.subservicio.index",
                     "url"   : "servicios/sub-servicios",
                     "name"  : "Lista de Sub Servicios",
-                    "can"   : "servicio"
-
-                },
-                {
-
-                    "route" : "servicios.tipo.planes",
-                    "url"   : "servicios/tipo-planes",
-                    "name"  : "Lista de Tipo Planes",
-                    "can"   :"tipo_plan"
-
-                },
-                {
-
-                    "route" : "servicios.planes",
-                    "url"   : "servicios/planes",
-                    "name"  : "Lista de Planes",
-                    "can"   :"tipo_plan"
-
-                },
-                {
-
-                    "route" : "servicios.tiposervicio",
-                    "url"   : "servicios/tipo-servicios",
-                    "name"  : "Lista de Tipo Servicios",
-                    "can"   : "servicio"
-
-                },
-                {
-
-                    "route" : "servicios.servicio",
-                    "url"   : "servicios/servicios",
-                    "name"  : "Lista de Servicios",
-                    "can"   : "servicio"
-
-                },
-                {
-
-                    "route" : "servicios.subservicio.index",
-                    "url"   : "servicios/sub-servicios",
-                    "name"  : "Lista de Sub Servicios",
-                    "can"   : "servicio"
-
-                },
-                {
-
-                    "route" : "servicios.contabilidad.index",
-                    "url"   : "servicios/contabilidad",
-                    "name"  : "Contabilidad",
                     "can"   : "servicio"
 
                 }
