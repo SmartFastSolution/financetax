@@ -1,5 +1,5 @@
 <div>
-    <form method="post" class="needs-validation">
+    <form  class="needs-validation">
         <div class="card-header">
             <h4>Editar Datos Personales</h4>
         </div>
@@ -16,6 +16,13 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-12">
+                    <label>Cédula</label>
+                    <input type="number" class="form-control" min="0" wire:model.defer="cedula" value="{{ $user->cedula }}">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 col-12">
                     <label>Telefóno</label>
                     <input type="tel" class="form-control" min="0" wire:model.defer="telefono">
 
@@ -25,6 +32,12 @@
                     <input type="text" class="form-control" wire:model.defer="ciudad">
                 </div>
             </div>
+            <div class="row">
+                <div class="form-group col-md-6 col-12">
+                    <label>Genero</label>
+                    <input type="text" class="form-control text-dark" wire:model.defer="genero" value="{{ $user->genero }}">
+                </div>
+            </div>   
             <div class="row">
                 <div class="form-group col-12">
                     <label>Domicilio</label>
@@ -36,10 +49,13 @@
                     <label>Fecha Nacimiento</label>
                     <input type="date" class="form-control" wire:model.defer="fecha_n">
                 </div>
-            </div>     
+            </div>   
+             
         </div>
         <div class="card-footer text-center">
             <button class="btn btn-primary" wire:click.prevent="ActualizarDatos">Actualizar</button>
         </div>
     </form>
 </div>
+
+

@@ -50,4 +50,14 @@ class AdminController extends Controller
     }
 
 
+    public function mis_empresas()
+    {
+        return view('admin.usuarios.empresas.mis-empresas');
+    }
+
+    public function tarjeta_credito()
+    {
+        return view('admin.usuarios.tarjeta-credito.tarjetacredito');
+    }
+
 }

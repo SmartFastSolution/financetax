@@ -1,5 +1,5 @@
 
-{ 
+{
     "menu" :[
         {
             "url"  : "",
@@ -7,49 +7,109 @@
             "icon" : "shield",
             "can"  : "administracion",
               "submenu" :[
-                  {
-                   
+                {
                     "route" : "admin.control.permisos",
                     "url"   : "admin/control-permisos",
                     "name"  : "Lista de Roles",
                     "can"   :"roles"
-
-                  },
-                  {
-
-                    "route" : "admin.usuario.index",
-                    "url"   : "admin/lista-usuarios",
-                    "name"  : "Lista de Usuarios",
-                    "can"   :"usuarios"
-                  }
-              ]
-
+                }
+            ]
         },
         {
             "url"  : "",
             "name" : "Servicios",
-            "icon" : "command",
+            "icon" : "grid",
             "can"  : "servicios",
             "submenu":[
 
                 {
-                   
-                    "route" : "admin.actividades",
-                    "url"   : "admin/actividades-online",
-                    "name"  : "Lista de Actividades",
-                    "can"   :"actividades"
 
-                },
-                {
-                   
                     "route" : "admin.post",
                     "url"   : "admin/post-online",
                     "name"  : "Lista de Publicaciones",
                     "can"   :"post"
 
+                },
+                {
+
+                    "route" : "servicios.tipo.planes",
+                    "url"   : "servicios/tipo-planes",
+                    "name"  : "Lista de Tipo Planes",
+                    "can"   :"tipo_plan"
+
+                },
+                {
+
+                    "route" : "servicios.planes",
+                    "url"   : "servicios/planes",
+                    "name"  : "Lista de Planes",
+                    "can"   :"tipo_plan"
+
+                },
+                {
+
+                    "route" : "servicios.tiposervicio",
+                    "url"   : "servicios/tipo-servicios",
+                    "name"  : "Lista de Tipo Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
+
+                    "route" : "servicios.servicio",
+                    "url"   : "servicios/servicios",
+                    "name"  : "Lista de Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
+
+                    "route" : "servicios.subservicio.index",
+                    "url"   : "servicios/sub-servicios",
+                    "name"  : "Lista de Sub Servicios",
+                    "can"   : "servicio"
+
+                },
+                {
+
+                    "route" : "servicios.contabilidad.index",
+                    "url"   : "servicios/contabilidad",
+                    "name"  : "Contabilidad",
+                    "can"   : "servicio"
+
                 }
             ]
 
+        },
+        {
+
+            "url"  : "",
+            "name" : "Lista Servicios",
+            "icon" : "grid",
+            "can"  : "lista_Servicios",
+            "submenu" :[
+
+            ]
+        },
+        {
+            "url"  : "",
+            "name" : "Ingreso de Facturas",
+            "icon" : "grid",
+            "can"  : "usuarios",
+            "submenu" :[
+                {
+                    "route" : "admin.ingreso_facturas.sri.index",
+                    "url"   : "/admin/ingreso_facturas/sri",
+                    "name"  : "Comprobantes SRI",
+                    "can"   :"usuarios"
+                },
+                {
+                    "route" : "admin.ingreso_facturas.ingreso_manual.index",
+                    "url"   : "/admin/ingreso_facturas/ingreso_manual",
+                    "name"  : "Ingreso Manual",
+                    "can"   :"usuarios"
+                }
+            ]
         }
     ]
 

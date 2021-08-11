@@ -1,9 +1,14 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="EditUsuario" tabindex="-1" data-keyboard="false"
+<div wire:ignore.self class="modal fade bd-example-modal-lg" id="createUser" tabindex="-1" data-keyboard="false"
     role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Actualizar Datos Usuario</h5>
+                @if ($editMode)
+                    <h5 class="modal-title" id="myLargeModalLabel">Actualizar Datos Usuario</h5>
+                @else
+                    <h5 class="modal-title" id="myLargeModalLabel">Crear Usuario</h5>
+                @endif
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -43,29 +48,39 @@
                 </div>
 
                 <div class="row">
-                    <div class="selectgroup selectgroup-pills">
-                        <span class="font-weight-bold text-dark"> Estado:</span>
-                        <label class="selectgroup-item">
-                            <input type="radio" wire:model="estado" name="estado" value="activo"
-                                class="selectgroup-input">
-                            <span class="selectgroup-button selectgroup-button-icon"><i
-                                    class="fas fa-toggle-on"></i></span>
-                        </label>
-                        <label class="selectgroup-item">
-                            <input type="radio" wire:model="estado" name="estado" value="inactivo"
-                                class="selectgroup-input">
-                            <span class="selectgroup-button selectgroup-button-icon"><i
-                                    class="fas fa-toggle-off"></i></span>
-                        </label>
-                        <span class="badge @if ($estado=='activo' ) badge-success @else badge-danger @endif">{{ $estado }}</span>
+                    <div class="form-group col-md-8">
+                        <div class="selectgroup selectgroup-pills">
+                            <span class="font-weight-bold text-dark"> Estado:</span>
+                            <label class="selectgroup-item">
+                                <input type="radio" wire:model="estado" name="estado" value="activo"
+                                    class="selectgroup-input">
+                                <span class="selectgroup-button selectgroup-button-icon"><i
+                                        class="fas fa-toggle-on"></i></span>
+                            </label>
+                            <label class="selectgroup-item">
+                                <input type="radio" wire:model="estado" name="estado" value="inactivo"
+                                    class="selectgroup-input">
+                                <span class="selectgroup-button selectgroup-button-icon"><i
+                                        class="fas fa-toggle-off"></i></span>
+                            </label>
+                            <span class="badge @if ($estado=='activo' ) badge-success @else badge-danger @endif">{{ $estado }}</span>
+                        </div>
                     </div>
                 </div>
-
-
+                <div class="badge badge-danger">clave por defecto : 12345678</div>
+                {{-- <span> clave por defecto : 12345678</span> --}}
             </div>
 
             <div class="modal-footer br">
-                <button type="button" class="btn btn-warning" wire:click="updateUser">Actualizar Usuario</button>
+
+                @if ($editMode)
+                    <button type="button" class="btn btn-warning" wire:click="updateUser">Actualizar Usuario</button>
+                @else
+                    @if ($createMode) disabled @endif
+                    <button type="button" class="btn btn-primary" @if ($createMode) disabled @endif wire:click="createUser">Crear Usuario</button>
+                @endif
+
+
             </div>
         </div>
     </div>

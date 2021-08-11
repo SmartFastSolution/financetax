@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
 class Usuario extends Component
@@ -25,10 +26,11 @@ class Usuario extends Component
         public $permissions =[];
         public $roles       =[];
         public $allRoles    =[];
+        public $createMode  = false;
         public $editMode    = false;
         public $user_id        ='';
 
-    public $name, $email ;
+    public $name, $email  ;
 
     public function mount(){
         $this->estado    ='activo';
@@ -51,6 +53,40 @@ class Usuario extends Component
                 ->paginate($this->perPage);
         return view('livewire.admin.usuario', compact('data'));
     }
+
+
+    public function createUser (){
+
+        $this->validate([
+            'name'     => 'required',
+            'email'    => 'required|email|unique:users,email',
+            'rol'      => 'required',
+        ],[
+            'name.required'        => 'No has agregado el nombre del usuario',
+            'email.required'     => 'No has agregado el correo',
+            'email.email'        => 'Agrega un correo valido',
+            'email.unique'       => 'Este correo ya se encuentra en uso',
+            'rol.required'         => 'No has selecionado un rol',
+        ]);
+            $this->createMode = true;
+
+            $clave    = 12345678;
+            $user     = new User;
+            $user->name   = $this->name;
+            $user->email  = $this->email; 
+            $user->password     = Hash::make($clave);
+            $user->estado       = $this->estado == 'activo' ? 'activo' : 'inactivo';
+            $user->save();
+            $user->assignRole($this->rol);
+            $this->resetInput();
+            $this->emit('success',['mensaje' => 'Usuario Registrado Correctamente', 'modal' => '#createUser']);
+            $this->createMode = false;
+
+
+    }
+
+
+
 
 
     public function resetInput()
@@ -110,7 +146,7 @@ class Usuario extends Component
         $user->save();
         $user->syncRoles([$this->rol]);
         $this->resetInput();
-        $this->emit('info',['mensaje' => 'Usuario Actualizado Correctamente', 'modal' => '#EditUsuario']);  
+        $this->emit('info',['mensaje' => 'Usuario Actualizado Correctamente', 'modal' => '#createUser']);  
 
      }
 
