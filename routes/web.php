@@ -15,14 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//ruta para inicio con video
 Route::get('/', function () {
+    return view('welcome2');
+});
+Route::get('/page', function () {
     return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-// Route::get('/', 'HomeController@index')->name('index');  // para que acceda solo a home sin entrar a welcome
+ //Route::get('/', 'HomeController@index')->name('index');  // para que acceda solo a home sin entrar a welcome nse comenta 
 
 
 
