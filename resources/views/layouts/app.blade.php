@@ -24,6 +24,7 @@
     <link href="{{ asset('assets/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/datatables/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/datatables/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
     @yield('style')

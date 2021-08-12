@@ -24,10 +24,12 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-daterangepicker": "^3.1.0",
         "cleave.js": "^1.6.0",
         "datatables.net-autofill-bs4": "^2.3.9",
         "datatables.net-bs4": "^3.2.2",
         "datatables.net-buttons-bs4": "^1.7.1",
+        "datatables.net-datetime": "^1.1.0",
         "datatables.net-responsive-bs4": "^2.2.9",
         "highcharts": "^9.1.2",
         "highcharts-vue": "^1.4.0",

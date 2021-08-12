@@ -95,6 +95,20 @@
             ]
         },
         {
+            "url"  : "",
+            "name" : "Servicios",
+            "icon" : "grid",
+            "can"  : "usuarios",
+            "submenu" :[
+                {
+                    "route" : "servicios.contabilidad.index",
+                    "url"   : "/servicios/contabilidad",
+                    "name"  : "Grafico Contable",
+                    "can"   :"usuarios"
+                }
+            ]
+        },
+        {
 
             "url"  : "#",
             "name" : "Planes",

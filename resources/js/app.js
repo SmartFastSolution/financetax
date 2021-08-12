@@ -14,11 +14,13 @@ const defaultOptionsObject = {
 }
 Vue.use(VueIziToast,defaultOptionsObject);
 
+require('bootstrap-daterangepicker');
 import datatable from 'datatables.net-bs4';
 import datatableres from 'datatables.net-responsive';
 import datatableresbs4 from 'datatables.net-responsive-bs4';
 require('datatables.net-buttons/js/dataTables.buttons')
 require('datatables.net-buttons/js/buttons.html5')
+require('datatables.net-datetime')
 import print from 'datatables.net-buttons/js/buttons.print'
 
 Vue.prototype.$tablaGlobal = function(nombre_tabla){
@@ -81,10 +83,3 @@ Vue.component('ingreso-factura-component', require('./components/IngresoFacturaC
 const app = new Vue({
      el: '#app',
 });
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-
-
-// const app = new Vue({
-//     el: '#app',
-// });

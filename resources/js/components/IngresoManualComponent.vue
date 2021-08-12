@@ -3,20 +3,33 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-10">
                 <button @click="modalNuevoRegistro = true,resetForm()" class="btn btn-primary btn-sm mb-2">Nuevo Registro</button>
+                <div class="row justify-content-center">
+                    <div class="form-group col-6 col-md-3">
+                        <label>Fecha: </label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control form-control-sm inputDateRange">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-info resetDateFilter" type="button">
+                                    <i class="fa fa-retweet"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <table id="tblTransacciones" class="table table-striped table-bordered table-sm" style="width:100%;">
                     <thead style="font-size:9.0pt;">
                         <tr>
-                            <th style="width:100px;">Fecha</th>
+                            <th class="text-center" style="width:100px;">Fecha</th>
                             <th style="width:150px;">Tipo Transacción</th>
                             <th>Detalle</th>
-                            <th style="width:100px;">Iva</th>
-                            <th style="width:100px;">Importe</th>
+                            <th class="text-center" style="width:60px;">Iva</th>
+                            <th class="text-center" style="width:60px;">Importe</th>
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="item in transacciones" :key="item.id">
-                            <td>{{ item.fecha }}</td>
+                            <td class="text-center">{{ item.fecha }}</td>
                             <td>{{ item.tipo }}</td>
                             <td>{{ item.detalle }}</td>
                             <td class="text-right pr-4">{{ item.iva }}</td>
@@ -197,9 +210,128 @@ export default {
     },
     created() {
         this.listarTipoTransaccion();
-        this.$tablaGlobal("#tblTransacciones");
+        //this.$tablaGlobal("#tblTransacciones");
+        this.generarDataTable();
     },
     methods: {
+        generarDataTable(){
+            this.$nextTick(()=>{
+                var minDateFilter = '';
+                var maxDateFilter = '';
+
+                $("#tblTransacciones").DataTable().destroy();
+                var tabla = $("#tblTransacciones").DataTable({
+                    "retrieve": true,
+                    "bDeferRender": true,
+                    "autoWidth": false,
+                    "order": [[ 0, "desc" ]],
+                    "search": {
+                        "regex": true,
+                        "caseInsensitive": false,
+                    },
+                    "destroy": true,
+                    "sPaginationType": "full_numbers",
+                    "language":{
+                        "sProcessing":     "Procesando...",
+                        "sLengthMenu":     "Mostrar _MENU_ registros",
+                        "sZeroRecords":    "No se encontraron resultados",
+                        "sEmptyTable":     "Ningún dato disponible en esta tabla =(",
+                        "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                        "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+                        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+                        "sInfoPostFix":    "",
+                        "sSearch":         "Buscar:",
+                        "sUrl":            "",
+                        "sInfoThousands":  ",",
+                        "sLoadingRecords": "Cargando...",
+                        "oPaginate": {
+                            "sFirst":    "<i class='fa fa-fast-backward' aria-hidden='true'></i>",
+                            "sLast":     "<i class='fa fa-fast-forward' aria-hidden='true'></i>",
+                            "sNext":     "<i class='fa fa-step-forward' aria-hidden='true'></i>",
+                            "sPrevious": "<i class='fa fa-step-backward' aria-hidden='true'></i>"
+                        },
+                        "oAria": {
+                            "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                        }
+                    },
+                    "responsive": true,
+                    //dom: 'Bfrtip',
+                });
+
+                $('.inputDateRange').daterangepicker({
+                    startDate: moment(),
+                    endDate: moment(),
+                    locale: {
+                        format: 'YYYY/MM/DD',
+                        "separator": " - ",
+                        "applyLabel": "Aplicar",
+                        "cancelLabel": "Cancelar",
+                        "fromLabel": "DE",
+                        "toLabel": "HASTA",
+                        "customRangeLabel": "Custom",
+                        "daysOfWeek": [
+                            "Dom",
+                            "Lun",
+                            "Mar",
+                            "Mie",
+                            "Jue",
+                            "Vie",
+                            "Sáb"
+                        ],
+                        "monthNames": [
+                            "Enero",
+                            "Febrero",
+                            "Marzo",
+                            "Abril",
+                            "Mayo",
+                            "Junio",
+                            "Julio",
+                            "Agosto",
+                            "Septiembre",
+                            "Octubre",
+                            "Noviembre",
+                            "Diciembre"
+                        ],
+                        "firstDay": 1,
+                        "opens": "center",
+                    }
+                }, function(start, end, label) {
+                    //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                    maxDateFilter = end;
+                    minDateFilter = start;
+                    tabla.draw();
+                });
+
+                $('.resetDateFilter').click(function(){
+                    maxDateFilter = '';
+                    minDateFilter = '';
+                    tabla.draw();
+                });
+
+                $.fn.dataTableExt.afnFiltering.push(
+                    function(oSettings, aData, iDataIndex){
+                        if(typeof aData._date == 'undefined'){
+                            aData._date = new Date(aData[0]).getTime();
+                        }
+
+                        if(minDateFilter && !isNaN(minDateFilter)){
+                            if(aData._date < minDateFilter){
+                                return false;
+                            }
+                        }
+
+                        if(maxDateFilter && !isNaN(maxDateFilter)){
+                            if(aData._date > maxDateFilter){
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                );
+
+            });
+        },
         cerrarModal(){
             this.modalNuevoRegistro = false;
         },

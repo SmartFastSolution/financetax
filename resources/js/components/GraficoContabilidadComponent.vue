@@ -5,8 +5,8 @@
                 <highcharts :options="chartOptions"></highcharts>
             </div>
         </div>
-        <div class="row mb-4">
-            <div class="col-12">
+        <div class="row mb-4 justify-content-center">
+            <div class="col-10">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <i class="fa fa-circle" aria-hidden="true" style="color:#28a745;"></i>
