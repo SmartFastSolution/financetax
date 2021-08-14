@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Http\Livewire\Tienda;
+
+use App\Servicios\Subservice;
+use App\Servicios\Tipoplan;
+use App\Tienda\Shop;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use Livewire\Component;
+use Livewire\WithPagination;
+
+class Miadminlista extends Component
+{
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+    protected $queryString     = [
+        'search' => ['except' => ''],
+        'page' => ['except' => 1]
+    ];
+    public $perPage         = 10;
+    public $search          = '';
+    public $orderBy         = 'shops.id';
+    public $orderAsc        = true;
+    public $uid;
+    public $ShowMode        = false;
+
+    public $clientes  =[];
+    public $tipoplans  =[];
+    public $subservices  =[];
+
+    public $shop_id, $costo, $user_id, $tipoplan_id, $subservice_id ; 
+
+    public function mount(){
+        $this->uid = Auth::user()->id;
+     }
+
+    public function render()
+    {   
+      
+        $data = Shop::where('especialista_id', $this->uid)
+        ->join('users','shops.user_id','=','users.id')
+        ->join('subservices','shops.subservice_id', '=','subservices.id')
+        ->join('tipoplans','shops.tipoplan_id','=','tipoplans.id')
+        ->where(function($query){
+            $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
+            ->orWhere('users.name', 'like', '%' . $this->search . '%');
+        })
+        
+        ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as cliente')
+        ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
+        ->paginate($this->perPage);
+    
+
+        return view('livewire.tienda.miadminlista',compact('data'));
+    }
+
+    public function sortBy($field)
+    {
+        if ($this->orderBy === $field) {
+            $this->orderAsc = !$this->orderAsc;
+        } else {
+            $this->orderAsc = true;
+        }
+        $this->orderBy = $field;
+    }
+
+
+    public function estadochange($id)
+    {
+        $estado = Shop::find($id);
+        $estado->estado = $estado->estado == 'aprovada' ? 'en proceso' : 'aprovada';
+        $estado->save();
+        $this->emit('info',['mensaje' => $estado->estado == 'aprovada' ? 'Compra Aprobada Correctamente' : 'Compra en estado de Proceso']);
+ 
+    }
+
+    public function ShowData($id){
+       $a   = Shop::find($id);
+       $this->shop_id          = $id;
+       $this->costo            = $a->costo;
+       $this->user_id          = $a->user_id;
+       $this->tipoplan_id      = $a->tipoplan_id;
+       $this->subservice_id    = $a->subservice_id;
+       $this->ShowMode = true ;
+
+    }
+
+
+    public function resetModal(){ 
+        $this->reset(['ShowMode','costo','user_id','tipoplan_id','subservice_id']);
+        $this->resetValidation();
+    }
+
+
+}

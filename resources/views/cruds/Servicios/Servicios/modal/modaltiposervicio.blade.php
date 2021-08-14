@@ -24,10 +24,10 @@
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class=" text-dark font-weight-bold">Seleccione un Rol</label>
-                    <select wire:model="rol" class="form-control @error('rol') is-invalid @enderror">
+                    <select wire:model="role_id" class="form-control @error('role_id') is-invalid @enderror">
                         <option value="" selected disabled="">Elige un Rol</option>
                         @foreach ($roles as $ro)
-                            <option value="{{ $ro }}">{{ $ro }}</option>
+                            <option value="{{ $ro->id }}">{{ $ro->name }}</option>
                         @endforeach
                     </select>
                     @error('rol')

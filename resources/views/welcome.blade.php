@@ -347,7 +347,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="video">
-                        <iframe width="100%" src="digital/mp4/estudio.mp4" frameborder="0" allowfullscreen></iframe>
+                        <iframe width="100%" src="digital/mp4/financetaxvideo.mp4" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -451,15 +451,14 @@
                   
                     <div class="icons-wrapper">
                       <div class="icons" align = "justify">
-                        <div class="icon"><i class="fas fa-address-card" data-toggle="tooltip" data-placement="top" title="SERVICIOS CONTABLE"></i></div>
-                        <div class="icon" ><i class="fas fa-chart-bar" data-toggle="tooltip" data-placement="top" title="FINANZAS"></i></div>
-                        <div class="icon"><i class="fas fa-donate" data-toggle="tooltip" data-placement="top" title="IMPUESTO"></i></div>
-                        <div class="icon"><i class="fas fa-users" data-toggle="tooltip" data-placement="top" title="RRHH"></i></div>
-                        <div class="icon"><i class="fas fa-chart-pie" data-toggle="tooltip" data-placement="top" title="MARKETING"></i></div>                     
-                        <div class="icon"><i class="fas fa-chart-line" data-toggle="tooltip" data-placement="top" title="INDICADORES DE GESTIÓN"></i></div>
-                       
-                        <div class="icon"><i class="fas fa-laptop-code" data-toggle="tooltip" data-placement="top" title="SERVICIOS PARA EMPRENDEDORES"></i></div>
-                        <div class="icon"><i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Otros Servicios"></i></div>
+                        <div class="icon"><a href=""><i class="fas fa-address-card" data-toggle="tooltip" data-placement="top" title="SERVICIOS CONTABLE"></i></a></div>
+                        <div class="icon"><a href=""><i class="fas fa-chart-bar" data-toggle="tooltip" data-placement="top" title="FINANZAS"></i></a></div>
+                        <div class="icon"><a href=""><i class="fas fa-donate" data-toggle="tooltip" data-placement="top" title="IMPUESTO"></i></a></div>
+                        <div class="icon"><a href=""><i class="fas fa-users" data-toggle="tooltip" data-placement="top" title="RRHH"></i></a></div>
+                        <div class="icon"><a href=""><i class="fas fa-chart-pie" data-toggle="tooltip" data-placement="top" title="MARKETING"></i></a></div>                     
+                        <div class="icon"><a href=""><i class="fas fa-chart-line" data-toggle="tooltip" data-placement="top" title="INDICADORES DE GESTIÓN"></i></a></div>
+                        <div class="icon"><a href=""><i class="fas fa-laptop-code" data-toggle="tooltip" data-placement="top" title="SERVICIOS PARA EMPRENDEDORES"></i></a></div>
+                        <div class="icon"><a href=""><i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Otros Servicios"></i></a></div>
 
                       </div>
                     </div>

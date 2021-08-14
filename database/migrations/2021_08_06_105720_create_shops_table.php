@@ -15,6 +15,16 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
+            $table->float('costo', 6, 3)->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('tipoplan_id')->nullable();
+            $table->foreign('tipoplan_id')->references('id')->on('tipoplans')->onDelete('cascade');
+            $table->unsignedBigInteger('subservice_id')->nullable();
+            $table->foreign('subservice_id')->references('id')->on('subservices')->onDelete('cascade');
+            $table->enum('estado',['pendiente','aprovada','en proceso'])->nullable();
+            $table->unsignedBigInteger('especialista_id')->nullable();
+            $table->foreign('especialista_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

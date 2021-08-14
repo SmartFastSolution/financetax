@@ -50,7 +50,7 @@
                                 @foreach ($data as $p)
                                     <tr>
                                         <td class="text-center ">{{ $p->nombre }}</td>
-                                        <td class="text-center "> {{ $p->roles[0]->name }}</td>
+                                        <td class="text-center "> {{ $p->rol }}</td>
                                         <td class="text-center ">
                                             <span style="cursor: pointer;"
                                                 wire:click.prevent="estadochange('{{ $p->id }}')"

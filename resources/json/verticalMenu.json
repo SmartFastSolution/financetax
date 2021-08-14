@@ -29,7 +29,7 @@
             "url"  : "",
             "name" : "Mantenimiento(s)",
             "icon" : "grid",
-            "can"  : "servicios",
+            "can"  : "mantenimientos",
             "submenu":[
 
                 {
@@ -91,12 +91,21 @@
                     "can"   : "tienda"
 
                 },
+               
                 {
                    
-                    "route" : "servicios.subservicio.index",
-                    "url"   : "servicios/sub-servicios",
-                    "name"  : "Mis Servicios",
-                    "can"   : "servicio"
+                    "route" : "admin.tienda.index",
+                    "url"   : "tienda/admin-planes",
+                    "name"  : "Administracion Planes",
+                    "can"   : "admin_tienda"
+
+                },
+                {
+                   
+                    "route" : "me.admin.tienda.index",
+                    "url"   : "tienda/mi-administracion-plan",
+                    "name"  : "Mi Administracion de Planes",
+                    "can"   : "admin_tienda"
 
                 }
                 

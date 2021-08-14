@@ -15,7 +15,7 @@ class Plan extends Model
 
 
        public function tipoplan (){
-           return $this->belongsTo('App\Servicios\Tipoplan');
+           return $this->belongsTo('App\Servicios\Tipoplan','tipoplan_id','id');
        }
 
        public function documento()

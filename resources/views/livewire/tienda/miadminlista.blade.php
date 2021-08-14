@@ -1,5 +1,5 @@
 <div>
-
+    @include('cruds.Tienda.modal.modalshowdata')
     <div class="card">
         <div class="card-body">
 
@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="col-lg-3">
-                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar Sub Servicio...">
+                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar Cliente...">
                 </div>
             </div>
 
@@ -23,56 +23,54 @@
                   <thead>
                      <tr>
                         <th class="px-4 py-2 text-center ">
-                           Servicio
-                           <a class="text-primary" wire:click.prevent="sortBy('servicio')" role="button">
+                           Cliente
+                           <a class="text-primary" wire:click.prevent="sortBy('cliente')" role="button">
          
-                               @include('includes._sort-icon', ['field' => 'servicio'])
+                               @include('includes._sort-icon', ['field' => 'cliente'])
                            </a>
                        </th>
                          <th class="px-4 py-2 text-center ">
-                             Sub Servicio
-                             <a class="text-primary" wire:click.prevent="sortBy('nombre')" role="button">
+                             SubServicio
+                             <a class="text-primary" wire:click.prevent="sortBy('sub')" role="button">
          
-                                 @include('includes._sort-icon', ['field' => 'nombre'])
+                                 @include('includes._sort-icon', ['field' => 'sub'])
                              </a>
                          </th>
                          <th class="px-4 py-2 text-center ">
-                             Descripción
-                             <a class="text-primary" wire:click.prevent="sortBy('descripcion')" role="button">
+                             Tipo Plan
+                             <a class="text-primary" wire:click.prevent="sortBy('tipoplan')" role="button">
          
-                                 @include('includes._sort-icon', ['field' => 'descripcion'])
+                                 @include('includes._sort-icon', ['field' => 'tipoplan'])
                              </a>
-                         </th>
+                         </th> 
+                         <th class="px-4 py-2 text-center">Costo</th>
                          <th class="px-4 py-2 text-center">Estado</th>
                          <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                      </tr>
                  </thead>
                   <tbody>
                      @if ($data->isNotEmpty())
-                     @foreach ($data as $subservice)
+                     @foreach ($data as $compra)
                      <tr>
-                        <td class="text-center ">{{ $subservice->servicio }}</td>
-                        <td class="text-center ">{{ $subservice->nombre }}</td>
-                        <td class="text-center ">{{ $subservice->descripcion }}</td>
+                        <td class="text-center ">{{ $compra->cliente }}</td>
+                        <td class="text-center ">{{ $compra->sub }}</td>
+                        <td class="text-center ">{{ $compra->tipoplan }}</td>
+                        <td class="text-center ">{{ $compra->costo }}</td>
                         <td class="text-center ">
                            <span style="cursor: pointer;"
-                               wire:click.prevent="estadochange('{{ $subservice->id }}')"
-                               class="badge @if ($subservice->estado == 'activo') badge-success
+                               wire:click.prevent="estadochange('{{ $compra->id }}')"
+                               class="badge @if ($compra->estado == 'aprovada') badge-success
                            @else
-                               badge-danger @endif">{{ $subservice->estado }}</span>
+                               badge-dark @endif">{{ $compra->estado }}</span>
                        </td>
                        <td width="10px">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#createService"
-                            wire:click.prevent="editSubservice({{ $subservice->id }})">
-                            Editar
+                        <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#Show"
+                            wire:click.prevent="ShowData({{ $compra->id }})">
+                            <i class="fas fa-eye"></i>
+                            Ver
                         </button>
                     </td>
-                    <td width="10px">
-                        <button class="btn btn-danger"
-                            wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar este Servicio?','eliminarSubServicio', {{ $subservice->id }})">
-                            Eliminar
-                        </button>
-                    </td>
+                   
                      </tr>
                      @endforeach
                      @else
@@ -100,5 +98,4 @@
            </div>
         </div>
     </div>
-    
 </div>

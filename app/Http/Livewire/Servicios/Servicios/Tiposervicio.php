@@ -39,11 +39,13 @@ class Tiposervicio extends Component
 
     public function render()
     {
-        $this->roles = Role::whereNotIn('name',['super-admin'])->get()->pluck('name');
-        $data = Tiposer::where(function($query){
+        $this->roles = Role::whereNotIn('name',['super-admin'])->get(['id', 'name']);
+        $data = Tiposer::join('roles','tiposervicios.role_id','roles.id')
+         ->where(function($query){
             $query->where('tiposervicios.nombre', 'like', '%'.$this->search.'%');
            
            })
+           ->select('tiposervicios.*','roles.name as rol')
            ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
            ->paginate($this->perPage);
         //dd($data);
@@ -51,8 +53,8 @@ class Tiposervicio extends Component
 
     }
 
-    public function resetModal(){
-        $this->reset(['nombre','editMode']);;
+    public function resetModal(){ 
+        $this->reset(['nombre','editMode']);
         $this->resetValidation();
     }
 
@@ -70,10 +72,10 @@ class Tiposervicio extends Component
     public function create(){
         $this->validate([
             'nombre'     => 'required',
-            'rol'      => 'required',
+            'role_id'      => 'required',
         ],[
             'nombre.required'        => 'No has agregado el nombre del usuario',
-            'rol.required'         => 'No has selecionado un Rol',
+            'role_id.required'         => 'No has selecionado un Rol',
         ]);
 
         $this->createMode = true;
@@ -81,8 +83,8 @@ class Tiposervicio extends Component
         $a               = new Tiposer;
         $a->nombre       = $this->nombre;
         $a->estado       = $this->estado == 'activo' ? 'activo' : 'inactivo';
+        $a->role_id       = $this->role_id;
         $a->save();
-        $a->assignRole($this->rol);
         $this->resetModal();
         $this->emit('success',['mensaje' => 'Tipo Servicio Registrado Correctamente', 'modal' => '#createTservicio']);
         $this->createMode = false;
@@ -96,22 +98,23 @@ class Tiposervicio extends Component
         $a                      = Tiposer::find($id);
         $this->nombre           = $a->nombre;
         $this->estado           = $a->estado;
+        $this->role_id          = $a->role_id;
         $this->editMode  = true;
-        if ($a->hasRole('admin')) {
-            $this->rol         = "admin";
-        }elseif($a->hasRole('contador')){
-            $this->rol         = "contador";
-        }elseif($a->hasRole('financiero')){
-            $this->rol         = "financiero";
-        }elseif($a->hasRole('marketing')){
-            $this->rol         = "marketing";
-        }elseif($a->hasRole('abogado')){
-            $this->rol         = "abogado";
-        }elseif($a->hasRole('invitado')){
-            $this->rol         = "invitado";
-        }elseif($a->hasRole('cliente')){
-            $this->rol         = "cliente";
-        }
+        // if ($a->hasRole('admin')) {
+        //     $this->rol         = "admin";
+        // }elseif($a->hasRole('contador')){
+        //     $this->rol         = "contador";
+        // }elseif($a->hasRole('financiero')){
+        //     $this->rol         = "financiero";
+        // }elseif($a->hasRole('marketing')){
+        //     $this->rol         = "marketing";
+        // }elseif($a->hasRole('abogado')){
+        //     $this->rol         = "abogado";
+        // }elseif($a->hasRole('invitado')){
+        //     $this->rol         = "invitado";
+        // }elseif($a->hasRole('cliente')){
+        //     $this->rol         = "cliente";
+        // }
 
     }
 
@@ -120,16 +123,16 @@ class Tiposervicio extends Component
 
         $this->validate([
             'nombre'     => 'required',
-            'rol'      => 'required',
+            'role_id'      => 'required',
         ],[
             'nombre.required'        => 'No has agregado el nombre del usuario',
-            'rol.required'         => 'No has selecionado un Rol',
+            'role_id.required'         => 'No has selecionado un Rol',
         ]);
         $a    = Tiposer::find($this->tiposervicio_id);
         $a->nombre   = $this->nombre;
         $a->estado   = $this->estado;
+        $a->role_id       = $this->role_id;
         $a->save();
-        $a->syncRoles([$this->rol]);
         $this->resetModal();
         $this->emit('success',['mensaje' => 'Tipo Servicio Actualizado Correctamente', 'modal' => '#createTservicio']);
        

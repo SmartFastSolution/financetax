@@ -41,7 +41,7 @@
                                 <div class="col-md-9 col-sm-12 col-xs-12">
                                     <div class="menu">
                                         <ul class="nav navbar-nav">
-                                            <li class="active"><a href="{{url('/')}}">INICIO</a></li>
+                                            <li class="active"><a href="{{url('/page')}}">INICIO</a></li>
                                             <li><a href="{{url('/nosotros-solution')}}">SOBRE NOSOTROS</a></li>
                                             <li><a href="{{url('/servicios')}}">SERVICIOS</a></li>
                                             <li><a href="{{url('/nuestro-equipo')}}">NUESTRO EQUIPO</a></li>

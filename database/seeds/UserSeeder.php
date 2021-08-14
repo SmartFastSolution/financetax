@@ -30,12 +30,16 @@ class UserSeeder extends Seeder
           $role8 = Role::create(['name'  => 'cliente' ]);
   
           Permission::create(['name' => 'administracion']);
-          Permission::create(['name' => 'servicios']);
+          Permission::create(['name' => 'mantenimientos']);
           Permission::create(['name' => 'roles']);
           Permission::create(['name' => 'usuarios']);
           Permission::create(['name' => 'post']);
           Permission::create(['name' => 'tipo_plan']);
           Permission::create(['name' => 'servicio']);
+          Permission::create(['name' => 'lista_Servicios']);
+          Permission::create(['name' => 'tienda']);
+          Permission::create(['name' => 'admin_tienda']);
+         
          
          
       

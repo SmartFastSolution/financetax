@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Tienda;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TiendaRequest;
 use App\Servicios\Service;
 use App\Servicios\Subservice;
 use Illuminate\Http\Request;
 use App\Servicios\Plan;
 use App\Servicios\Tipoplan;
+use App\Traits\TiendaTrait;
 
 class ShopController extends Controller
 {
+    use TiendaTrait;
     //controlador dedicado a la administracion de los planes que compra el usuario 
     //y administracion de los mismos por parte del especialista
 
@@ -62,14 +65,7 @@ class ShopController extends Controller
 
     }
 
-    // public function getPlan(Request $request){
-    //     $id = $request->id;
-    //     $planes = Plan::GetTipoplan($id);
-    //    // dd($planes);
-    //     $data = array('message' => "Plan cargado satisfactoriamente", 'data' => $planes);
-    //     return response()->json(collect($data), 200);
-    // }
-
+   
     public function getPlanes(Request $request)
     {
         $id = $request->id;
@@ -79,6 +75,23 @@ class ShopController extends Controller
       
     }
 
+     //almacenamiento del data
+    public function Store (TiendaRequest $request){
+
+        return response()->json($this->CreateData($request),201);
+    }
+
+
+
+    public function adminplanindex(){
+
+        return view('cruds.Tienda.adminplan.admincompra');
+    }
+
+
+    public function MiadminPlan (){
+        return view('cruds.Tienda.adminplan.miadminplan');
+    }
 
 
 }
