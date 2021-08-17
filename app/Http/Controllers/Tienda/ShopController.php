@@ -93,7 +93,8 @@ class ShopController extends Controller
     public function MiadminPlan (){
         return view('cruds.Tienda.adminplan.miadminplan');
     }
-
+    //redirecciona a la vista de los detalles de la compra del cliente 
+    // a la cual no se le ha asignado ningun especialista 
     public function Showdetalle($id){
         $compra = Shop::with([
             'tipoplan'=>function($query){
