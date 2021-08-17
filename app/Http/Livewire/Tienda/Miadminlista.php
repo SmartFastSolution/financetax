@@ -37,7 +37,9 @@ class Miadminlista extends Component
 
     public function render()
     {   
-      
+       $this->clientes = User::get(['id', 'name']);
+       $this->subservices = Subservice::get(['id', 'nombre']);
+       $this->tipoplans = Tipoplan::get(['id', 'nombre']);
         $data = Shop::where('especialista_id', $this->uid)
         ->join('users','shops.user_id','=','users.id')
         ->join('subservices','shops.subservice_id', '=','subservices.id')
@@ -76,15 +78,11 @@ class Miadminlista extends Component
     }
 
     public function ShowData($id){
-       $a   = Shop::find($id);
-       $this->shop_id          = $id;
-       $this->costo            = $a->costo;
-       $this->user_id          = $a->user_id;
-       $this->tipoplan_id      = $a->tipoplan_id;
-       $this->subservice_id    = $a->subservice_id;
-       $this->ShowMode = true ;
-
+        return redirect()->route('compra.detalle.individual.show', $id);
     }
+
+    
+   
 
 
     public function resetModal(){ 

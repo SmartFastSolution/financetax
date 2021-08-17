@@ -15,6 +15,7 @@ trait TiendaTrait
      $s->user_id          = Auth::id();
      $s->subservice_id    = $request->subservice_id;
      $s->tipoplan_id      = $request->tipoplan_id;
+     $s->plan_id          = $request->plan_id;
      $s->costo            = $request->costo;
      $s->estado           = $request->estado;
      $s->save();

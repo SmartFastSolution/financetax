@@ -20,6 +20,8 @@ class CreateShopsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('tipoplan_id')->nullable();
             $table->foreign('tipoplan_id')->references('id')->on('tipoplans')->onDelete('cascade');
+            $table->unsignedBigInteger('plan_id')->nullable();
+            $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
             $table->unsignedBigInteger('subservice_id')->nullable();
             $table->foreign('subservice_id')->references('id')->on('subservices')->onDelete('cascade');
             $table->enum('estado',['pendiente','aprovada','en proceso'])->nullable();

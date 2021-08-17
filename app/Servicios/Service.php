@@ -23,7 +23,7 @@ class Service extends Model
 
 
     public function tipo(){
-        return $this->belongsTo('App\Servicios\Tiposervicio', 'tiposervicio_id','id');
+        return $this->belongsTo('App\Servicios\Tiposervicio');
     }
 
     public function subservicio(){

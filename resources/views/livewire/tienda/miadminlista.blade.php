@@ -1,5 +1,4 @@
 <div>
-    @include('cruds.Tienda.modal.modalshowdata')
     <div class="card">
         <div class="card-body">
 
@@ -19,83 +18,83 @@
             </div>
 
             <div class="row table-responsive">
-               <table class="table table-striped">
-                  <thead>
-                     <tr>
-                        <th class="px-4 py-2 text-center ">
-                           Cliente
-                           <a class="text-primary" wire:click.prevent="sortBy('cliente')" role="button">
-         
-                               @include('includes._sort-icon', ['field' => 'cliente'])
-                           </a>
-                       </th>
-                         <th class="px-4 py-2 text-center ">
-                             SubServicio
-                             <a class="text-primary" wire:click.prevent="sortBy('sub')" role="button">
-         
-                                 @include('includes._sort-icon', ['field' => 'sub'])
-                             </a>
-                         </th>
-                         <th class="px-4 py-2 text-center ">
-                             Tipo Plan
-                             <a class="text-primary" wire:click.prevent="sortBy('tipoplan')" role="button">
-         
-                                 @include('includes._sort-icon', ['field' => 'tipoplan'])
-                             </a>
-                         </th> 
-                         <th class="px-4 py-2 text-center">Costo</th>
-                         <th class="px-4 py-2 text-center">Estado</th>
-                         <th class="px-4 py-2 text-center" colspan="2">Acción</th>
-                     </tr>
-                 </thead>
-                  <tbody>
-                     @if ($data->isNotEmpty())
-                     @foreach ($data as $compra)
-                     <tr>
-                        <td class="text-center ">{{ $compra->cliente }}</td>
-                        <td class="text-center ">{{ $compra->sub }}</td>
-                        <td class="text-center ">{{ $compra->tipoplan }}</td>
-                        <td class="text-center ">{{ $compra->costo }}</td>
-                        <td class="text-center ">
-                           <span style="cursor: pointer;"
-                               wire:click.prevent="estadochange('{{ $compra->id }}')"
-                               class="badge @if ($compra->estado == 'aprovada') badge-success
-                           @else
-                               badge-dark @endif">{{ $compra->estado }}</span>
-                       </td>
-                       <td width="10px">
-                        <button class="btn btn-icon icon-left btn-primary" data-toggle="modal" data-target="#Show"
-                            wire:click.prevent="ShowData({{ $compra->id }})">
-                            <i class="fas fa-eye"></i>
-                            Ver
-                        </button>
-                    </td>
-                   
-                     </tr>
-                     @endforeach
-                     @else
-                     <tr>
-                        <td colspan="10">
-                            <p class="text-center">No hay resultado para la busqueda
-                                <strong>{{ $search }}</strong> en la pagina
-                                <strong>{{ $page }}</strong> al mostrar
-                                <strong>{{ $perPage }} </strong> por pagina
-                            </p>
-                        </td>
-                    </tr>
-                   @endif
-                  </tbody>
-               </table>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-center ">
+                                Cliente
+                                <a class="text-primary" wire:click.prevent="sortBy('cliente')" role="button">
+
+                                    @include('includes._sort-icon', ['field' => 'cliente'])
+                                </a>
+                            </th>
+                            <th class="px-4 py-2 text-center ">
+                                SubServicio
+                                <a class="text-primary" wire:click.prevent="sortBy('sub')" role="button">
+
+                                    @include('includes._sort-icon', ['field' => 'sub'])
+                                </a>
+                            </th>
+                            <th class="px-4 py-2 text-center ">
+                                Tipo Plan
+                                <a class="text-primary" wire:click.prevent="sortBy('tipoplan')" role="button">
+
+                                    @include('includes._sort-icon', ['field' => 'tipoplan'])
+                                </a>
+                            </th>
+                            <th class="px-4 py-2 text-center">Costo</th>
+                            <th class="px-4 py-2 text-center">Estado</th>
+                            <th class="px-4 py-2 text-center" colspan="2">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if ($data->isNotEmpty())
+                            @foreach ($data as $compra)
+                                <tr>
+                                    <td class="text-center ">{{ $compra->cliente }}</td>
+                                    <td class="text-center ">{{ $compra->sub }}</td>
+                                    <td class="text-center ">{{ $compra->tipoplan }}</td>
+                                    <td class="text-center ">${{ $compra->costo }}</td>
+                                    <td class="text-center ">
+                                        <span style="cursor: pointer;"
+                                            wire:click.prevent="estadochange('{{ $compra->id }}')"
+                                            class="badge @if ($compra->estado == 'aprovada') badge-success
+                                        @else
+                                            badge-dark @endif">{{ $compra->estado }}</span>
+                                    </td>
+                                    <td width="10px">
+                                        <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
+                                            data-target="#Show" wire:click.prevent="ShowData({{ $compra->id }})">
+                                            <i class="fas fa-eye"></i>
+                                            Ver
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="10">
+                                    <p class="text-center">No hay resultado para la busqueda
+                                        <strong>{{ $search }}</strong> en la pagina
+                                        <strong>{{ $page }}</strong> al mostrar
+                                        <strong>{{ $perPage }} </strong> por pagina
+                                    </p>
+                                </td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
             </div>
             <div class="row">
-               <div class="col">
-                   {{ $data->links() }}
-               </div>
-               <div class="col text-right text-muted">
-                   Mostrar {{ $data->firstItem() }} a {{ $data->lastItem() }} de
-                   {{ $data->total() }} registros
-               </div>
-           </div>
+                <div class="col">
+                    {{ $data->links() }}
+                </div>
+                <div class="col text-right text-muted">
+                    Mostrar {{ $data->firstItem() }} a {{ $data->lastItem() }} de
+                    {{ $data->total() }} registros
+                </div>
+            </div>
         </div>
     </div>
 </div>

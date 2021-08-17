@@ -28,6 +28,11 @@ class Plan extends Model
            return $this->belongsTo('App\Servicios\Subservice');
        }
 
+
+       public function shops(){
+        return $this->hasMany('App\Tienda\Shop');
+    }
+
        public function scopePlanes($query, $id)
        {
            return $query->where('tipoplan_id',$id)->get();

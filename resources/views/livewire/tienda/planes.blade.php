@@ -52,23 +52,30 @@
                     <tbody>
                         @if ($data->isNotEmpty())
                             @foreach ($data as $p)
-                              <tr>
-                                <td class="text-center ">{{ $p->cliente }}</td>
-                                <td class="text-center ">${{ $p->costo }}</td>
-                                <td class="text-center ">{{ $p->sub }}</td>
-                                <td class="text-center ">{{ $p->ti }}</td>
-                               
-                              
-                               <td class="text-center ">
-                                <span style="cursor: pointer;"
-                                    wire:click.prevent="estadochange('{{ $p->id }}')"
-                                    class="badge @if ($p->estado == 'activo') badge-success
-                                @else
-                                    badge-danger @endif">{{ $p->estado }}</span>
-                            </td>
-                              </tr>
-                            @endforeach  
-                            @else
+                                <tr>
+                                    <td class="text-center ">{{ $p->cliente }}</td>
+                                    <td class="text-center ">${{ $p->costo }}</td>
+                                    <td class="text-center ">{{ $p->sub }}</td>
+                                    <td class="text-center ">{{ $p->ti }}</td>
+
+
+                                    <td class="text-center ">
+                                        <span style="cursor: pointer;"
+                                            wire:click.prevent="estadochange('{{ $p->id }}')"
+                                            class="badge @if ($p->estado == 'activo') badge-success
+                                        @else
+                                            badge-danger @endif">{{ $p->estado }}</span>
+                                    </td>
+                                    <td width="10px">
+                                        <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
+                                            data-target="#Show" wire:click.prevent="ShowPlan({{ $p->id }})">
+                                            <i class="fas fa-eye"></i>
+                                            Ver
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
                             <tr>
                                 <td colspan="10">
                                     <p class="text-center">No hay resultado para la busqueda
@@ -78,7 +85,7 @@
                                     </p>
                                 </td>
                             </tr>
-                        @endif                         
+                        @endif
                     </tbody>
                 </table>
             </div>

@@ -20,6 +20,10 @@ Route::prefix('tienda')->group(function(){
         //administracion de los planes que ha comprado el cliente
         Route::get('/admin-planes', 'Tienda\ShopController@adminplanindex')->name('admin.tienda.index'); 
         Route::get('/mi-administracion-plan', 'Tienda\ShopController@MiadminPlan')->name('me.admin.tienda.index'); 
+        Route::get('/detalle-plan/{shop}/show', 'Tienda\ShopController@Showdetalle')->name('compra.detalle.show'); //detalle general de cada solicitud de compra por parte del cliente en la vista de administracion de planes generales
+        Route::get('/detalle-plan-individual/{shop}/show', 'Tienda\ShopController@Showdetalleindividual')->name('compra.detalle.individual.show'); //vista del detalle de los planes elegidos por el especialista
+
+
     });
 
 

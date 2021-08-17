@@ -30,6 +30,7 @@ class Planes extends Component
     public $especialista_id ='';
     public $role_id ;
 
+    //componenete para la administracion de planes generales 
     public function mount(){
        $this-> role_id = Auth::user()->roles[0]->id;
     }
@@ -85,6 +86,10 @@ class Planes extends Component
     }
    
 
+    public function ShowPlan($id){
+
+        return redirect()->route('compra.detalle.show', $id);
+    }
    
 
 }

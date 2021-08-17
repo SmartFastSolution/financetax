@@ -9,6 +9,7 @@ use App\Servicios\Subservice;
 use Illuminate\Http\Request;
 use App\Servicios\Plan;
 use App\Servicios\Tipoplan;
+use App\Tienda\Shop;
 use App\Traits\TiendaTrait;
 
 class ShopController extends Controller
@@ -91,6 +92,49 @@ class ShopController extends Controller
 
     public function MiadminPlan (){
         return view('cruds.Tienda.adminplan.miadminplan');
+    }
+
+    public function Showdetalle($id){
+        $compra = Shop::with([
+            'tipoplan'=>function($query){
+                $query->select('id','nombre');
+            },
+            'tipoplan.planes',
+            'subservicio' =>function($query){
+                $query->select('id','nombre','descripcion');
+            },
+            'cliente' => function($query){
+                $query->select('id','name','email');
+            },
+            'plan' => function($query){
+                $query->select('id','descripcion');
+            }
+           
+            ]) ->find($id);
+      // dd($compra);
+        return view('cruds.Tienda.adminplan.show.showplangeneral', compact('compra'));
+    }
+
+    //function para visualizar el detalle de cada compra por parte de la lista de especialista acoplada
+    public function Showdetalleindividual($id){
+        $compra = Shop::with([
+            'tipoplan'=>function($query){
+                $query->select('id','nombre');
+            },
+            'tipoplan.planes',
+            'subservicio' =>function($query){
+                $query->select('id','nombre','descripcion');
+            },
+            'cliente' => function($query){
+                $query->select('id','name','email');
+            },
+            'plan' => function($query){
+                $query->select('id','descripcion');
+            }
+           
+            ]) ->find($id);
+      // dd($compra);
+        return view('cruds.Tienda.adminplan.show.showplanindividual', compact('compra'));
     }
 
 

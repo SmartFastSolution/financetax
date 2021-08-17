@@ -166,6 +166,7 @@
                     subservice_id:'',
                     errors: new Errors,
                     tipoplan_id: '',
+                    plan_id:'',
 
                 },
             },
@@ -181,6 +182,8 @@
                     this.detalle.descripcion = element.descripcion;
                     this.detalle.subservice_id = element.subservice_id;
                     this.detalle.tipoplan_id = element.tipoplan_id;
+                    this.detalle.plan_id = element.id;
+                    
                   }
                                   
               });
@@ -188,21 +191,7 @@
 
             methods: {
 
-                //BUSCAR LOS PLANES DE LOS TIPOS DE PLANES
-                searchPlan() {
-                    let id = this.tipoplan_id;
-                    let id2 = this.subservice_id;
-                    let url = '/tienda/obtener-plan';
-                    axios.post(url, {
-                        id: id,
-                    }).then(response => {
-                        this.plans = response.data;
-                        // console.log(response.data);
-                    }).catch(function(error) {
-
-                    });
-                }, //end 
-
+            
                 mostrardetalle(tipo){
                   
                     this.detalle.costo = tipo.costo;
@@ -225,6 +214,7 @@
                     data.append('subservice_id', this.detalle.subservice_id);
                     data.append('tipoplan_id', this.detalle.tipoplan_id);
                     data.append('costo', this.detalle.costo);
+                    data.append('plan_id', this.detalle.plan_id);
                     data.append('estado', estado);
                     
                     let datos ={

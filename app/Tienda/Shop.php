@@ -19,6 +19,10 @@ class Shop extends Model
         return $this->belongsTo('App\Servicios\Tipoplan');
     }
 
+    public function plan(){
+        return $this->belongsTo('App\Servicios\Plan');
+    }
+
     public function especialista()
     {
         return $this->belongsTo('App\User', 'especialista_id');

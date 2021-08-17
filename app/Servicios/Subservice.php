@@ -20,7 +20,7 @@ class Subservice extends Model
 
 
     public function servicio(){
-        return $this->belongsTo('App\Servicios\Service','service_id','id');
+        return $this->belongsTo('App\Servicios\Service');
     }
     
 
