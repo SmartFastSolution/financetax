@@ -71,6 +71,22 @@
                     "name"  : "Lista de Sub Servicios",
                     "can"   : "servicio"
 
+                },
+                {
+                   
+                    "route" : "tipocuenta.index",
+                    "url"   : "servicios/tipo-cuenta",
+                    "name"  : "Lista de Tipo Cuenta",
+                    "can"   : "servicio"
+
+                },
+                {
+                   
+                    "route" : "plancontable.index",
+                    "url"   : "servicios/plan-contable",
+                    "name"  : "Lista de Plan Contable",
+                    "can"   : "servicio"
+
                 }
             ]
 
@@ -91,6 +107,15 @@
                     "can"   : "tienda"
 
                 },
+                 {
+                   
+                    "route" : "cliente.lista.index",
+                    "url"   : "tienda/lista-compra",
+                    "name"  : "Mis Servicios",
+                    "can"   : "tienda"
+
+                },
+               
                
                 {
                    

@@ -55,6 +55,17 @@ class ServicioController extends Controller
          return response()->json($result, 201);
 
     }
+
+    public function Tipocuenta(){
+
+        return view('cruds.mantenimientos.tipocuenta.index');
+    }
+
+    
+    public function Plancontable(){
+
+        return view('cruds.mantenimientos.plancontable.index');
+    }
   
 
 }

@@ -23,6 +23,8 @@ Route::prefix('tienda')->group(function(){
         Route::get('/detalle-plan/{shop}/show', 'Tienda\ShopController@Showdetalle')->name('compra.detalle.show'); //detalle general de cada solicitud de compra por parte del cliente en la vista de administracion de planes generales
         Route::get('/detalle-plan-individual/{shop}/show', 'Tienda\ShopController@Showdetalleindividual')->name('compra.detalle.individual.show'); //vista del detalle de los planes elegidos por el especialista
 
+        //lista de planes que ha comprado el cliente
+        Route::get('/lista-compra', 'Tienda\ShopController@ListaPlanesCliente')->name('cliente.lista.index'); 
 
     });
 

@@ -22,7 +22,10 @@ Route::prefix('servicios')->group(function(){
           Route::get('/sub-servicios', 'Servicios\SubserviceController@Index')->name('servicios.subservicio.index'); //indice de un subservicio
           Route::get('/subservicios', 'Servicios\SubserviceController@Sub_service')->name('servicios.subservicio.create'); //creacion de un subservicio
           Route::post('/store-subservicios', 'Servicios\SubserviceController@store')->name('servicios.subservicio.store'); //store de un subservicio
-
+              
+              //mantenimientos 
+          Route::get('/tipo-cuenta', 'Servicios\ServicioController@Tipocuenta')->name('tipocuenta.index'); //ruta de tipo servicios 
+          Route::get('/plan-contable', 'Servicios\ServicioController@Plancontable')->name('plancontable.index'); //ruta de tipo servicios 
    });
 
 

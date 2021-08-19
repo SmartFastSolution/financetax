@@ -93,6 +93,7 @@ class ShopController extends Controller
     public function MiadminPlan (){
         return view('cruds.Tienda.adminplan.miadminplan');
     }
+
     //redirecciona a la vista de los detalles de la compra del cliente 
     // a la cual no se le ha asignado ningun especialista 
     public function Showdetalle($id){
@@ -138,5 +139,9 @@ class ShopController extends Controller
         return view('cruds.Tienda.adminplan.show.showplanindividual', compact('compra'));
     }
 
+    public function ListaPlanesCliente (){
+
+         return view('cruds.cliente.listacompra');
+    }
 
 }
