@@ -15,26 +15,24 @@
 <body>
 
     <header>
-
-      
         <div class="overlay"></div>
-
         <video class="embed-responsive-item w-100 " height="" autoplay loop>
             <source src="digital/mp4/video.mp4" type="video/mp4">
-        </video>
+               
+        </video>       
     </header>
 
+    
   
     <section class="my-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 mx-auto">
-                    <p class="mb-0">
-                        <a href="{{ url('/page') }}" class="btn btn-danger " role="button" aria-pressed="true">Empieza
-                            Ahora</a>
-                    </p>
-                </div>
-            </div>
+        <div class="container-sm">
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <h3 align="center">
+                    Solution FinanceTAX
+                </h3>
+                <a href="{{ url('/page') }}" class="btn btn-dark btn-lg btn-block" role="button" aria-pressed="true">Empieza
+                    Ahora</a>
+              </div>
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
