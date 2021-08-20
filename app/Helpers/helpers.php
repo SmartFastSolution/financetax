@@ -8,6 +8,7 @@
 use Illuminate\Support\Facades\Request;
 
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 if (!function_exists('active')) {
      function active($url){
@@ -57,6 +58,14 @@ if (!function_exists('ActiveAll')) {
                }
         }
  }
+
+ if (!function_exists('fechaFormat')) {
+       function fechaFormat($date)
+       {
+   
+           return Carbon::parse($date)->formatLocalized('%d de %B %Y ');
+       }
+   }
 
 
 //  if(!function_exists('Separador')){

@@ -25,7 +25,9 @@ Route::prefix('servicios')->group(function(){
               
               //mantenimientos 
           Route::get('/tipo-cuenta', 'Servicios\ServicioController@Tipocuenta')->name('tipocuenta.index'); //ruta de tipo servicios 
-          Route::get('/plan-contable', 'Servicios\ServicioController@Plancontable')->name('plancontable.index'); //ruta de tipo servicios 
+          Route::get('/plan-contable', 'Servicios\ServicioController@Plancontable')->name('plancontable.index'); //ruta de plan contable
+          Route::get('/impuesto-sri', 'Servicios\ServicioController@Impuestosri')->name('impuestosri.index'); //ruta de ruta de impuesto sri
+          Route::get('/proyeccion-gastos-personales', 'Servicios\ServicioController@ProyeccionGasto')->name('proyecciongasto.index'); //ruta de proyeccion de gasto personales
    });
 
 

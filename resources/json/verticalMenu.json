@@ -87,6 +87,20 @@
                     "name"  : "Lista de Plan Contable",
                     "can"   : "servicio"
 
+                },
+                {
+                   
+                    "route" : "impuestosri.index",
+                    "url"   : "servicios/impuesto-sri",
+                    "name"  : "Lista de Impuesto SRI",
+                    "can"   : "servicio"
+                },
+                {
+                   
+                    "route" : "proyecciongasto.index",
+                    "url"   : "servicios/proyeccion-gastos-personales",
+                    "name"  : "Lista de Proyección Gastos",
+                    "can"   : "servicio"
                 }
             ]
 

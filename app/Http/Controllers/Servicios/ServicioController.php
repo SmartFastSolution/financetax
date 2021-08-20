@@ -67,5 +67,14 @@ class ServicioController extends Controller
         return view('cruds.mantenimientos.plancontable.index');
     }
   
+    public function Impuestosri(){
+
+        return view('cruds.mantenimientos.ImpuestosSRI.index');
+    }
+    public function ProyeccionGasto(){
+
+        return view('cruds.mantenimientos.proyecciongastos.index');
+    }
+  
 
 }
