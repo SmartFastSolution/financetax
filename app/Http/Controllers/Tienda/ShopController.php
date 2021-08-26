@@ -18,6 +18,12 @@ class ShopController extends Controller
     //controlador dedicado a la administracion de los planes que compra el usuario 
     //y administracion de los mismos por parte del especialista
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
      public function Index()
     {
         $data = Service::where('estado','activo')->paginate(8);
