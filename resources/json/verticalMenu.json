@@ -37,7 +37,7 @@
                     "route" : "servicios.tipo.planes",
                     "url"   : "servicios/tipo-planes",
                     "name"  : "Lista de Tipo Planes",
-                    "can"   :"tipo_plan"
+                    "can"   : "m-tipoplan"
 
                 },
                 {
@@ -45,7 +45,7 @@
                     "route" : "servicios.planes",
                     "url"   : "servicios/planes",
                     "name"  : "Lista de Planes",
-                    "can"   :"tipo_plan"
+                    "can"   : "m-plan"
 
                 },
                 {
@@ -53,7 +53,7 @@
                     "route" : "servicios.tiposervicio",
                     "url"   : "servicios/tipo-servicios",
                     "name"  : "Lista de Tipo Servicios",
-                    "can"   : "servicio"
+                    "can"   : "m-tiposervicio"
 
                 },
                 {
@@ -61,7 +61,7 @@
                     "route" : "servicios.servicio",
                     "url"   : "servicios/servicios",
                     "name"  : "Lista de Servicios",
-                    "can"   : "servicio"
+                    "can"   : "m-servicio"
 
                 },
                 {
@@ -69,7 +69,7 @@
                     "route" : "servicios.subservicio.index",
                     "url"   : "servicios/sub-servicios",
                     "name"  : "Lista de Sub Servicios",
-                    "can"   : "servicio"
+                    "can"   : "m-subservicio"
 
                 },
                 {
@@ -77,7 +77,7 @@
                     "route" : "tipocuenta.index",
                     "url"   : "servicios/tipo-cuenta",
                     "name"  : "Lista de Tipo Cuenta",
-                    "can"   : "servicio"
+                    "can"   : "m-tipocuenta"
 
                 },
                 {
@@ -85,7 +85,7 @@
                     "route" : "plancontable.index",
                     "url"   : "servicios/plan-contable",
                     "name"  : "Lista de Plan Contable",
-                    "can"   : "servicio"
+                    "can"   : "m-plancontable"
 
                 },
                 {
@@ -93,14 +93,14 @@
                     "route" : "impuestosri.index",
                     "url"   : "servicios/impuesto-sri",
                     "name"  : "Lista de Impuesto SRI",
-                    "can"   : "servicio"
+                    "can"   : "m-impuesto"
                 },
                 {
                    
                     "route" : "proyecciongasto.index",
                     "url"   : "servicios/proyeccion-gastos-personales",
                     "name"  : "Lista de Proyección Gastos",
-                    "can"   : "servicio"
+                    "can"   : "m-proyecciones"
                 }
             ]
 
@@ -110,7 +110,7 @@
             "url"  : "#",
             "name" : "Planes",
             "icon" : "list",
-            "can"  : "lista_Servicios",
+            "can"  : "compra",
             "submenu" :[
 
                 {
@@ -118,7 +118,7 @@
                     "route" : "tienda.index",
                     "url"   : "tienda/tienda-solution",
                     "name"  : "Servicios",
-                    "can"   : "tienda"
+                    "can"   : "c-servicios"
 
                 },
                  {
@@ -126,7 +126,7 @@
                     "route" : "cliente.lista.index",
                     "url"   : "tienda/lista-compra",
                     "name"  : "Mis Servicios",
-                    "can"   : "tienda"
+                    "can"   : "c-misservicios"
 
                 },
                
@@ -136,7 +136,7 @@
                     "route" : "admin.tienda.index",
                     "url"   : "tienda/admin-planes",
                     "name"  : "Administracion Planes",
-                    "can"   : "admin_tienda"
+                    "can"   : "c-admtienda"
 
                 },
                 {
@@ -144,7 +144,7 @@
                     "route" : "me.admin.tienda.index",
                     "url"   : "tienda/mi-administracion-plan",
                     "name"  : "Mi Administracion de Planes",
-                    "can"   : "admin_tienda"
+                    "can"   : "c-miadmtienda"
 
                 }
                 

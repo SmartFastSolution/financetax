@@ -29,16 +29,28 @@ class UserSeeder extends Seeder
           $role7 = Role::create(['name'  => 'invitado' ]);
           $role8 = Role::create(['name'  => 'cliente' ]);
   
-          Permission::create(['name' => 'administracion']);
-          Permission::create(['name' => 'mantenimientos']);
+          Permission::create(['name' => 'administracion']); //menu administracion
+          Permission::create(['name' => 'mantenimientos']); //menu mantenimientos
+          Permission::create(['name' => 'compra']); //menu lista compra
+          //de administracion
           Permission::create(['name' => 'roles']);
           Permission::create(['name' => 'usuarios']);
-          Permission::create(['name' => 'post']);
-          Permission::create(['name' => 'tipo_plan']);
-          Permission::create(['name' => 'servicio']);
-          Permission::create(['name' => 'lista_Servicios']);
-          Permission::create(['name' => 'tienda']);
-          Permission::create(['name' => 'admin_tienda']);
+
+          //de mantenimientos
+          Permission::create(['name' => 'm-tipoplan']);
+          Permission::create(['name' => 'm-plan']);
+          Permission::create(['name' => 'm-tiposervicio']);
+          Permission::create(['name' => 'm-servicio']);
+          Permission::create(['name' => 'm-subservicio']);
+          Permission::create(['name' => 'm-tipocuenta']);
+          Permission::create(['name' => 'm-plancontable']);
+          Permission::create(['name' => 'm-impuesto']);
+          Permission::create(['name' => 'm-proyecciones']);
+           // del menu de compra compra
+          Permission::create(['name' => 'c-servicios']);
+          Permission::create(['name' => 'c-misservicios']);
+          Permission::create(['name' => 'c-admtienda']);
+          Permission::create(['name' => 'c-miadmtienda']);
          
          
          
