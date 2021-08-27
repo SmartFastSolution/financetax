@@ -11,6 +11,7 @@
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
+    @laravelPWA
 </head>
 
 <body>

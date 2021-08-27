@@ -4,7 +4,7 @@ namespace App\Traits;
 use Illuminate\Support\Facades\Auth;
 use App\Tienda\Shop;
 
-trait TiendaTrait
+trait ShopTrait
 {
 
 

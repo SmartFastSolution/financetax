@@ -28,8 +28,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="inputAddress">Descripción</label>
-
-                                    <textarea v-model="descripcion" class="form-control @error('descripcion') is-invalid @enderror"></textarea>
+                                    <ckeditor v-model="descripcion" :config="config"></ckeditor>
+                                 
                                     @error('descripcion')
                                         <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
                                     @enderror
@@ -57,7 +57,7 @@
 
 @endsection
 @section('js')
-
+<script src="//cdn.ckeditor.com/4.16.2/full/ckeditor.js"></script>
 <script type="text/javascript">
 
         class Errors {
@@ -113,6 +113,12 @@
                 editMode: false,
                 buttonDisable: false,
                 service_id:'',
+                config: {
+                toolbar: [
+                    ['Bold', 'Italic', 'Underline', 'Strike', 'Styles', 'TextColor', 'BGColor', 'UIColor' , 'JustifyLeft' , 'JustifyCenter' , 'JustifyRight' , 'JustifyBlock' , 'BidiLtr' , 'BidiRtl' , 'NumberedList' , 'BulletedList' , 'Outdent' , 'Indent' , 'Blockquote' , 'CreateDiv','Format','Font','FontSize']
+                    ],
+                     height: 300,
+                 }
             },//en data
 
             methods: {

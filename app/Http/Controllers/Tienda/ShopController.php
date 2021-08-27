@@ -10,11 +10,11 @@ use Illuminate\Http\Request;
 use App\Servicios\Plan;
 use App\Servicios\Tipoplan;
 use App\Tienda\Shop;
-use App\Traits\TiendaTrait;
+use App\Traits\ShopTrait;
 
 class ShopController extends Controller
 {
-    use TiendaTrait;
+    use ShopTrait;
     //controlador dedicado a la administracion de los planes que compra el usuario 
     //y administracion de los mismos por parte del especialista
 
@@ -73,15 +73,6 @@ class ShopController extends Controller
     }
 
    
-    public function getPlanes(Request $request)
-    {
-        $id = $request->id;
-        $plans = Plan::Planes($id);
-        $data = array('message' => "Plan cargado satisfactoriamente", 'data' => $plans);
-        return response()->json(collect($data), 200);
-      
-    }
-
      //almacenamiento del data
     public function Store (TiendaRequest $request){
 

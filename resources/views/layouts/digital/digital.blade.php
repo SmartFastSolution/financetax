@@ -19,7 +19,7 @@
       rel="stylesheet">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/v4-shims.css">
-
+      @laravelPWA
 @yield('css')
     </head>
 

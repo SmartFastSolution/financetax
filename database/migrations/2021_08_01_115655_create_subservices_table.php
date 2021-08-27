@@ -16,7 +16,7 @@ class CreateSubservicesTable extends Migration
         Schema::create('subservices', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->nullable();
-            $table->string('descripcion')->nullable();
+            $table->longText('descripcion')->nullable();
             $table->enum('estado',['activo','inactivo'])->nullable();
             $table->unsignedBigInteger('service_id')->nullable();
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');

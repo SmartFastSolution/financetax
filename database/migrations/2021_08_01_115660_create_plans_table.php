@@ -16,7 +16,7 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
             $table->date('fecha_vigencia');
-            $table->string('descripcion')->nullable();
+            $table->longText('descripcion')->nullable();
             $table->float('costo', 6, 3)->nullable();
             $table->enum('estado',['activo','inactivo'])->nullable();
             $table->unsignedBigInteger('tipoplan_id')->nullable();

@@ -19,6 +19,7 @@
         "laravolt/avatar": "^4.1",
         "livewire/livewire": "^2.4",
         "pusher/pusher-php-server": "~4.0",
+        "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-permission": "^4.2"
     },
     "require-dev": {

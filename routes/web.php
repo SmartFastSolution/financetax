@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -23,7 +24,12 @@ Route::get('/page', function () {
     return view('welcome');
 });
 
+Route::get('/offline', function () {
+    return view('vendor/laravelpwa/offline');
+});
+
 Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
  //Route::get('/', 'HomeController@index')->name('index');  // para que acceda solo a home sin entrar a welcome nse comenta 

@@ -115,8 +115,8 @@
                                     </div>
                                     <div class="card-body">
                                         <p class="m-t-30">
-
-                                            {{ $compra->subservicio->descripcion }}
+                                            {!!htmlspecialchars_decode($compra->subservicio->descripcion)!!}
+                                           
 
                                         </p>
                                     </div>
@@ -131,7 +131,7 @@
                                     
                                         <p class="m-t-30">
                                             
-                                            {{ $compra->plan->descripcion }}
+                                            {!!htmlspecialchars_decode($compra->plan->descripcion)!!}
                                         </p>
                                       
                                     </div>

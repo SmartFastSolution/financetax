@@ -20,11 +20,10 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <address>
-                                                    <strong>Requerimientos:</strong><br>
-                                                    Sarah Smith<br>
-                                                    6404 Cut Glass Ct,<br>
-                                                    Wendell,<br>
-                                                    NC, 27591, USA
+                                                    <strong>{{ $p->nombre }}</strong><br>
+                                                    <p>
+                                                        {!!htmlspecialchars_decode($p->descripcion)!!}
+                                                    </p>
                                                 </address>
                                             </div>
                                             <div class="col-md-6 text-md-right">
@@ -46,10 +45,10 @@
                                                         <div class="tab-content tab-bordered" id="myTab3Content">
                                                             <div class="tab-pane fade show active"  id="home"
                                                                 role="tabpanel" aria-labelledby="home-tab2">
-                                                                 <h2>@{{detalle.descripcion}}</h2>  
-                                                               
+                                                              
+                                                                <p><span align="left" v-html="detalle.descripcion"></span></p>
                                                                 <br>
-                                                                <strong >$ @{{detalle.costo}}</strong>
+                                                                <h3><strong >$ @{{detalle.costo}}</strong></h3>
                                                                 <br>
                                                                 <div class="text-md-right">
                                                                     <div class="float-lg-left mb-lg-0 mb-3">
@@ -68,19 +67,12 @@
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <address>
-                                                    <strong>{{ $p->nombre }}</strong><br>
-                                                    <p>
-                                                        {{ $p->descripcion }}
-                                                    </p>
-
-                                                </address>
                                             </div>
                                             <div class="col-md-6 text-md-right">
-                                                <address>
+                                                {{-- <address>
                                                     <strong>Order Date:</strong><br>
                                                     June 26, 2018<br><br>
-                                                </address>
+                                                </address> --}}
                                             </div>
                                         </div>
                                     </div>

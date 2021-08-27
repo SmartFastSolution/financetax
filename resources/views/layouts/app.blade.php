@@ -3,27 +3,29 @@
 <!-- Copied from http://radixtouch.in/templates/admin/aegis/source/light/index.html by Cyotek WebCopy 1.7.0.600, Saturday, September 21, 2019, 2:51:57 AM -->
 
 <head>
+   
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SOLUTIONFINANCETAX</title>
     <!-- General CSS Files -->
    
-    
+  
     @livewireStyles
-   
+    
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">  
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
   
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/bundles/izitoast/css/iziToast.min.css') }}">
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+   
     <!-- Template CSS -->
   
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
+    @laravelPWA
     @yield('style')
-
    
+    
 </head>
 
 <body>
@@ -261,6 +263,10 @@
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js') }}"></script>
     <script src="{{ asset('//cdn.jsdelivr.net/npm/sweetalert2@11') }}"></script>
+    {{-- <script src="{{ asset('../node_modules/ckeditor4/ckeditor.js') }}"></script>
+    <script src="{{ asset('../node_modules/ckeditor4-vue/dist/ckeditor.js') }}"></script> --}}
+    
+
   
     <script src="{{ asset('js/eventos.js') }}"></script>
    

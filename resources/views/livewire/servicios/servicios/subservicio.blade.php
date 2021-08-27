@@ -36,13 +36,13 @@
                                  @include('includes._sort-icon', ['field' => 'nombre'])
                              </a>
                          </th>
-                         <th class="px-4 py-2 text-center ">
+                         {{-- <th class="px-4 py-2 text-center ">
                              Descripción
                              <a class="text-primary" wire:click.prevent="sortBy('descripcion')" role="button">
          
                                  @include('includes._sort-icon', ['field' => 'descripcion'])
                              </a>
-                         </th>
+                         </th> --}}
                          <th class="px-4 py-2 text-center">Estado</th>
                          <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                      </tr>
@@ -53,7 +53,7 @@
                      <tr>
                         <td class="text-center ">{{ $subservice->servicio }}</td>
                         <td class="text-center ">{{ $subservice->nombre }}</td>
-                        <td class="text-center ">{{ $subservice->descripcion }}</td>
+                        {{-- <td class="text-center ">{{ $subservice->descripcion }}</td> --}}
                         <td class="text-center ">
                            <span style="cursor: pointer;"
                                wire:click.prevent="estadochange('{{ $subservice->id }}')"
