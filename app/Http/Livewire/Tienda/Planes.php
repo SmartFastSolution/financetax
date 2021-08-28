@@ -30,7 +30,7 @@ class Planes extends Component
     public $especialista_id ='';
     public $role_id ;
 
-    //componenete para la administracion de planes generales 
+    //COMPONENTE PARA LA ADMINISTRACION DE PLANES GENERALES
     public function mount(){
        $this-> role_id = Auth::user()->roles[0]->id;
     }
@@ -67,7 +67,7 @@ class Planes extends Component
          $estado->estado = 'en proceso';
          $estado->especialista_id = Auth::user()->id;
          $estado->save();
-         $this->emit('info',['mensaje' => $estado->estado == 'en proceso' ? 'Compra en Proceso' : 'Aprovada']);
+         $this->emit('info',['mensaje' => $estado->estado == 'en proceso' ? 'Compra en Proceso' : 'Aprobada']);
         }
         else {
          $this->emit('info',['mensaje' =>'Esta Compra ya fue Asignada']);

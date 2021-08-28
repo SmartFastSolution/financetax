@@ -31,6 +31,8 @@ class Miadminlista extends Component
 
     public $shop_id, $costo, $user_id, $tipoplan_id, $subservice_id ; 
 
+    
+    //COMPONENTE PARA LA ADMINISTRACION DE PLANES ACEPTADOS POR EL ESPECIALISTA
     public function mount(){
         $this->uid = Auth::user()->id;
      }
@@ -71,7 +73,7 @@ class Miadminlista extends Component
     public function estadochange($id)
     {
         $estado = Shop::find($id);
-        $estado->estado = $estado->estado == 'aprovada' ? 'en proceso' : 'aprovada';
+        $estado->estado = $estado->estado == 'aprobada' ? 'en proceso' : 'aprobada';
         $estado->save();
         $this->emit('info',['mensaje' => $estado->estado == 'aprovada' ? 'Compra Aprobada Correctamente' : 'Compra en estado de Proceso']);
  

@@ -58,7 +58,7 @@
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"
                                             wire:click.prevent="estadochange('{{ $compra->id }}')"
-                                            class="badge @if ($compra->estado == 'aprovada') badge-success
+                                            class="badge @if ($compra->estado == 'aprobada') badge-success
                                         @else
                                             badge-dark @endif">{{ $compra->estado }}</span>
                                     </td>
