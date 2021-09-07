@@ -20,6 +20,11 @@
                     <input type="number" class="form-control" min="0" wire:model.defer="cedula" value="{{ $user->cedula }}">
 
                 </div>
+                <div class="form-group col-md-6 col-12">
+                    <label>Edad</label>
+                    <input type="number" class="form-control" min="0" wire:model.defer="edad" value="{{ $user->edad }}">
+
+                </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-12">
@@ -34,7 +39,7 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-12">
-                    <label>Genero</label>
+                    <b data-toggle="tooltip" title="Masculino o Femenino"><label>Genero</label></b>
                     <input type="text" class="form-control text-dark" wire:model.defer="genero" value="{{ $user->genero }}">
                 </div>
             </div>   

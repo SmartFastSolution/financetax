@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Livewire\WithPagination;
 use Spatie\Permission\Models\Role;
@@ -56,7 +57,6 @@ class Usuario extends Component
 
 
     public function createUser (){
-
         $this->validate([
             'name'     => 'required',
             'email'    => 'required|email|unique:users,email',

@@ -24,7 +24,7 @@
             <div class="container mt-5">
                 <div class="row">
                     <div  class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                        <div class="card card-danger">
+                        <div class="card card-info">
                            
                             <div class="card-header">
                                 <img class="nav_logo_img img-fluid top-left" src="digital/images/logo1.png">
@@ -82,12 +82,18 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4" style="background-color: rgba(225, 51, 152, 0.912)">
+                                        <button type="submit" class="btn btn-info btn-lg btn-block" tabindex="4">
                                             {{ __('Ingresar') }}
                                         </button>
+                                      
                                     </div>
                                 </form>
-
+                                <div class="mb-4 text-muted text-center">
+                                    No te has Registrado? <a  href="{{ url('/register') }}">Crea  Tu Cuenta</a>
+                                </div>
+                                <div class="mb-4 text-muted text-center">
+                                      <a  href="{{ url('/page') }}">Volver Página Principal</a>
+                                </div>
 
                             </div>
                         </div>

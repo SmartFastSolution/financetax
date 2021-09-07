@@ -4,7 +4,7 @@ return [
     'name' => 'SolutionFinanceTax',
     'manifest' => [
         'name' => env('APP_NAME', 'SolutionFinanceTax'),
-        'short_name' => 'PWA',
+        'short_name' => 'SOLUTION',
         'start_url' => '/',
         'background_color' => '#ffffff',
         'theme_color' => '#000000',

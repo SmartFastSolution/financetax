@@ -1,563 +1,490 @@
-@extends('layouts.digital.digital')
-
-@section('css')
-    <style>
-     
-     #menucircular  .wrapper {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-        }
-
-        #menucircular   .menu-btn {
-            background: #e355fd;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: background .3s;
-            z-index: 2;
-            box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        #menucircular    .menu-btn:hover,
-        #menucircular     .active {
-            background: #e355fd;
-        }
-
-        #menucircular    .menu-btn,
-        #menucircular     .icons-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition-delay: .1s;
-        }
-
-        #menucircular   .menu-btn span {
-            display: block;
-            width: 30px;
-            height: 3px;
-            background: rgb(0, 0, 0);
-            margin-bottom: 5px;
-            transition: background .3s, transform .3s;
-        }
-
-        #menucircular    .menu-btn span:last-child {
-            margin-bottom: 0;
-        }
-
-        #menucircular   .active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        #menucircular   .active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        #menucircular   .active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -5px);
-        }
-
-        #menucircular     .icons {
-            position: relative;
-        }
-
-        #menucircular     .icon {
-            position: absolute;
-            top: calc(50% - 30px);
-            left: calc(50% - 30px);
-            background: #272C2C;
-            width: 70px;
-            height: 70px;
-            border-radius: 70%;
-            display: flex;
-            cursor: pointer;
-            transform: translate(0px, 0px);
-            z-index: 1;
-        }
-
-        #menucircular     .icon:hover {
-            background: #000000;
-        }
-
-        #menucircular     .icon:hover .fas {
-            color: #e355fd;
-        }
-
-        #menucircular     .fas {
-            margin: 1.2rem;
-
-            color: #e355fd;
-            font-size: 40px;
-            position: absolute;
-        }
-
-        #menucircular      .icon:nth-child(1) {
-            transition: background .3s, transform .3s .10s;
-        }
-
-        #menucircular     .icon:nth-child(2) {
-            transition: background .3s, transform .3s .15s;
-        }
-
-        #menucircular     .icon:nth-child(3) {
-            transition: background .3s, transform .3s .20s;
-        }
-
-        #menucircular      .icon:nth-child(4) {
-            transition: background .3s, transform .3s .25s;
-        }
-
-        #menucircular    .icon:nth-child(5) {
-            transition: background .3s, transform .3s .30s;
-        }
-
-        #menucircular      .icon:nth-child(6) {
-            transition: background .3s, transform .3s .35s;
-        }
-
-        #menucircular     .icon:nth-child(7) {
-            transition: background .3s, transform .3s .40s;
-        }
-
-        #menucircular      .icon:nth-child(8) {
-            transition: background .3s, transform .3s .45s;
-        }
-
-        #menucircular      .show:nth-child(1) {
-            transform: translate(0px, -150px);
-        }
-
-        #menucircular     .show:nth-child(2) {
-            transform: translate(110px, -110px);
-        }
-
-        #menucircular      .show:nth-child(3) {
-            transform: translate(150px, 0px);
-        }
-
-        #menucircular      .show:nth-child(4) {
-            transform: translate(110px, 110px);
-        }
-
-        #menucircular    .show:nth-child(5) {
-            transform: translate(0px, 150px);
-        }
-
-        #menucircular     .show:nth-child(6) {
-            transform: translate(-110px, 110px);
-        }
-
-        #menucircular      .show:nth-child(7) {
-            transform: translate(-150px, 0px);
-        }
-
-        #menucircular     .show:nth-child(8) {
-            transform: translate(-110px, -110px);
-        }
-        
-
-    </style>
-
-    {{-- <style>
-
-           
-            #menudos     .menu {
-            position: relative;
-            background: #cd3e3d;
-            width: 3em;
-            height: 3em;
-            border-radius: 5em;
-            margin: auto;
-            margin-top: 5em;
-            margin-bottom: 5em;
-            cursor: pointer;
-            border: 1em solid #df1cb8;
-            }
-            #menudos     .menu:after {
-            content: "";
-            position: absolute;
-            top: 1em;
-            left: 1em;
-            width: 1em;
-            height: 0.2em;
-            border-top: 0.6em double #fff;
-            border-bottom: 0.2em solid #fff;
-            }
-            #menudos    .menu ul {
-            list-style: none;
-            padding: 0;
-            }
-            #menudos     .menu li {
-            width: 5em;
-            height: 1.4em;
-            padding: 0.2em;
-            margin-top: 0.2em;
-            text-align: center;
-            border-top-right-radius: 0.6em;
-            border-bottom-right-radius: 0.6em;
-            transition: all 1s;
-            background: #fdaead;
-            opacity: 0;
-            z-index: -1;
-            }
-            #menudos     .menu:hover li {
-            opacity: 1;
-            }
-            /**
-            * Add a pseudo element to cover the space
-            * between the links. This is so the menu
-            * does not lose :hover focus and disappear
-            */
-            #menudos    .menu:hover ul::before {
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            display: block;
-            left: 50%;
-            top: -5.0em;
-            /**
-            * The pseudo-element is a semi-circle
-            * created with CSS. Top, bottom, and right
-            * borders are 6.5em (left being 0), and then
-            * a border-radius is added to the two corners
-            * on the right.
-            */
-            border-width: 6.5em;
-            border-radius: 0 7.5em 7.5em 0;
-            border-left: 0;
-            border-style: solid;
-            /**
-            * Have to have a border color for the border
-            * to be hoverable. I'm using a very light one
-            * so that it looks invisible.
-            */
-            border-color: rgba(0,0,0,0.01);
-            /**
-            * Put the psuedo-element behind the links
-            * (So they can be clicked on)
-            */
-            z-index: -1;
-            /**
-            * Make the cursor default so it looks like
-            * nothing is there
-            */
-            cursor: default;
-            }
-            #menudos    .menu a {
-            color: white;
-            text-decoration: none;
-            /**
-            * This is to vertically center the text on the
-            * little tab-like things that the text is on.
-            */
-            line-height: 1.5em;
-            }
-            #menudos     .menu a {
-            color: white;
-            text-decoration: none;
-            }
-            #menudos    .menu ul {
-            transform: rotate(180deg) translateY(-2em);
-            transition: 1s all;
-            }
-            #menudos     .menu:hover ul {
-            transform: rotate(0deg) translateY(-1em);
-            }
-            #menudos     .menu li:hover {
-            background: #cd3e3d;
-            z-index: 10;
-            }
-
-            #menudos    .menu li:nth-of-type(1) {
-            transform: rotate(-90deg);
-            position: absolute;
-            left: -1.2em;
-            top: -4.2em;
-            }
-            #menudos    .menu li:nth-of-type(2) {
-            transform: rotate(-45deg);
-            position: absolute;
-            left: 2em;
-            top: -3em;
-            }
-            #menudos    .menu li:nth-of-type(3) {
-            position: absolute;
-            left: 3.4em;
-            top: 0.3em;
-            }
-            #menudos   .menu li:nth-of-type(4) {
-            transform: rotate(45deg);
-            position: absolute;
-            left: 2em;
-            top: 3.7em;
-            }
-            #menudos   .menu li:nth-of-type(5) {
-            transform: rotate(90deg);
-            position: absolute;
-            left: -1.2em;
-            top: 5em;
-            }
-            #menudos   .hint {
-            text-align: center;
-            }
-
-
-    </style> --}}
-
-@endsection
-
-@section('header')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="header-carousal owl-carousel owl-theme">
-                <div class="item">
-                    <h4>Nosotros Somos</h4>
-                    <h2>Tu Consultoría OnLine</h2>
-                    <a href="{{ url('/nosotros-solution') }}" class="btn btn-danger  btn-lg" role="button"
-                        aria-pressed="true">Empieza Ahora</a>
-                </div>
-                <div class="item">
-                    <h4>Compartir el mismo objetivo es el primer paso para el</h4>
-                    <h2>ÉXITO</h2>
-                    <a href="{{ url('/nosotros-solution') }}" class="btn btn-danger  btn-lg" role="button"
-                        aria-pressed="true">Empieza Ahora</a>
-                </div>
-            </div>
-        </div>
-    </div>
-@endsection
+@extends('layouts.regna.regna')
 
 
 @section('content')
-
-
-    <section class="about-us">
-        <h2>ACERCA DE NOSOTROS</h2>
-        <div class="about-icon">
-            <img src="img/section-icon.jpg" alt="">
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="video">
-                        <iframe width="100%" src="digital/mp4/financetaxvideo.mp4" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="text">
-                        <h4 style="text-align: justify;">
-                            Nuestros servicios de asesoría fiscal,
-                            contable y administrativa se prestan a
-                            empresas, profesionales y particulares,
-                            a medida y de forma personalizada,
-                            según los requerimientos de cada cliente.
-                        </h4>
-                        <br>
-                        <h4 style="text-align: justify;">
-                            Somos una empresa especialista en asesorías
-                            financieras, tributaria, contable y Laboral.
-                            Como empresa de consultoría de gestión para
-                            compañías, prestamos un servicio altamente
-                            profesionalizado, orientado al área
-                            económico-financiera, gerencial y de organización.
-                        </h4>
-                    </div>
-                </div>
+    
+    <!-- ======= About Section ======= -->
+    <section id="about">
+        <div class="container" data-aos="fade-up">
+          <div class="row about-container">
+  
+            <div class="col-lg-6 content order-lg-1 order-2">
+              <h2 class="title">Acerca de Nosotros</h2>
+              <p style="color: black; text-align: justify;">
+                Nuestros servicios de asesoría fiscal, contable y administrativa se prestan a   empresas, profesionales y particulares, a medida y de forma personalizada, según los requerimientos de cada cliente.
+              </p>
+              <p style="color: black; text-align: justify;">
+                Somos una empresa especialista  en asesorías financieras , tributaria, contable y Laboral. Como empresa de consultoría de gestión para compañías, prestamos un servicio altamente profesionalizado, orientado al área económico-financiera, gerencial y de organización. 
+              </p>
+  
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                <div class="icon"><i class="fa fa-comments"></i></div>
+                <h4 class="title"><a href="">CONSULTORÍA DE GESTIÓN ONLINE</a></h4>
+                <p class="description" style="color: black; text-align: justify;">
+                  Te asesoramos en cualquier área de gestión: Finanzas, Tributación, Presupuesto, Contabilidad, Organización, RRHH, Operaciones, Estrategia, Plan de Ventas, Mejora de Procesos y más.
+                </p>
+              </div>
+  
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                <div class="icon"><i class="fa fa-handshake-o" aria-hidden="true"></i></div>
+                <h4 class="title"><a href="">CONSULTORES SENIOR EXPERTOS EN CADA AREA</a></h4>
+                <p class="description" style="color: black; text-align: justify;">Nuestros Consultores tienen amplia experiencia como Directivos y Consultores de Empresas</p>
+              </div>
+  
+              <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                <div class="icon"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
+                <h4 class="title"><a href="">CONTACTO AGIL</a></h4>
+                <p class="description" style="color: black; text-align: justify;">A través de email, chat, teléfono o videoconferencia</p>
+              </div>
+  
             </div>
+  
+            <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div>
+          </div>
+  
         </div>
-    </section>
+      </section><!-- End About Section -->
+  
+      <!-- ======= Facts Section ======= -->
+      <section id="facts">
+        <div class="container" data-aos="fade-up">
+          <div class="section-header">
+            <h3 class="section-title">Misión</h3>
+            <p class="section-description" style="color: black; text-align: justify;">
+              Apoyar en la gestión de crecimiento y desarrollo de las pequeñas,
+              medianas empresas, personas naturales y profesionales que generan emprendimientos en el Ecuador. Ser no solo un asesor sino un constante soporte y aliados estratégicos, a través del desempeño directo de un grupo de profesionales con un alto grado profesionalismo, compromiso, excelencia y calidad humana.
 
-
-
-
-    <section class="footer-icon">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="footer-carousal owl-carousel owl-theme">
-                        <div class="item">
-                            <h4 class="text-center"> CONSULTORÍA DE GESTIÓN ONLINE</h4>
-                            <p class="text-center" style="text-align: justify;">
-                                Te asesoramos en cualquier área de gestión: Finanzas, Tributación, Presupuesto,
-                                Contabilidad, Organización, RRHH, Operaciones, Estrategia, Plan de Ventas, Mejora de
-                                Procesos y más
-
-                            </p>
-                        </div>
-                        <div class="item">
-                            <h4 class="text-center">¡TÚ ELIGES!</h4>
-                            <p class="text-center" style="text-align: justify;">
-                                Planes que se adaptan a tus necesidades desde $50/mes
-                            </p>
-                        </div>
-                        <div class="item">
-                            <h4 class="text-center"> CONSULTORES SENIOR EXPERTOS EN CADA AREA</h4>
-                            <p class="text-center" style="text-align: justify;">
-                                Nuestros Consultores tienen amplia experiencia como Directivos y Consultores de Empresas
-                            </p>
-                        </div>
-                        <div class="item">
-                            <h4 class="text-center">CONTACTO AGIL</h4>
-                            <p class="text-center" style="text-align: justify;">
-                                A través de email, chat, teléfono o videoconferencia
-                            </p>
-                        </div>
-                        <div class="item">
-                            <h4 class="text-center">+ CLIENTES</h4>
-                            <p class="text-center" style="text-align: justify;">
-                                Más clientes y empresas avalan nuestra experiencia y metodología ayudando a Pymes,
-                                profesionales y al nuevo emprendedor.
-                            </p>
-                        </div>
-                        <div class="item">
-                            <h4 class="text-center">SIN PERMAMENCIA</h4>
-                            <p class="text-center" style="text-align: justify;">
-                                nuestros planes siempre buscan la optimización de recursos de nuestros clientes.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            </p>
+          </div>
+          <div class="section-header">
+            <h3 class="section-title">Visión</h3>
+            <p class="section-description" style="color: black; text-align: justify;">
+              Consolidarnos como líder y referente para el mercado de las asesorías administrativas e integradas a empresas, con un marcado énfasis en la calidad de servicio y en la innovación, tanto para nuestro desarrollo como para nuestros clientes.
+            
+            </p>
+          </div>
+  
+        </div>
+      </section><!-- End Facts Section -->
+  
+      <!-- ======= Services Section ======= -->
+      <section id="services">
+        <div class="container" data-aos="fade-up">
+          <div class="section-header">
+            <h3 class="section-title">Nuestros Servicios</h3>
+            <p class="section-description"></p>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-bar-chart"></i></a></div>
+                <h4 class="title"><a href="">FINANZAS</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; ">Elaboración de Declaraciones mensuales 104 y 103</li>
+                    <li style="color: black; text-align: left; "> Subidas de Anexos tributarios en el año</li>
+                    <li style="color: black; text-align: left; ">Elaboración del Balance anual al SRI</li>
+                    <li style="color: black; text-align: left; ">Análisis proyectado de valores a pagar tributariamente y asesoría de correctivos y mejoras</li> <br>
+                  </ul>
+                </p>
+              </div>
             </div>
-        </div>
-    </section>
+            <br>
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-desktop"></i></a></div>
+                <h4 class="title"><a href="">PÁGINA WEB</a></h4>
+                <p class="description"   ">
+                  <ul style="color: black; text-align: center; ">
+                    <li  >Creación de Pagina Web</li>
+                    <li  >Dominio</li>
+                    <li >Seguridad SSl</li>
+                    <li >Correo Empresarial</li>
+                  </ul>
 
-
-    <section class="service">
-        <h2>Servicios</h2>
-        <div class="about-icon">
-           
-        </div>
+                </p>
+              </div>
+            </div>
       
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-money" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="">IMPUESTOS</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; ">Elaboración de Declaraciones mensuales 104 y 103</li>
+                    <li style="color: black; text-align: left; "> Subidas de Anexos tributarios en el año</li>
+                    <li style="color: black; text-align: left; ">Elaboración del Balance anual al SRI</li>
+                    <li style="color: black; text-align: left; ">Análisis proyectado de valores a pagar tributariamente y asesoría de correctivos y mejoras</li> 
+                  </ul>
+                </p>
+              </div>
+            </div>
+  
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-address-card-o" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="">SERVICIOS CONTABLE</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; ">Análisis de los registros contables cuentas por cobrar</li>
+                    <li style="color: black; text-align: left; ">Conciliaciones Bancarias</li>
+                    <li style="color: black; text-align: left; ">Análisis de manejos de activos fijo y su registro de depreciaciones</li>
+                    <li style="color: black; text-align: left; ">etc</li> 
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-money" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="">MARKETING</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; ">Elaboración de Post</li>
+                    <li style="color: black; text-align: left; "> Elaboración de Logo</li>
+                    <li style="color: black; text-align: left; ">Tarjetas de Presentación</li>
+                    <li style="color: black; text-align: left; ">Otros</li> 
+                  </ul>
+                </p>
+              </div>
+            </div>
+            <br>
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-address-card-o" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="">SERVICIOS PARA EMPRENDEDORES</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; "> Servicios Contable Personas Naturales</li>
+                    <li style="color: black; text-align: left; "> Asesoria de Manejos anual de sus ingresos y gastos</li>
+                    <li style="color: black; text-align: left; "> Constitución de CIA</li>
+                    <li style="color: black; text-align: left; ">etc</li> 
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><a href=""><i class="fa fa-line-chart" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="">INDICADORES DE GESTIÓN</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; ">Indicadores de Ratios Financiero</li>
+                    <li style="color: black; text-align: left; "> Examen de la situación real de la empresa</li>
+                    <li style="color: black; text-align: left; ">Evaluación de indicadores por departamento</li>
+                    <li style="color: black; text-align: left; ">Otros</li> 
+                  </ul>
+                </p>
+              </div>
+            </div>
+            <br>
+            <div class="col-lg-6 col-md-8" data-aos="zoom-in">
+              <div class="box">
+                <div class="icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></i></a></div>
+                <h4 class="title"><a href="">CONTRATOS</a></h4>
+                <p class="description">
+                  <ul>
+                    <li style="color: black; text-align: left; "> Formato de Contrato de laboral</li>
+                    <li style="color: black; text-align: left; "> Contrato de constitución de empresa</li>
+                    <li style="color: black; text-align: left; "> Contrato de constitución de empresa</li>
+                    <li style="color: black; text-align: left; ">Otros</li> 
+                  </ul>
+                </p>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+      </section><!-- End Services Section -->
+  
+      <!-- ======= Call To Action Section ======= -->
+      <section id="call-to-action">
         <div class="container">
-        
-            <div id="menucircular">
+          <div class="row" data-aos="zoom-in">
+            <div class="col-lg-9 text-center text-lg-left">
+              <h3 class="cta-title">Accede a Nuestros Servicios</h3>
+              <p class="cta-text"> </p>
+            </div>
+            <div class="col-lg-3 cta-btn-container text-center">
+              <a class="cta-btn align-middle" href="{{ url('tienda/tienda-solution') }}">Ir Tienda</a> 
+          
 
-                <div class="wrapper">
-
-                    <div class="menu-btn">
-                      <div class="btn">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                      </div>
-                    </div>
-                  
-                    <div class="icons-wrapper">
-                      <div class="icons" align = "justify">
-                        <div class="icon"><a href=""><i class="fas fa-address-card" data-toggle="tooltip" data-placement="top" title="SERVICIOS CONTABLE"></i></a></div>
-                        <div class="icon"><a href=""><i class="fas fa-chart-bar" data-toggle="tooltip" data-placement="top" title="FINANZAS"></i></a></div>
-                        <div class="icon"><a href=""><i class="fas fa-donate" data-toggle="tooltip" data-placement="top" title="IMPUESTO"></i></a></div>
-                        <div class="icon"><a href=""><i class="fas fa-users" data-toggle="tooltip" data-placement="top" title="RRHH"></i></a></div>
-                        <div class="icon"><a href=""><i class="fas fa-chart-pie" data-toggle="tooltip" data-placement="top" title="MARKETING"></i></a></div>                     
-                        <div class="icon"><a href=""><i class="fas fa-chart-line" data-toggle="tooltip" data-placement="top" title="INDICADORES DE GESTIÓN"></i></a></div>
-                        <div class="icon"><a href=""><i class="fas fa-laptop-code" data-toggle="tooltip" data-placement="top" title="SERVICIOS PARA EMPRENDEDORES"></i></a></div>
-                        <div class="icon"><a href=""><i class="fas fa-plus" data-toggle="tooltip" data-placement="top" title="Otros Servicios"></i></a></div>
-
-                      </div>
-                    </div>
-                  
+            </div>
+          </div>
+  
+        </div>
+      </section><!-- End Call To Action Section -->
+  
+      <!-- ======= Portfolio Section ======= -->
+      {{-- <section id="portfolio" class="portfolio">
+        <div class="container" data-aos="fade-up">
+          <div class="section-header">
+            <h3 class="section-title">Portfolio</h3>
+            <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+          </div>
+  
+          <div class="row" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-12 d-flex justify-content-center">
+              <ul id="portfolio-flters">
+                <li data-filter="*" class="filter-active">All</li>
+                <li data-filter=".filter-app">App</li>
+                <li data-filter=".filter-card">Card</li>
+                <li data-filter=".filter-web">Web</li>
+              </ul>
+            </div>
+          </div>
+  
+          <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+              <img src="assets/img/portfolio/portfolio-1.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>App 1</h4>
+                <p>App</p>
+                <a href="assets/img/portfolio/portfolio-1.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <img src="assets/img/portfolio/portfolio-2.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Web 3</h4>
+                <p>Web</p>
+                <a href="assets/img/portfolio/portfolio-2.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+              <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>App 2</h4>
+                <p>App</p>
+                <a href="assets/img/portfolio/portfolio-3.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Card 2</h4>
+                <p>Card</p>
+                <a href="assets/img/portfolio/portfolio-4.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Web 2</h4>
+                <p>Web</p>
+                <a href="assets/img/portfolio/portfolio-5.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>App 3</h4>
+                <p>App</p>
+                <a href="assets/img/portfolio/portfolio-6.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+              <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Card 1</h4>
+                <p>Card</p>
+                <a href="assets/img/portfolio/portfolio-7.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-card">
+              <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Card 3</h4>
+                <p>Card</p>
+                <a href="assets/img/portfolio/portfolio-8.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+              <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
+              <div class="portfolio-info">
+                <h4>Web 3</h4>
+                <p>Web</p>
+                <a href="assets/img/portfolio/portfolio-9.jpg" data-gall="portfolioGallery" class="venobox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
+                <a href="portfolio-details.html" class="details-link" title="More Details"><i class="bx bx-link"></i></a>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </section><!-- End Portfolio Section --> --}}
+  
+      <!-- ======= Team Section ======= -->
+      <section id="team">
+        <div class="container" data-aos="fade-up">
+          <div class="section-header">
+            <h3 class="section-title">NUESTRO EQUIPO</h3>
+            <p class="section-description" style="color: black; text-align: center; ">El compromiso, la eficiencia, la oportunidad y la integridad son los valores que nos sustentan.​</p>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6">
+              <div class="member" data-aos="fade-up" data-aos-delay="100">
+                <div class="pic"><img src="regna/assets/img/equipo/portfolio1.jpg" alt=""></div>
+                <h4>ECONOMISTAS</h4>
+             
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6">
+              <div class="member" data-aos="fade-up" data-aos-delay="200">
+                <div class="pic"><img src="regna/assets/img/equipo/portfolio2.jpg" alt=""></div>
+                <h4>FINANCIERO</h4>
+               
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6">
+              <div class="member" data-aos="fade-up" data-aos-delay="300">
+                <div class="pic"><img src="regna/assets/img/equipo/portfolio4.jpg" alt=""></div>
+                <h4>CONTADORES</h4>
+               
+               
+              </div>
+            </div>
+  
+            <div class="col-lg-4 col-md-6">
+              <div class="member" data-aos="fade-up" data-aos-delay="400">
+                <div class="pic"><img src="regna/assets/img/equipo/portfolio3.jpg" alt=""></div>
+                <h4>ABOGADOS</h4>
+              
+             
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="member" data-aos="fade-up" data-aos-delay="400">
+                  <div class="pic"><img src="regna/assets/img/equipo/portfolio5.jpg" alt=""></div>
+                  <h4>AUDITORES</h4>
+                
+                
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-6">
+                <div class="member" data-aos="fade-up" data-aos-delay="400">
+                  <div class="pic"><img src="regna/assets/img/equipo/portfolio6.jpg" alt=""></div>
+                  <h4>ING. MARKETING</h4>
+                 
+                 
+                </div>
+              </div>
+              
+          </div>
+  
+        </div>
+      </section><!-- End Team Section -->
+  
+      <!-- ======= Contact Section ======= -->
+      {{-- <section id="contact">
+        <div class="container">
+          <div class="section-header">
+            <h3 class="section-title">Contact</h3>
+            <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+          </div>
+        </div>
+  
+        <!-- Uncomment below if you wan to use dynamic maps -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22864.11283411948!2d-73.96468908098944!3d40.630720240038435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbg!4v1540447494452" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
+  
+        <div class="container mt-5">
+          <div class="row justify-content-center">
+  
+            <div class="col-lg-3 col-md-4">
+  
+              <div class="info">
+                <div>
+                  <i class="fa fa-map-marker"></i>
+                  <p>A108 Adam Street<br>New York, NY 535022</p>
+                </div>
+  
+                <div>
+                  <i class="fa fa-envelope"></i>
+                  <p>info@example.com</p>
+                </div>
+  
+                <div>
+                  <i class="fa fa-phone"></i>
+                  <p>+1 5589 55488 55s</p>
+                </div>
+              </div>
+  
+              <div class="social-links">
+                <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="instagram"><i class="fa fa-instagram"></i></a>
+                <a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a>
+                <a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a>
+              </div>
+  
+            </div>
+  
+            <div class="col-lg-5 col-md-8">
+              <div class="form">
+                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                  <div class="form-group">
+                    <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                    <div class="validate"></div>
                   </div>
-
+                  <div class="form-group">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email" />
+                    <div class="validate"></div>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject" />
+                    <div class="validate"></div>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
+                    <div class="validate"></div>
+                  </div>
+                  <div class="mb-3">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">Your message has been sent. Thank you!</div>
+                  </div>
+                  <div class="text-center"><button type="submit">Send Message</button></div>
+                </form>
+              </div>
             </div>
-    </section>
-
-
-    {{-- <section class="service">
-        <h2>dos</h2>
-        <div class="about-icon">
-            <img src="img/section-icon.jpg" alt="">
+  
+          </div>
+  
         </div>
-        <div class="container">
-            <div id="menudos">
-
-                <div class="container">
-                    <nav class="menu">
-                        <ul>
-                          <li><a href="#products">Products</a></li>
-                          <li><a href="#services">Services</a></li>
-                          <li><a href="#careers">Careers</a></li>
-                          <li><a href="#about">About</a></li>
-                          <li><a href="#contact">Contact</a></li>
-                        </ul>
-                      </nav>
-                </div><!-- container -->
-
-            </div>
-    </section> --}}
-
-    <section class="contact-area">
-        <div class="container">
-            <br>
-            <h4 class="text-center">
-                <i>
-                    Con Solution Finance Tax podras solucionar tus dudas de gestión empresarial de forma rápida y ágil via
-                    email, chat, teléfono o videoconferencia.
-                </i>
-            </h4>
-            <br>
-            <h4>
-                <i>
-                    Asesoramos en cualquier área empresarial: <strong> Financiera, Tributaria, Contable , Comercial,
-                        Marketing, RRHH, Atención al Cliente, Procesos y muchas más.</strong>
-                </i>
-            </h4>
-            <br>
-            <h4>
-                <i>
-                    La realidad y el día a día de la Pyme son diferentes a la de una gran empresa, es por ello que en
-                    <strong> TuConsultoriaOnline</strong> entendemos que tus preocupaciones y recursos son diferentes, pero
-                    no por ello hay que renunciar a alcanzar la excelencia en la gestión.
-                </i>
-            </h4>
-            <br>
-            <h2 class="text-center">
-                <strong>¡NO TE PREOCUPES POR LA DISTANCIA! </strong>
-            </h2>
-            <br>
-            <h4>
-                <i>
-                    La comunicación vía chat, email, telefónica o videoconferencia con tu asesor nos permite darte un trato
-                    cercano y de confianza, como también un servicio más rápido, cómodo y ágil.
-                </i>
-            </h4>
-            <br>
-            <h4>
-                <i>
-                    Somos tu <strong>compañero de viaje ideal</strong> , poniendo profesionales a tu alcance que te ayudarán
-                    en cualquier consulta de gestión que tengas.
-                </i>
-            </h4>
+      </section><!-- End Contact Section --> --}}
+  
 
 
-        </div>
-    </section>
-
-    <br>
-
-
-@endsection
-
-@section('js')
-
-    <script>
-        $(function( ) {
-            var $btn = $('.btn'),
-                $menuBtn = $('.menu-btn'),
-                $icon = $(' .icon');
-
-            $menuBtn.on('click', function() {
-                $(this).toggleClass('active');
-                $icon.toggleClass('show');
-                $btn.toggleClass('active');
-            });
-        });
-    </script>
 
 @endsection

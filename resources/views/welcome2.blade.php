@@ -7,11 +7,11 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>INICIO</title>
     <!-- General CSS Files -->
-
+    @laravelPWA
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
-    @laravelPWA
+  
 </head>
 
 <body>

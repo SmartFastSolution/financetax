@@ -25,7 +25,7 @@
                 <div class="row">
                     <div
                         class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                        <div class="card card-danger">
+                        <div class="card card-info">
                             <div class="card-header">
                                
                                 <img class="nav_logo_img img-fluid top-right" src="digital/images/logo1.png">
@@ -99,7 +99,7 @@
 
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: rgba(225, 51, 152, 0.912)">
+                                        <button type="submit" class="btn btn-info btn-lg btn-block">
                                                 {{ __('Registrar') }}
                                             </button>
                                         </div>
@@ -109,6 +109,9 @@
                             <div class="mb-4 text-muted text-center">
                                 Ya te has Registrado? <a  href="{{ url('/login') }}">Accede a Tu Cuenta</a>
                             </div>
+                            <div class="mb-4 text-muted text-center">
+                                <a  href="{{ url('/page') }}">Volver Página Principal</a>
+                          </div>
                         </div>
                     </div>
                 </div>

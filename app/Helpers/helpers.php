@@ -75,6 +75,31 @@ if (!function_exists('ActiveAll')) {
 //         }
 //  }
 
+if (!function_exists('starMonth')) {
+       function starMonth($format = 'Y-m-d')
+       {
+           $s = Carbon::now()->startOfMonth();
+   
+           return $s->format($format);
+       }
+   }
+   
+   
+   if (!function_exists('finalMes')) {
+       function finalMes($format = 'Y-m-d')
+       {
+           $s = Carbon::now()->endOfMonth();
+   
+           return $s->format($format);
+       }
+   }
+
+   if (!function_exists('changeDateFormate')) {
+       function changeDateFormate($date, $date_format)
+       {
+           return Carbon::parse($date)->format($date_format);
+       }
+   }
 
 
 

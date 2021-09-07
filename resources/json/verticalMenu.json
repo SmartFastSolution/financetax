@@ -149,7 +149,27 @@
                 }
                 
             ]
+        },
+        {
+            
+            "url"  : "#",
+            "name" : "Reportes",
+            "icon" : "file-text",
+            "can"  : "reportes",
+            "submenu" :[
+                {
+                   
+                    "route" : "reportes.usuario",
+                    "url"   : "reportes/reporte-usuarios",
+                    "name"  : "Reporte Edades Usuarios",
+                    "can"   : "r-usuarios-edades"
+
+                }
+              
+                
+            ]
         }
+
     ]
 
 

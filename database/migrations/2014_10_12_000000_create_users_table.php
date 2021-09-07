@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->date('fecha_n')->nullable();
             $table->string('telefono')->nullable();
             $table->string('genero')->nullable();
+            $table->string('edad')->nullable();
             $table->string('image')->nullable();
             $table->enum('estado',['activo','inactivo'])->nullable()->default('activo');
             $table->timestamp('access_at')->nullable();
