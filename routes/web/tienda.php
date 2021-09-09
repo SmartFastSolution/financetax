@@ -19,6 +19,7 @@ Route::prefix('tienda')->group(function(){
     Route::group(['middleware'=>['role_or_permission:super-admin|c-misservicios']], function(){   
         //lista de planes que ha comprado el cliente
         Route::get('/lista-compra', 'Tienda\ShopController@ListaPlanesCliente')->name('cliente.lista.index'); 
+        
 
     });
     Route::group(['middleware'=>['role_or_permission:super-admin|c-admtienda']], function(){   
@@ -33,6 +34,7 @@ Route::prefix('tienda')->group(function(){
         //RUTA DE ADMINISTRACION DE COMPRA QUE HA TOMADO CADA ESPECIALISTA   
         Route::get('/mi-administracion-plan', 'Tienda\ShopController@MiadminPlan')->name('me.admin.tienda.index'); 
         Route::get('/detalle-plan-individual/{shop}/show', 'Tienda\ShopController@Showdetalleindividual')->name('compra.detalle.individual.show'); //vista del detalle de los planes elegidos por el especialista
+    
     });
 
 

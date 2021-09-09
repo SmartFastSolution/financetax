@@ -21,33 +21,39 @@ class Listacliente extends Component
     public $orderBy         = 'shops.id';
     public $orderAsc        = true;
     public $uid;
+    public $condicional;
     
     //LISTA DE LOS PLANES DE LOS CLIENTES- SOLICITUD DE COMPRA
 
-    public function mount(){
+    public function mount($condicional=false){
         $this-> uid = Auth::user()->id;
+        $this->condicional = $condicional;
 
     }
 
     public function render()
     {
-        $data = Shop::join('users','shops.user_id','=','users.id')
-        ->join('subservices','shops.subservice_id','=','subservices.id')
-        ->join('services','subservices.service_id','=','services.id')
-        ->join('tiposervicios','services.tiposervicio_id','=','tiposervicios.id')
+        $data = Shop::where('user_id', $this->uid)
+        ->join('users','shops.especialista_id', '=','users.id')
+        ->join('subservices','shops.subservice_id', '=','subservices.id')
         ->join('tipoplans','shops.tipoplan_id','=','tipoplans.id')
-        ->where('user_id', $this->uid)
-        ->where('shops.estado', 'aprobada')
         ->where(function($query){
             $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
-            ->orWhere('users.name', 'like', '%' . $this->search . '%')
-            ->orWhere('tipoplans.nombre', 'like', '%' . $this->search . '%');
+            ->orWhere('users.name', 'like', '%' . $this->search . '%');
         })
-         ->select('shops.*','users.name as cliente','subservices.nombre as sub', 'tipoplans.nombre as ti')
-         
+        ->where('shops.estado','!=','pendiente')
+        ->where(function ($query) {
+            if ($this->condicional) {
+                $query->where('shops.estado', 'aprobada');
+            } else {
+                $query->where('shops.estado', '!=', 'aprobada');
+            }
+        })
+        ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista')
          ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
          ->paginate($this->perPage);
-        //dd($data);
+        //  ->get();
+        // dd($data);
         return view('livewire.tienda.listacliente', compact('data'));
     }
 
