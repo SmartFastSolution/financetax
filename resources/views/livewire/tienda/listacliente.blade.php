@@ -56,12 +56,19 @@
                                   <td class="text-center ">{{ $compra->tipoplan }}</td>
                                   <td class="text-center ">${{ $compra->costo }}</td>
                                   <td class="text-center ">{{ $compra->estado }}</td>
-                               
+
                                   <td width="10px">
                                       <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
-                                          data-target="#Show" wire:click.prevent="ShowData({{ $compra->id }})">
+                                          data-target="#Show" wire:click.prevent="Show({{ $compra->id }})">
                                           <i class="fas fa-eye"></i>
-                                          Ver
+
+                                      </button>
+                                  </td>
+                                  <td width="10px">
+                                      <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
+                                          data-target="#Show" wire:click.prevent="Interaccion({{ $compra->id }})">
+                                          <i class="fas fa-inbox"></i>
+
                                       </button>
                                   </td>
 

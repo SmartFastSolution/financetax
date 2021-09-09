@@ -22,12 +22,12 @@ class Listacliente extends Component
     public $orderAsc        = true;
     public $uid;
     public $condicional;
-    
+
     //LISTA DE LOS PLANES DE LOS CLIENTES- SOLICITUD DE COMPRA
 
-    public function mount($condicional=false){
+    public function mount(){
         $this-> uid = Auth::user()->id;
-        $this->condicional = $condicional;
+
 
     }
 
@@ -42,18 +42,9 @@ class Listacliente extends Component
             ->orWhere('users.name', 'like', '%' . $this->search . '%');
         })
         ->where('shops.estado','!=','pendiente')
-        ->where(function ($query) {
-            if ($this->condicional) {
-                $query->where('shops.estado', 'aprobada');
-            } else {
-                $query->where('shops.estado', '!=', 'aprobada');
-            }
-        })
         ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista')
          ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
          ->paginate($this->perPage);
-        //  ->get();
-        // dd($data);
         return view('livewire.tienda.listacliente', compact('data'));
     }
 
@@ -66,5 +57,16 @@ class Listacliente extends Component
             $this->orderAsc = true;
         }
         $this->orderBy = $field;
+    }
+
+    //function para la vista de detalle de la compra realizada por el cliente
+    public function Show($id){
+
+        return redirect()->route('cliente.detalle.compra', $id);
+
+    }
+    //function dedicada para la interaccion entre el cliente y especialista
+    public function Interaccion($id){
+        return redirect()->route('cliente.interaccion', $id);
     }
 }
