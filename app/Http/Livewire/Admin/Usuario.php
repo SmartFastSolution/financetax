@@ -86,9 +86,6 @@ class Usuario extends Component
     }
 
 
-
-
-
     public function resetInput()
     {
 		$this->name = null;

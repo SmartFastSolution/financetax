@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\User;
 
+use App\City;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -10,9 +11,14 @@ use App\User;
 class DatosPersonales extends Component
 {   
  
-    public $genero="";
+     public $genero ="";
      public $uid ;
-     public $user, $telefono, $fecha_n, $ciudad, $domicilio , $cedula, $edad;
+     public $user, $telefono, $fecha_n, $domicilio , $cedula, $edad;
+     public $ciudades  =[];
+     public $city_id   ;
+     public $user_id   ;
+     public $editMode    = true;
+     
 
      public function mount(){
          $this->uid = Auth::user()->id;
@@ -20,46 +26,47 @@ class DatosPersonales extends Component
 
     public function render()
     {   
-        $this->user       = Auth::user();
-        $this->name       = $this->user->name;
-        $this->telefono   = $this->user->telefono;
-        $this->fecha_n    = $this->user->fecha_n;
-        $this->ciudad     = $this->user->ciudad;
-        $this->cedula     = $this->user->cedula;
-        $this->genero     = $this->user->genero;
-        $this->domicilio  = $this->user->domicilio;
-        $this->edad       = $this->user->edad;
+        $this->ciudades = City::get(['id','nombre']);
 
-        // $data = User::where('id', $this->uid)->get();
-        return view('livewire.admin.user.datos-personales');
+        $data = User::where('id', $this->uid)
+        ->with('city')
+        ->get();
+        return view('livewire.admin.user.datos-personales', compact('data'));
     }
 
-    public function ActualizarDatos(){
+    public function EditDatos(){
 
-       
+     
+        $user                  = Auth::user();
+        $this->name            = $user->name;
+        $this->email           = $user->email;
+        $this->telefono        = $user->telefono;
+        $this->domicilio       = $user->domicilio;
+        $this->fecha_n         = $user->fecha_n;
+        $this->cedula          = $user->cedula;
+        $this->genero          = $user->genero;
+        $this->edad            = $user->edad;
+        $this->city_id         = $user->city_id;
+        $this->editMode  = true;
+        dd($user);
+    }
 
-        $user  = Auth::user();
-        $user->telefono   = $this->telefono;
-        $user->fecha_n    = $this->fecha_n;
-        $user->ciudad     = $this->ciudad;
-        $user->domicilio  = $this->domicilio;
-        $user->cedula     = $this->cedula;
-        $user->genero     = $this->genero;
-        $user->edad       = $this->edad;
+
+    public function UpdateDatos(){
+
+        $user              = Auth::user();
+        $user->telefono    = $this->telefono;
+        $user->fecha_n     = $this->fecha_n;
+        $user->city_id     = $this->city_id;
+        $user->domicilio   = $this->domicilio;
+        $user->cedula      = $this->cedula;
+        $user->genero      = $this->genero;
+        $user->edad        = $this->edad;
         $user->save();
-        $this->ResetInput();
 
-        $this->emit('info',['mensaje' => 'Datos Actualizados Correctamente']);
+        $this->emit('info',['mensaje' => 'Datos Actualizados Correctamente', 'modal' => '#EditUser']);  
     }
 
 
-    public function ResetInput(){
-        $this->telefono = null;
-        $this->fecha_n  = null;
-        $this->ciudad   = null;
-        $this->domicilio = null;
-        $this->cedula = null;
-        $this->genero = null;
-        $this->edad = null;
-    }
+  
 }

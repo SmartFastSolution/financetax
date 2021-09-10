@@ -164,6 +164,14 @@
                     "name"  : "Reporte Edades Usuarios",
                     "can"   : "r-usuarios-edades"
 
+                },
+                {
+                   
+                    "route" : "reportes.usuario.ciudad",
+                    "url"   : "reportes/reporte-usuarios-ciudad",
+                    "name"  : "Reporte Ciudad Usuarios",
+                    "can"   : "r-usuarios-ciudad"
+
                 }
               
                 

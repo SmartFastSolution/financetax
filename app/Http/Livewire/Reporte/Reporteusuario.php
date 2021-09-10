@@ -20,40 +20,27 @@ class Reporteusuario extends Component
 
 
         protected $paginationTheme = 'bootstrap';
-        protected $listeners       = ['EliminarImpuesto'];
-        protected $queryString     =['search' => ['except' => ''],
-        'page',
+        protected $queryString     = [
+            'search' => ['except' => ''],
+            'page'   => ['except' => 1]
         ];
 
-        public $perPage  = 10;
-        public $search   ='';
-        public $orderBy =  'users.id';
-        public $orderAsc = true;
-        public $filtro_edad ;
-        public $filtro_ciudad;
-        public $findrole='';
-        public $filtro_genero ='';
-        public $roles       =[];
-        public $to;
-        public $from   ;
+        public $perPage      = 10;
+        public $search       ='';
+        public $orderBy      =  'users.id';
+        public $orderAsc     = true;
+        public $filtro_edad  ='';
+        public $findrole     ='';
+        public $roles        =[];
        
     
 
-    public function mount($rol='cliente'){
-        $this->rol= $rol;
-        $this->from = starMonth();
-        $this->to   =  finalMes();
-
-    }
 
 
     public function render()
     {
         $this->roles = Role::whereNotIn('name',['super-admin'])->get()->pluck('name');
         $users = User::where('users.id', '!=', 1)
-      
-                           
-       
         ->where(function($query){
                 $query->where('users.name', 'like','%'. $this->search . '%');
         })
@@ -70,10 +57,6 @@ class Reporteusuario extends Component
         })
             ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
               ->paginate($this->perPage); 
-       
-    //   ->get();
-    //   dd($users);
-
         return view('livewire.reporte.reporteusuario', compact('users'));
     }
 
@@ -90,14 +73,10 @@ class Reporteusuario extends Component
 
 
     public function GenerarExcelEdadUsuario(){
-
-
         $users = User::where('users.id', '!=', 1)
-       
         ->where(function($query){
                 $query->where('users.name', 'like','%'. $this->search . '%');
         })
-
         ->where(function ($query) {
             if ($this->findrole !== '') {
                 $query->role($this->findrole);
@@ -108,7 +87,6 @@ class Reporteusuario extends Component
              $query->where('users.edad', $this->filtro_edad);
          }
         })
-
             ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
               ->get();
               return Excel::download(new ReportUserExport ($users), 'users_'.now().'.xlsx');

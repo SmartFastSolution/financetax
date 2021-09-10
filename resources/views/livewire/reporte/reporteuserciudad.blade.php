@@ -1,28 +1,14 @@
 <div>
-    <button type="button" class="btn btn-outline-success mb-2" wire:click.prevent="GenerarExcelEdadUsuario()">
+    <button type="button" class="btn btn-outline-success mb-2" wire:click.prevent="GenerarExcelCiudadUsuario()">
         <i class="fa fa-file-excel"></i> Generar Reporte
     </button>
     <div class="card">
         <div class="row p-2">
             <div class="col-lg-3 col-sm-12 mt-2">
-                <select wire:model="findrole" class="form-control form-control-sm" >
-                    <option value="">Roles</option>
-                    @foreach ($roles as $r)
-                        <option value="{{ $r }}">{{ $r }}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="col-lg-3 col-sm-12 mt-2">
-                <select wire:model="filtro_edad" class="form-control form-control-sm">
-                    <option value="">Todas las Edades</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
+                <select wire:model="filtro_ciudad" class="form-control form-control-sm">
+                    <option value="">Todas la Ciudad</option>
+                    <option value="Guayaquil">Guayaquil</option>
+                    <option value="Loja">Loja</option>
                 </select>
             </div>
         </div>
@@ -58,7 +44,7 @@
                                     @include('includes._sort-icon', ['field' => 'name'])
                                 </a>
                             </th>
-                            <th class="px-4 py-2 text-center">Edad</th>
+                            <th class="px-4 py-2 text-center">Ciudad</th>
                             <th class="px-4 py-2 text-center">Estado</th>
                             <th class="px-4 py-2 text-center">Fecha Registro</th>
 
@@ -70,7 +56,7 @@
                                 <tr>
                                     <td class="text-center ">{{ $u->cedula }}</td>
                                     <td class="text-center ">{{ $u->name }}</td>
-                                    <td class="text-center ">{{ $u->edad }}</td>
+                                    <td class="text-center ">{{ $u->ciudad }}</td>
                                     <td class="text-center ">
                                         <span class="float-center  badge badge-success">
                                             {{ $u->estado }}
@@ -104,4 +90,7 @@
             </div>
         </div>
     </div>
+
+
+
 </div>

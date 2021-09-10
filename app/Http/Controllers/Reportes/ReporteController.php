@@ -11,4 +11,8 @@ class ReporteController extends Controller
     public function ReporteEdad(){
         return view('cruds.reportes.reporteusuarios.reporteusuario');
     }
+
+    public function ReporteCiudad(){
+        return view('cruds.reportes.reporteusuarios.reporteuserciudad');
+    }
 }
