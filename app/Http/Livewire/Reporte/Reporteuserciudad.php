@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reporte;
 
+use App\City;
 use App\Exports\ReportUserCiudadExport;
 use App\User;
 use Livewire\Component;
@@ -26,21 +27,25 @@ class Reporteuserciudad extends Component
     public $orderBy        =  'users.id';
     public $orderAsc       = true;
     public $filtro_ciudad  ='';
+    public $ciudadesall =[];
 
 
 
     public function render()
     {
+        $this->ciudadesall = City::all(['id', 'nombre']);
         $users = User::where('users.id', '!=', 1)
+        ->join('cities', 'users.city_id' ,'=','cities.id')
         ->where(function($query){
                 $query->where('users.name', 'like','%'. $this->search . '%');
         })
 
         ->where(function($query){
             if($this->filtro_ciudad !== ''){
-             $query->where('users.ciudad', $this->filtro_ciudad);
+             $query->where('users.city_id', $this->filtro_ciudad);
          }
         })
+        ->select('users.*','cities.nombre as ciudad')
             ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
               ->paginate($this->perPage); 
         

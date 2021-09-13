@@ -7,8 +7,9 @@
             <div class="col-lg-3 col-sm-12 mt-2">
                 <select wire:model="filtro_ciudad" class="form-control form-control-sm">
                     <option value="">Todas la Ciudad</option>
-                    <option value="Guayaquil">Guayaquil</option>
-                    <option value="Loja">Loja</option>
+                    @foreach ($ciudadesall as $r)
+                        <option value="{{ $r->id }}">{{ $r->nombre }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>
