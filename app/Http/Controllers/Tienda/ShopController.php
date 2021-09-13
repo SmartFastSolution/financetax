@@ -15,7 +15,7 @@ use App\Traits\ShopTrait;
 class ShopController extends Controller
 {
     use ShopTrait;
-    //controlador dedicado a la administracion de los planes que compra el usuario 
+    //controlador dedicado a la administracion de los planes que compra el usuario
     //y administracion de los mismos por parte del especialista
 
     public function __construct()
@@ -37,42 +37,42 @@ class ShopController extends Controller
         $servicio =Service::where('id', $id)->firstOrfail();
         $data  = Subservice::where('service_id', $id)->paginate(8);
 
-      
+
         return view('cruds.Tienda.listasubservicios', compact('servicio','data'));
-       
+
 
     }
 
- //function para el redireccionamiento de la informacion de compra de la solicitud 
+ //function para el redireccionamiento de la informacion de compra de la solicitud
     public function access2 ($id){
-       
-       
-        
+
+
+
         $data  = Subservice::join('services','subservices.service_id','=', 'services.id')
          ->join('tiposervicios','services.tiposervicio_id','=','tiposervicios.id')
         ->where('subservices.id',$id)
         ->select('subservices.*','services.nombre as servicio','tiposervicios.nombre as tiposervicio')
         ->get();
-        
-        $plans = Plan::where('estado', 'activo') 
+
+        $plans = Plan::where('estado', 'activo')
                 ->with(['subservicio','subservicio.nombre'],['tipoplan','tipoplan.nombre'])
-                 ->where('subservice_id','=', $id)  
+                 ->where('subservice_id','=', $id)
                  ->get();
 
         $tipoplan = Tipoplan::join('plans','plans.tipoplan_id','=','tipoplans.id')
                     ->where('plans.subservice_id',$id)
-                    ->where('plans.estado', 'activo') 
-                    ->where('tipoplans.estado', 'activo') 
-                   
-        ->get(); 
-        
+                    ->where('plans.estado', 'activo')
+                    ->where('tipoplans.estado', 'activo')
+
+        ->get();
+
         //dd($tipoplan);
 
         return view('cruds.Tienda.paginacompra', compact('data', 'plans','tipoplan'));
 
     }
 
-   
+
      //almacenamiento del data
     public function Store (TiendaRequest $request){
 
@@ -91,8 +91,8 @@ class ShopController extends Controller
         return view('cruds.Tienda.adminplan.miadminplan');
     }
 
-    //redirecciona a la vista de los detalles de la compra del cliente 
-    // a la cual no se le ha asignado ningun especialista 
+    //redirecciona a la vista de los detalles de la compra del cliente
+    // a la cual no se le ha asignado ningun especialista
     public function Showdetalle($id){
         $compra = Shop::with([
             'tipoplan'=>function($query){
@@ -108,7 +108,7 @@ class ShopController extends Controller
             'plan' => function($query){
                 $query->select('id','descripcion');
             }
-           
+
             ]) ->find($id);
       // dd($compra);
         return view('cruds.Tienda.adminplan.show.showplangeneral', compact('compra'));
@@ -130,7 +130,7 @@ class ShopController extends Controller
             'plan' => function($query){
                 $query->select('id','descripcion');
             }
-           
+
             ]) ->find($id);
       // dd($compra);
         return view('cruds.Tienda.adminplan.show.showplanindividual', compact('compra'));
@@ -140,5 +140,10 @@ class ShopController extends Controller
 
          return view('cruds.cliente.listacompra');
     }
+
+
+
+
+
 
 }
