@@ -6,9 +6,11 @@ use App\Tienda\Shop;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 
 class Listacliente extends Component
 {
+    use WithFileUploads;
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     protected $queryString     = [
@@ -22,6 +24,12 @@ class Listacliente extends Component
     public $orderAsc        = true;
     public $uid;
     public $condicional;
+
+    //prueba para el modal
+    public $user;
+    public $detalle;
+    public $observacion;
+    public $documento = [];
 
     //LISTA DE LOS PLANES DE LOS CLIENTES- SOLICITUD DE COMPRA
 
@@ -69,4 +77,41 @@ class Listacliente extends Component
     public function Interaccion($id){
         return redirect()->route('cliente.interaccion', $id);
     }
+
+
+
+
+    /* Probando */
+    public function enviarMensaje()
+    {
+        $validatedData = $this->validate([
+            'user' => 'required',
+            'documento' => 'required'
+            /* Podriamos validar otras cosas  */
+        ]);
+
+
+        /* Se barre los archivos */
+        /*  foreach ($this->documento as $key => $documento) {
+            $this->documento[$key] = $documento->store('documento','public');
+        } */
+
+        foreach ($this->documento as $key => $documento) {
+            $this->documento[$key] = $documento->store('documentos','public');
+        }
+        // Guardamos el mensaje en la BBDD
+        \App\Interaccion::create([
+            "user" => $this->user,
+            "detalle" => $this->detalle,
+            "observacion" => $this->observacion,
+            "documento" => $this->documento,
+        ]);
+
+        // Este evento es para que lo reciba el componente
+        // por Javascript y muestre el ALERT BOOSTRAP de "enviado"
+        session()->flash('message', 'File uploaded.');
+    }
+
+
+
 }

@@ -15,4 +15,9 @@ class ReporteController extends Controller
     public function ReporteCiudad(){
         return view('cruds.reportes.reporteusuarios.reporteuserciudad');
     }
+    //RUTA PARA ACCEDER AL REPORTE DE GENEROS CLIENTES
+    public function ReporteGenero(){
+        return view('cruds.reportes.reporteusuarios.reportegenero');
+    }
+
 }

@@ -28,4 +28,13 @@ class Shop extends Model
         return $this->belongsTo('App\User', 'especialista_id');
     }
 
+    public function interaccion()
+    {
+        return $this->hasOne('App\Interaccion', 'user');
+    }
+
+
+
+
+
 }
