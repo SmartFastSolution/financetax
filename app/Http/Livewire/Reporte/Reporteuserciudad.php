@@ -69,15 +69,17 @@ class Reporteuserciudad extends Component
 
 
         $users = User::where('users.id', '!=', 1)
+        ->join('cities', 'users.city_id' ,'=','cities.id')
         ->where(function($query){
                 $query->where('users.name', 'like','%'. $this->search . '%');
         })
 
         ->where(function($query){
             if($this->filtro_ciudad !== ''){
-             $query->where('users.ciudad', $this->filtro_ciudad);
+             $query->where('users.city_id', $this->filtro_ciudad);
          }
         })
+        ->select('users.*','cities.nombre as ciudad')
             ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
             ->get();
             return Excel::download(new ReportUserCiudadExport ($users), 'users_'.now().'.xlsx');
