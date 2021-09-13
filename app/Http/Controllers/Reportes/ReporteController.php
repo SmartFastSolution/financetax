@@ -11,4 +11,10 @@ class ReporteController extends Controller
     public function ReporteEdad(){
         return view('cruds.reportes.reporteusuarios.reporteusuario');
     }
+
+    //RUTA PARA ACCEDER AL REPORTE DE GENEROS CLIENTES
+    public function ReporteGenero(){
+        return view('cruds.reportes.reporteusuarios.reportegenero');
+    }
+
 }
