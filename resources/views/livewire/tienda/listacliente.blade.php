@@ -65,14 +65,11 @@
                                       </button>
                                   </td>
                                   <td width="10px">
-                                  @include('livewire.tienda.modal.interaccion')
-                                      <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
-                                      data-target="#modalInteraccion" >
+                                  <button class="btn btn-icon icon-left btn-primary"
+                                           wire:click.prevent="Interaccion({{ $compra->id }})">
                                           <i class="fas fa-inbox"></i>
                                       </button>
                                   </td>
-
-
                               </tr>
                           @endforeach
                       @else

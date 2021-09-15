@@ -11,7 +11,7 @@ use App\Traits\PlanTrait;
 use Illuminate\Http\Request;
 
 class PlanController extends Controller
-{   
+{
     use PlanTrait;
 
     public function __construct()
@@ -26,12 +26,12 @@ class PlanController extends Controller
         return view('cruds.Servicios.TipoPlanes.Planes');
     }
 
-    //crud de creacion de plan y edicion 
+    //crud de creacion de plan y edicion
     public function Plan(Request $request){
 
         $subservicios = Subservice::where('estado', 'activo')->get();
         $tipoplan  = Tipoplan::where('estado', 'activo')->get();
-        
+
         if ($request->has('plans')) {
             $plans = Plan::with(['subservicio','subservicio.nombre'],['tipoplan','tipoplan.nombre'])->findOrFail($request->get('plans'));
            // dd($plans);
@@ -41,11 +41,11 @@ class PlanController extends Controller
             return view('cruds.Servicios.TipoPlanes.createplan', compact('subservicios', 'tipoplan'));
 
         }
-      
 
-     
 
-       
+
+
+
     }
 
     public function Store(PlanRequest $request){

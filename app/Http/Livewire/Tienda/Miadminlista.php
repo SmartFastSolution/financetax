@@ -29,16 +29,16 @@ class Miadminlista extends Component
     public $tipoplans  =[];
     public $subservices  =[];
 
-    public $shop_id, $costo, $user_id, $tipoplan_id, $subservice_id ; 
+    public $shop_id, $costo, $user_id, $tipoplan_id, $subservice_id ;
 
-    
+
     //COMPONENTE PARA LA ADMINISTRACION DE PLANES ACEPTADOS POR EL ESPECIALISTA
     public function mount(){
         $this->uid = Auth::user()->id;
      }
 
     public function render()
-    {   
+    {
        $this->clientes = User::get(['id', 'name']);
        $this->subservices = Subservice::get(['id', 'nombre']);
        $this->tipoplans = Tipoplan::get(['id', 'nombre']);
@@ -50,11 +50,11 @@ class Miadminlista extends Component
             $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
             ->orWhere('users.name', 'like', '%' . $this->search . '%');
         })
-        
+
         ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as cliente')
         ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
         ->paginate($this->perPage);
-    
+
 
         return view('livewire.tienda.miadminlista',compact('data'));
     }
@@ -76,20 +76,26 @@ class Miadminlista extends Component
         $estado->estado = $estado->estado == 'aprobada' ? 'en proceso' : 'aprobada';
         $estado->save();
         $this->emit('info',['mensaje' => $estado->estado == 'aprovada' ? 'Compra Aprobada Correctamente' : 'Compra en estado de Proceso']);
- 
+
     }
 
     public function ShowData($id){
         return redirect()->route('compra.detalle.individual.show', $id);
     }
 
-    
-   
 
 
-    public function resetModal(){ 
+
+
+    public function resetModal(){
         $this->reset(['ShowMode','costo','user_id','tipoplan_id','subservice_id']);
         $this->resetValidation();
+    }
+
+
+    //function dedicada para la interaccion entre el especialista y el cliente
+    public function Interaccion($id){
+        return redirect()->route('tienda.interaccion', $id);
     }
 
 

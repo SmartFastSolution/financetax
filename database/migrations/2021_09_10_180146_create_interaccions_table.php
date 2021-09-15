@@ -15,10 +15,15 @@ class CreateInteraccionsTable extends Migration
     {
         Schema::create('interaccions', function (Blueprint $table) {
             $table->id();
-            $table->string("user");
-            $table->text("detalle");
-            $table->text("observacion");
-            $table->string("documento");
+            $table->unsignedBigInteger('cliente_id')->nullable();
+            $table->foreign('cliente_id')->references('id')->on('users')->onDelete('cascade');
+            $table->text("detalle")->nullable();
+            $table->date('fecha');
+            $table->longText("observacion")->nullable();
+            $table->unsignedBigInteger('especialista_id')->nullable();
+            $table->foreign('especialista_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('shop_id')->nullable();
+            $table->foreign('shop_id')->references('id')->on('shops')->onDelete('cascade');
             $table->timestamps();
         });
     }

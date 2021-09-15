@@ -8,10 +8,9 @@ class Interaccion extends Model
 {
    protected $table = "interaccions";
         protected $fillable = [
-        "user",
         "detalle",
         "observacion",
-        "documento",
+        'fecha',
     ];
 
 

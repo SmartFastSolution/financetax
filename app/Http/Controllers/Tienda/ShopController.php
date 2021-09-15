@@ -24,126 +24,147 @@ class ShopController extends Controller
     }
 
 
-     public function Index()
+    public function Index()
     {
-        $data = Service::where('estado','activo')->paginate(8);
+        $data = Service::where('estado', 'activo')->paginate(8);
         return view('cruds.Tienda.index', compact('data'));
-
     }
 
     //function para el redireccionamiento a la pagina de lista de solicitudes
-    public function access ($id){
+    public function access($id)
+    {
 
-        $servicio =Service::where('id', $id)->firstOrfail();
+        $servicio = Service::where('id', $id)->firstOrfail();
         $data  = Subservice::where('service_id', $id)->paginate(8);
 
 
-        return view('cruds.Tienda.listasubservicios', compact('servicio','data'));
-
-
+        return view('cruds.Tienda.listasubservicios', compact('servicio', 'data'));
     }
 
- //function para el redireccionamiento de la informacion de compra de la solicitud
-    public function access2 ($id){
+    //function para el redireccionamiento de la informacion de compra de la solicitud
+    public function access2($id)
+    {
 
 
 
-        $data  = Subservice::join('services','subservices.service_id','=', 'services.id')
-         ->join('tiposervicios','services.tiposervicio_id','=','tiposervicios.id')
-        ->where('subservices.id',$id)
-        ->select('subservices.*','services.nombre as servicio','tiposervicios.nombre as tiposervicio')
-        ->get();
+        $data  = Subservice::join('services', 'subservices.service_id', '=', 'services.id')
+            ->join('tiposervicios', 'services.tiposervicio_id', '=', 'tiposervicios.id')
+            ->where('subservices.id', $id)
+            ->select('subservices.*', 'services.nombre as servicio', 'tiposervicios.nombre as tiposervicio')
+            ->get();
 
         $plans = Plan::where('estado', 'activo')
-                ->with(['subservicio','subservicio.nombre'],['tipoplan','tipoplan.nombre'])
-                 ->where('subservice_id','=', $id)
-                 ->get();
+            ->with(['subservicio', 'subservicio.nombre'], ['tipoplan', 'tipoplan.nombre'])
+            ->where('subservice_id', '=', $id)
+            ->get();
 
-        $tipoplan = Tipoplan::join('plans','plans.tipoplan_id','=','tipoplans.id')
-                    ->where('plans.subservice_id',$id)
-                    ->where('plans.estado', 'activo')
-                    ->where('tipoplans.estado', 'activo')
+        $tipoplan = Tipoplan::join('plans', 'plans.tipoplan_id', '=', 'tipoplans.id')
+            ->where('plans.subservice_id', $id)
+            ->where('plans.estado', 'activo')
+            ->where('tipoplans.estado', 'activo')
 
-        ->get();
+            ->get();
 
         //dd($tipoplan);
 
-        return view('cruds.Tienda.paginacompra', compact('data', 'plans','tipoplan'));
-
+        return view('cruds.Tienda.paginacompra', compact('data', 'plans', 'tipoplan'));
     }
 
 
-     //almacenamiento del data
-    public function Store (TiendaRequest $request){
+    //almacenamiento del data
+    public function Store(TiendaRequest $request)
+    {
 
-        return response()->json($this->CreateData($request),201);
+        return response()->json($this->CreateData($request), 201);
     }
 
 
 
-    public function adminplanindex(){
+    public function adminplanindex()
+    {
 
         return view('cruds.Tienda.adminplan.admincompra');
     }
 
 
-    public function MiadminPlan (){
+    public function MiadminPlan()
+    {
         return view('cruds.Tienda.adminplan.miadminplan');
     }
 
     //redirecciona a la vista de los detalles de la compra del cliente
     // a la cual no se le ha asignado ningun especialista
-    public function Showdetalle($id){
+    public function Showdetalle($id)
+    {
         $compra = Shop::with([
-            'tipoplan'=>function($query){
-                $query->select('id','nombre');
+            'tipoplan' => function ($query) {
+                $query->select('id', 'nombre');
             },
             'tipoplan.planes',
-            'subservicio' =>function($query){
-                $query->select('id','nombre','descripcion');
+            'subservicio' => function ($query) {
+                $query->select('id', 'nombre', 'descripcion');
             },
-            'cliente' => function($query){
-                $query->select('id','name','email');
+            'cliente' => function ($query) {
+                $query->select('id', 'name', 'email');
             },
-            'plan' => function($query){
-                $query->select('id','descripcion');
+            'plan' => function ($query) {
+                $query->select('id', 'descripcion');
             }
 
-            ]) ->find($id);
-      // dd($compra);
+        ])->find($id);
+        // dd($compra);
         return view('cruds.Tienda.adminplan.show.showplangeneral', compact('compra'));
     }
 
     //function para visualizar el detalle de cada compra por parte de la lista de especialista acoplada
-    public function Showdetalleindividual($id){
+    public function Showdetalleindividual($id)
+    {
         $compra = Shop::with([
-            'tipoplan'=>function($query){
-                $query->select('id','nombre');
+            'tipoplan' => function ($query) {
+                $query->select('id', 'nombre');
             },
             'tipoplan.planes',
-            'subservicio' =>function($query){
-                $query->select('id','nombre','descripcion');
+            'subservicio' => function ($query) {
+                $query->select('id', 'nombre', 'descripcion');
             },
-            'cliente' => function($query){
-                $query->select('id','name','email');
+            'cliente' => function ($query) {
+                $query->select('id', 'name', 'email');
             },
-            'plan' => function($query){
-                $query->select('id','descripcion');
+            'plan' => function ($query) {
+                $query->select('id', 'descripcion');
             }
 
-            ]) ->find($id);
-      // dd($compra);
+        ])->find($id);
+        // dd($compra);
         return view('cruds.Tienda.adminplan.show.showplanindividual', compact('compra'));
     }
 
-    public function ListaPlanesCliente (){
+    public function ListaPlanesCliente()
+    {
 
-         return view('cruds.cliente.listacompra');
+        return view('cruds.cliente.listacompra');
     }
 
 
 
 
+    //funcion para la interaccion con el cliente
+    public function InteraccionEspecialista($id)
+    {
+        $compra = Shop::with([
+           /*  'users' => function ($query) {
+                $query->select('id', 'nombre');
+            }, */
+            'tipoplan' => function ($query) {
+                $query->select('id', 'nombre');
+            },
+            'cliente' => function ($query) {
+                $query->select('id', 'name', 'email');
+            },
 
-
+        ])->find($id);
+        //dd($compra);
+        return view('cruds.Tienda.adminplan.especialistainteraccion', compact('compra'));
+        /* return view('cruds.Tienda.adminplan.especialistainteraccion'); */
+    }
 }

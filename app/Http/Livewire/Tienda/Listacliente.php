@@ -79,39 +79,4 @@ class Listacliente extends Component
     }
 
 
-
-
-    /* Probando */
-    public function enviarMensaje()
-    {
-        $validatedData = $this->validate([
-            'user' => 'required',
-            'documento' => 'required'
-            /* Podriamos validar otras cosas  */
-        ]);
-
-
-        /* Se barre los archivos */
-        /*  foreach ($this->documento as $key => $documento) {
-            $this->documento[$key] = $documento->store('documento','public');
-        } */
-
-        foreach ($this->documento as $key => $documento) {
-            $this->documento[$key] = $documento->store('documentos','public');
-        }
-        // Guardamos el mensaje en la BBDD
-        \App\Interaccion::create([
-            "user" => $this->user,
-            "detalle" => $this->detalle,
-            "observacion" => $this->observacion,
-            "documento" => $this->documento,
-        ]);
-
-        // Este evento es para que lo reciba el componente
-        // por Javascript y muestre el ALERT BOOSTRAP de "enviado"
-        session()->flash('message', 'File uploaded.');
-    }
-
-
-
 }
