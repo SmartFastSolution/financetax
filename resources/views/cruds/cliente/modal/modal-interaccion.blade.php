@@ -14,10 +14,8 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label>Especialista</label>
-                        <input disabled type="text" wire:model.defer="especialista_id" placeholder="{{ $compra->especialista->name }}" class="form-control @error('detalle') is-invalid @enderror">
-                        @error('detalle')
-                        <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
-                        @enderror
+                        <input disabled type="text" class="form-control  wire:model.defer="especialista_id" placeholder="{{ $compra->especialista->name }}" >
+
                     </div>
 
                     <div class="col-sm-6">
@@ -42,8 +40,10 @@
 
                     <div class="form-group col-md-12">
                         <label class="font-weight-bold text-dark" for="inputPassword4">Observacion</label>
-                        <textarea class="form-control" name="" wire:model.defer="observacion" id="" cols="30" rows="5"></textarea>
-
+                        <textarea class="form-control" name="" wire:model.defer="observacion" class="form-control @error('detalle') is-invalid @enderror" id="" cols="30" rows="5"></textarea>
+                        @error('observacion')
+                        <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
+                        @enderror
                     </div>
                 </div>
 

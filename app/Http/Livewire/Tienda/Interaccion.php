@@ -53,13 +53,25 @@ class Interaccion extends Component
 
     public function resetModal()
     {
-        $this->reset(['createMode', 'detalle', 'observacion', 'fecha']);
+        $this->reset(['detalle', 'observacion', 'fecha']);
         $this->resetValidation();
     }
 
     public function enviarMensaje()
     {
+        $this->validate([
+            'detalle'     => 'required',
+            'observacion'      => 'required',
+            'fecha'      => 'required',
+        ],[
+            'detalle.required'        => 'No has agregado un Detalle ',
+            'observacion.required'         => 'No has agregado una Observacion',
+            'fecha.required'         => 'No has selecionado una Fecha',
+        ]);
+
+
         $this->createMode = true;
+
         $message                       = new AppInteraccion;
         $message->especialista_id      = Auth::user()->id;
         $message->cliente_id           = $this->cliente;
@@ -69,7 +81,8 @@ class Interaccion extends Component
         $message->shop_id              = $this->shop;
         $message->save();
         $this->resetModal();
-        $this->emit('success', ['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#SendMessage']);
+        $this->emit('success', ['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#modalInteraccionEspecialista']);
+
         $this->createMode = false;
     }
 

@@ -46,6 +46,18 @@ class Interaccion extends Component
     }
 
     public function enviarMensaje(){
+
+        $this->validate([
+            'detalle'     => 'required',
+            'observacion'      => 'required',
+            'fecha'      => 'required',
+        ],[
+            'detalle.required'        => 'No has agregado un Detalle ',
+            'observacion.required'         => 'No has agregado una Observacion',
+            'fecha.required'         => 'No has selecionado una Fecha',
+        ]);
+
+
         $this->createMode = true;
         $message                       = new AppInteraccion;
         $message->cliente_id           = Auth::user()->id;
@@ -55,7 +67,7 @@ class Interaccion extends Component
         $message->observacion          = $this->observacion;
         $message->save();
         $this->resetModal();
-        $this->emit('success',['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#SendMessage']);
+        $this->emit('success',['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#modalInteraccion']);
         $this->createMode = false;
     }
 
