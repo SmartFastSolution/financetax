@@ -34,6 +34,7 @@ Route::prefix('tienda')->group(function(){
         //RUTA DE ADMINISTRACION DE COMPRA QUE HA TOMADO CADA ESPECIALISTA
         Route::get('/mi-administracion-plan', 'Tienda\ShopController@MiadminPlan')->name('me.admin.tienda.index');
         Route::get('/detalle-plan-individual/{shop}/show', 'Tienda\ShopController@Showdetalleindividual')->name('compra.detalle.individual.show'); //vista del detalle de los planes elegidos por el especialista
+        Route::get('/interaccion-compra-especialista/{shop}/show', 'Tienda\ShopController@InteraccionEspecialista')->name('tienda.interaccion');
 
     });
 

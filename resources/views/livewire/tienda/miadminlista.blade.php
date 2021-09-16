@@ -62,13 +62,19 @@
                                         @else
                                             badge-dark @endif">{{ $compra->estado }}</span>
                                     </td>
-                                    <td width="10px">
+                                    <td width="10px" class="text-center ">
                                         <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
                                             data-target="#Show" wire:click.prevent="ShowData({{ $compra->id }})">
                                             <i class="fas fa-eye"></i>
-                                            Ver
                                         </button>
                                     </td>
+                                    <td width="10px" class="text-center ">
+                                      <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
+                                          data-target="#Show" wire:click.prevent="Interaccion({{ $compra->id }})">
+                                          <i class="fas fa-inbox"></i>
+
+                                      </button>
+                                  </td>
 
                                 </tr>
                             @endforeach
