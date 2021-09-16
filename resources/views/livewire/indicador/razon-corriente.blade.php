@@ -14,7 +14,7 @@
                 </div>
             </div>  
             <div class=" text-center">
-                <button type="button" class="btn btn-outline-dark" wire:click.prevent="ImportarRazonCorriente()">Importar Documento</button>
+                <button type="button" class="btn btn-outline-dark" wire:click.prevent="ImportarRazonCorriente()" >Importar Documento</button>
             </div>
         </div>
     </div>

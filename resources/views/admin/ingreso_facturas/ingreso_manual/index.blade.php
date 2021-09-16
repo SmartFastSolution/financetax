@@ -21,7 +21,7 @@
     </div>
 </div>
 --}}
-<div>
+<div id="app">
     <h2 class="text-center font-weight-bold">Ingreso Manual de Comprobantes Electronicos</h2>
     <ingreso-manual-component />
 </div>

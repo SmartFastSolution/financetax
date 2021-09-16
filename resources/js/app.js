@@ -66,7 +66,7 @@ Vue.prototype.$tablaGlobal = function(nombre_tabla){
         });
     });
 }
-
+import CKEditor from 'ckeditor4-vue';
 Vue.use( CKEditor );
 import 'vue-search-select/dist/VueSearchSelect.css';
 import { ModelListSelect } from 'vue-search-select'

@@ -182,7 +182,7 @@
                 </aside>
             </div>
             <!-- Main Content -->
-            <div class="main-content" id="app">
+            <div class="main-content" >
 
                 @yield('content')
                 <div class="settingSidebar">
@@ -255,6 +255,7 @@
 						</div>
 					</div>
 				</div>
+                <div id="app"></div>
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
@@ -265,7 +266,7 @@
             </footer>
         </div>
 
-
+       
     <script src="{{ asset('js/app.js') }}"></script>
     @livewireScripts
     <!-- General JS Scripts -->
