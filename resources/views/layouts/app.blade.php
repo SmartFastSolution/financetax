@@ -31,8 +31,6 @@
 
     @laravelPWA
     @yield('style')
-
-
 </head>
 
 <body>
