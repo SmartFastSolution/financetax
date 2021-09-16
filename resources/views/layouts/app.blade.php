@@ -181,9 +181,9 @@
 					</a>
 					<div class="settingSidebar-body ps-container ps-theme-default">
 						<div class="fade show active">
-							<div class="setting-panel-header">Setting Panel</div>
+							<div class="setting-panel-header">Panel de Configuración</div>
 							<div class="p-15 border-bottom">
-								<h6 class="font-medium m-b-10">Select Layout</h6>
+								<h6 class="font-medium m-b-10">Selecionar Layout</h6>
 								<div class="selectgroup layout-color w-50">
 									<label class="selectgroup-item"> <input type="radio" name="value" value="1" class="selectgroup-input select-layout" checked=""> <span class="selectgroup-button">Light</span>
 									</label> <label class="selectgroup-item"> <input type="radio" name="value" value="2" class="selectgroup-input select-layout">
@@ -239,7 +239,7 @@
 							<div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
 								<a href="#" class="btn btn-icon icon-left btn-primary
 										btn-restore-theme">
-									<i class="fas fa-undo"></i> Restore Default
+									<i class="fas fa-undo"></i> Restaurar por Defecto
 								</a>
 							</div>
 						</div>
@@ -248,7 +248,7 @@
             </div>
             <footer class="main-footer">
                 <div class="footer-left">
-                    Copyright &copy; 2019 <div class="bullet"></div> Design By <a href="#">Redstar</a>
+                    Copyright &copy; 2019 <div class="bullet"></div> Creado Por <a href="#">SmartFastSolution</a>
                 </div>
                 <div class="footer-right">
                 </div>

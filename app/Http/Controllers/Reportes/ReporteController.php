@@ -20,4 +20,13 @@ class ReporteController extends Controller
         return view('cruds.reportes.reporteusuarios.reportegenero');
     }
 
+     //RUTA PARA ACCEDER AL REPORTE DE TELEFONO CLIENTES
+     public function ReporteTelefono(){
+        return view('cruds.reportes.reporteusuarios.reporteusertelefono');
+    }
+
+      //RUTA PARA ACCEDER AL REPORTE DE TELEFONO CLIENTES
+      public function ReporteEmail(){
+        return view('cruds.reportes.reporteusuarios.reporteuseremail');
+    }
 }

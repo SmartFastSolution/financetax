@@ -180,10 +180,43 @@
                     "name"  : "Reporte Generos Usuarios",
                     "can"   : "r-usuarios-generos"
 
+                },
+                {
+
+                    "route" : "reportes.usuario.telefono",
+                    "url"   : "reportes/reporte-usuario-telefono",
+                    "name"  : "Reporte Teléfono Usuarios",
+                    "can"   : "r-usuarios-telefono"
+
+                },
+                {
+
+                    "route" : "reportes.usuario.email",
+                    "url"   : "reportes/reporte-usuario-email",
+                    "name"  : "Reporte Correo Electrónico Usuarios",
+                    "can"   : "r-usuarios-email"
+
                 }
 
 
             ]
+        },
+        {
+            "url"  : "",
+            "name" : "Indicadores Financieros",
+            "icon" : "pie-chart",
+            "can"  : "indicadores",
+              "submenu" :[
+                  {
+
+                    "route" : "indicador.razon.corriente",
+                    "url"   : "indicadores/indicador-razon-corriente",
+                    "name"  : "Razón Corriente",
+                    "can"   :"ind-razoncorriente"
+
+                  }
+              ]
+
         }
 
     ]
