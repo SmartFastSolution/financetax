@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>SOLUTIONFINANCETAX</title>
     <!-- General CSS Files -->
    
@@ -15,12 +16,22 @@
     
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">  
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
-  
+
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/bundles/izitoast/css/iziToast.min.css') }}">
    
     <!-- Template CSS -->
-  
+
+    <link href="{{ asset('assets/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/datatables/css/fixedHeader.bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/datatables/css/responsive.bootstrap.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
+    @yield('style')
+
+
+
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
     @laravelPWA
     @yield('style')
@@ -30,7 +41,6 @@
 
 <body>
     <div class="loader"></div>
-    
         <div class="main-wrapper main-wrapper-1">
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
@@ -116,8 +126,8 @@
                                 </a>
                                 <a href="{{ url('/admin/mis-empresas') }}" class="dropdown-item has-icon"> <i class="fas fa-building"></i>
                                     Mis Empresas
-                                   
-                                  </a> 
+
+                                  </a>
                                   <a href="{{ url('/admin/mis-tarjetas-credito') }}"  class="dropdown-item has-icon"> <i class="fas fa-money-check"></i>
                                     Tarjeta Credito
                                   </a>
@@ -163,8 +173,8 @@
                     </div>
                     <ul class="sidebar-menu">
                         <li class="menu-header">MENU</li>
-                     
-                        {{-- aqui MENU JSON --}}                   
+
+                        {{-- aqui MENU JSON --}}
                             @foreach ($menuData[0]->menu as $menu)
                             @include('layouts.panels.menuVertical',['menu' => $menu])
                             @endforeach
@@ -172,7 +182,7 @@
                 </aside>
             </div>
             <!-- Main Content -->
-            <div class="main-content">
+            <div class="main-content" id="app">
 
                 @yield('content')
                 <div class="settingSidebar">
@@ -235,7 +245,7 @@
 									</label>
 								</div>
 							</div>
-						
+
 							<div class="mt-4 mb-4 p-3 align-center rt-sidebar-last-ele">
 								<a href="#" class="btn btn-icon icon-left btn-primary
 										btn-restore-theme">
@@ -254,8 +264,8 @@
                 </div>
             </footer>
         </div>
- 
-    
+
+
     <script src="{{ asset('js/app.js') }}"></script>
     @livewireScripts
     <!-- General JS Scripts -->
@@ -269,9 +279,9 @@
 
   
     <script src="{{ asset('js/eventos.js') }}"></script>
-   
+
     @yield('js')
-    
+
 </body>
 
 </html>

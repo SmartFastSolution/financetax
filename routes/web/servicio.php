@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GraficosController;
 
 //rutas del menu de mantenimiento
 Route::prefix('servicios')->group(function(){
@@ -13,8 +14,8 @@ Route::prefix('servicios')->group(function(){
        Route::group(['middleware'=>['role_or_permission:super-admin|m-plan']], function(){
             //RUTAS DE LOS  PLANES
             Route::get('/planes', 'Servicios\PlanController@Planes')->name('servicios.planes'); //indice de los planes
-            Route::get('/crear-plan', 'Servicios\PlanController@Plan')->name('servicios.planes.create');// crud de creacion de un plan 
-            Route::post('/store-plan', 'Servicios\PlanController@Store')->name('servicios.planes.store'); //crud de almacenamiento de un plan 
+            Route::get('/crear-plan', 'Servicios\PlanController@Plan')->name('servicios.planes.create');// crud de creacion de un plan
+            Route::post('/store-plan', 'Servicios\PlanController@Store')->name('servicios.planes.store'); //crud de almacenamiento de un plan
 
        });
 
@@ -55,4 +56,5 @@ Route::prefix('servicios')->group(function(){
               //RUTAS DE PROYECCIONES
             Route::get('/proyeccion-gastos-personales', 'Servicios\ServicioController@ProyeccionGasto')->name('proyecciongasto.index'); //ruta de proyeccion de gasto personales
        });
+       Route::view('servicios/contabilidad', 'grafico.contabilidad.index')->name('servicios.contabilidad.index'); //Interface Grafica Servicio Contabilidad
 });

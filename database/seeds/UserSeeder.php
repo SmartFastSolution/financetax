@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-      
+
           //resetea el cache de roles y permisos antes de exportar
           app()[PermissionRegistrar::class]->forgetCachedPermissions();
           $role1 = Role::create(['name'  => 'super-admin']);
@@ -69,5 +69,13 @@ class UserSeeder extends Seeder
         ]);
         $user = User::find(1);
         $user->assignRole($role1);
+
+        // $user = User::create([
+        //     'name'      =>  'Luis López',
+        //     'email'     =>  'luisefrain1985@gmail.com',
+        //     'password'  =>  bcrypt('123456'),
+        //     'estado'    =>  'activo',
+        // ]);
+        // $user->assignRole($role1);
     }
 }

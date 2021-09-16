@@ -13,17 +13,15 @@
                     "url"   : "admin/control-permisos",
                     "name"  : "Lista de Roles",
                     "can"   :"roles"
-
-                  },
-                  {
+                },
+                {
 
                     "route" : "admin.usuario.index",
                     "url"   : "admin/lista-usuarios",
                     "name"  : "Lista de Usuarios",
                     "can"   :"usuarios"
                   }
-              ]
-
+            ]
         },
         {
             "url"  : "",
@@ -104,6 +102,42 @@
                 }
             ]
 
+        },
+
+        {
+            "url"  : "",
+            "name" : "Ingreso de Facturas",
+            "icon" : "grid",
+            "can"  : "usuarios",
+            "submenu" :[
+                {
+                    "route" : "admin.ingreso_facturas.sri.index",
+                    "url"   : "/admin/ingreso_facturas/sri",
+                    "name"  : "Comprobantes SRI",
+                    "can"   :"usuarios"
+                },
+                {
+                    "route" : "admin.ingreso_facturas.ingreso_manual.index",
+                    "url"   : "/admin/ingreso_facturas/ingreso_manual",
+                    "name"  : "Ingreso Manual",
+                    "can"   :"usuarios"
+                }
+
+            ]
+        },
+        {
+            "url"  : "",
+            "name" : "Servicios",
+            "icon" : "grid",
+            "can"  : "usuarios",
+            "submenu" :[
+                {
+                    "route" : "servicios.contabilidad.index",
+                    "url"   : "/servicios/contabilidad",
+                    "name"  : "Grafico Contable",
+                    "can"   :"usuarios"
+                }
+            ]
         },
         {
 
