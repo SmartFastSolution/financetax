@@ -2030,6 +2030,165 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2053,10 +2212,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           "X-CSRF-TOKEN": document.head.querySelector("[name=csrf-token]").content
         }
       },
-      comprobantes: [],
+      facturas: [],
+      notas_credito: [],
+      notas_debito: [],
+      retenciones: [],
+      liquidaciones: [],
+      errores: [],
       ocultarDropZone: false,
       ocultarCarga: true,
-      ocultarTabla: true
+      ocultarTabla: true,
+      contFacturas: 0,
+      contNotaCredito: 0,
+      contNotaDebito: 0,
+      contRetenciones: 0,
+      contLiquidaciones: 0,
+      contErrores: 0,
+      disabledGuardar: true
     };
   },
   components: {
@@ -2074,15 +2245,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 resp = JSON.parse(response.xhr.response);
 
                 if (resp != 0) {
-                  this.comprobantes = resp;
+                  this.facturas = resp.facturas;
+                  this.contFacturas = resp.facturas.length;
+                  this.notas_credito = resp.notas_credito;
+                  this.contNotaCredito = resp.notas_credito.length;
+                  this.notas_debito = resp.notas_debito;
+                  this.contNotaDebito = resp.notas_debito.length;
+                  this.retenciones = resp.retenciones;
+                  this.contRetenciones = resp.retenciones.length;
+                  this.liquidaciones = resp.liquidaciones;
+                  this.contLiquidaciones = resp.liquidaciones.length;
+                  this.errores = resp.errores;
+                  this.contErrores = resp.errores.length;
                   this.ocultarDropZone = true;
                   this.ocultarCarga = true;
                   this.ocultarTabla = false;
+
+                  if (this.contFacturas > 0 || this.contNotaCredito > 0 || this.contNotaDebito > 0 || this.contRetenciones > 0 || this.contLiquidaciones > 0) {
+                    this.disabledGuardar = false;
+                  }
                 } else {
-                  this.$toast.error('Error!', 'Se ha producido un error, vuelva a intentar');
+                  Toast.fire({
+                    icon: 'error',
+                    text: 'Se ha producido un error, vuelva a intentar'
+                  });
                   this.ocultarDropZone = false;
                   this.ocultarCarga = true;
                   this.ocultarTabla = true;
+                  this.disabledGuardar = true;
                 }
 
               case 2:
@@ -2111,6 +2301,74 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     cargaCompleta: function cargaCompleta(file) {
       this.$refs.dropzone.removeFile(file);
+    },
+    exportarExcel: function exportarExcel() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _this.postForm('/comprobante_electronicos/exportarExcel', {
+                  facturas: JSON.stringify(_this.facturas),
+                  notasCredito: JSON.stringify(_this.notas_credito),
+                  notasDebito: JSON.stringify(_this.notas_debito),
+                  retenciones: JSON.stringify(_this.retenciones),
+                  liquidaciones: JSON.stringify(_this.liquidaciones)
+                });
+
+              case 1:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    postForm: function postForm(path, params, method) {
+      method = method || 'post';
+      var form = document.createElement('form');
+      form.setAttribute('method', method);
+      form.setAttribute('action', path);
+      var token = document.createElement('input');
+      token.setAttribute('type', 'hidden');
+      token.setAttribute('name', '_token');
+      token.setAttribute('value', document.head.querySelector("[name=csrf-token]").content);
+      form.appendChild(token);
+
+      for (var key in params) {
+        if (params.hasOwnProperty(key)) {
+          var hiddenField = document.createElement('input');
+          hiddenField.setAttribute('type', 'hidden');
+          hiddenField.setAttribute('name', key);
+          hiddenField.setAttribute('value', params[key]);
+          form.appendChild(hiddenField);
+        }
+      }
+
+      document.body.appendChild(form);
+      form.submit();
+    },
+    reiniciar: function reiniciar() {
+      Object.assign(this.$data, this.$options.data());
+    }
+  },
+  computed: {
+    facturasOrderBy: function facturasOrderBy() {
+      return _.orderBy(this.facturas, 'fechaEmision', 'asc');
+    },
+    notasCredOrderBy: function notasCredOrderBy() {
+      return _.orderBy(this.notas_credito, 'fechaEmision', 'asc');
+    },
+    notasDebOrderBy: function notasDebOrderBy() {
+      return _.orderBy(this.notas_debito, 'fechaEmision', 'asc');
+    },
+    retenOrderBy: function retenOrderBy() {
+      return _.orderBy(this.retenciones, 'fechaEmision', 'asc');
+    },
+    liquidacionesOrderBy: function liquidacionesOrderBy() {
+      return _.orderBy(this.liquidaciones, 'fechaEmision', 'asc');
     }
   }
 });
@@ -82021,7 +82279,7 @@ module.exports = function (css) {
 /*! exports provided: _args, _from, _id, _inBundle, _integrity, _location, _phantomChildren, _requested, _requiredBy, _resolved, _spec, _where, author, browser, bugs, dependencies, description, devDependencies, homepage, license, main, name, repository, scripts, version, default */
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"_args\":[[\"tesseract.js@1.0.19\",\"C:\\\\laragon\\\\www\\\\financiero\"]],\"_from\":\"tesseract.js@1.0.19\",\"_id\":\"tesseract.js@1.0.19\",\"_inBundle\":false,\"_integrity\":\"sha512-UXnCd2GkDOuVwPYv8MryzDwXEPLJ/BjEuT76PWzVC8XhZbsChRkpoiKDSGDbZ2BW2rwg1yBWJ0joSdCTw1umBA==\",\"_location\":\"/tesseract.js\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"tesseract.js@1.0.19\",\"name\":\"tesseract.js\",\"escapedName\":\"tesseract.js\",\"rawSpec\":\"1.0.19\",\"saveSpec\":null,\"fetchSpec\":\"1.0.19\"},\"_requiredBy\":[\"/tesseract-vue\"],\"_resolved\":\"https://registry.npmjs.org/tesseract.js/-/tesseract.js-1.0.19.tgz\",\"_spec\":\"1.0.19\",\"_where\":\"C:\\\\laragon\\\\www\\\\financiero\",\"author\":\"\",\"browser\":{\"./src/node/index.js\":\"./src/browser/index.js\"},\"bugs\":{\"url\":\"https://github.com/naptha/tesseract.js/issues\"},\"dependencies\":{\"file-type\":\"^3.8.0\",\"is-url\":\"1.2.2\",\"isomorphic-fetch\":\"^2.2.1\",\"jpeg-js\":\"^0.2.0\",\"level-js\":\"^2.2.4\",\"node-fetch\":\"^1.6.3\",\"object-assign\":\"^4.1.0\",\"png.js\":\"^0.2.1\",\"tesseract.js-core\":\"^1.0.2\"},\"description\":\"Pure Javascript Multilingual OCR\",\"devDependencies\":{\"babel-preset-es2015\":\"^6.16.0\",\"babelify\":\"^7.3.0\",\"browserify\":\"^13.1.0\",\"concurrently\":\"^3.1.0\",\"envify\":\"^3.4.1\",\"http-server\":\"^0.9.0\",\"pako\":\"^1.0.3\",\"uglify-js\":\"^3.4.9\",\"watchify\":\"^3.7.0\"},\"homepage\":\"https://github.com/naptha/tesseract.js\",\"license\":\"Apache-2.0\",\"main\":\"src/index.js\",\"name\":\"tesseract.js\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/naptha/tesseract.js.git\"},\"scripts\":{\"build\":\"browserify src/index.js -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.js --standalone Tesseract && browserify src/browser/worker.js -t [ babelify --presets [ es2015 ] ] -o dist/worker.js && uglifyjs dist/tesseract.js --source-map -o dist/tesseract.min.js && uglifyjs dist/worker.js --source-map -o dist/worker.min.js\",\"release\":\"npm run build && git commit -am 'new release' && git push && git tag `jq -r '.version' package.json` && git push origin --tags && npm publish\",\"start\":\"concurrently --kill-others \\\"watchify src/index.js  -t [ envify --TESS_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.dev.js --standalone Tesseract\\\" \\\"watchify src/browser/worker.js  -t [ envify --TESS_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/worker.dev.js\\\" \\\"http-server -p 7355\\\"\"},\"version\":\"1.0.19\"}");
+module.exports = JSON.parse("{\"_args\":[[\"tesseract.js@1.0.19\",\"C:\\\\xampp\\\\htdocs\\\\financiero\"]],\"_from\":\"tesseract.js@1.0.19\",\"_id\":\"tesseract.js@1.0.19\",\"_inBundle\":false,\"_integrity\":\"sha512-UXnCd2GkDOuVwPYv8MryzDwXEPLJ/BjEuT76PWzVC8XhZbsChRkpoiKDSGDbZ2BW2rwg1yBWJ0joSdCTw1umBA==\",\"_location\":\"/tesseract.js\",\"_phantomChildren\":{},\"_requested\":{\"type\":\"version\",\"registry\":true,\"raw\":\"tesseract.js@1.0.19\",\"name\":\"tesseract.js\",\"escapedName\":\"tesseract.js\",\"rawSpec\":\"1.0.19\",\"saveSpec\":null,\"fetchSpec\":\"1.0.19\"},\"_requiredBy\":[\"/tesseract-vue\"],\"_resolved\":\"https://registry.npmjs.org/tesseract.js/-/tesseract.js-1.0.19.tgz\",\"_spec\":\"1.0.19\",\"_where\":\"C:\\\\xampp\\\\htdocs\\\\financiero\",\"author\":\"\",\"browser\":{\"./src/node/index.js\":\"./src/browser/index.js\"},\"bugs\":{\"url\":\"https://github.com/naptha/tesseract.js/issues\"},\"dependencies\":{\"file-type\":\"^3.8.0\",\"is-url\":\"1.2.2\",\"isomorphic-fetch\":\"^2.2.1\",\"jpeg-js\":\"^0.2.0\",\"level-js\":\"^2.2.4\",\"node-fetch\":\"^1.6.3\",\"object-assign\":\"^4.1.0\",\"png.js\":\"^0.2.1\",\"tesseract.js-core\":\"^1.0.2\"},\"description\":\"Pure Javascript Multilingual OCR\",\"devDependencies\":{\"babel-preset-es2015\":\"^6.16.0\",\"babelify\":\"^7.3.0\",\"browserify\":\"^13.1.0\",\"concurrently\":\"^3.1.0\",\"envify\":\"^3.4.1\",\"http-server\":\"^0.9.0\",\"pako\":\"^1.0.3\",\"uglify-js\":\"^3.4.9\",\"watchify\":\"^3.7.0\"},\"homepage\":\"https://github.com/naptha/tesseract.js\",\"license\":\"Apache-2.0\",\"main\":\"src/index.js\",\"name\":\"tesseract.js\",\"repository\":{\"type\":\"git\",\"url\":\"git+https://github.com/naptha/tesseract.js.git\"},\"scripts\":{\"build\":\"browserify src/index.js -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.js --standalone Tesseract && browserify src/browser/worker.js -t [ babelify --presets [ es2015 ] ] -o dist/worker.js && uglifyjs dist/tesseract.js --source-map -o dist/tesseract.min.js && uglifyjs dist/worker.js --source-map -o dist/worker.min.js\",\"release\":\"npm run build && git commit -am 'new release' && git push && git tag `jq -r '.version' package.json` && git push origin --tags && npm publish\",\"start\":\"concurrently --kill-others \\\"watchify src/index.js  -t [ envify --TESS_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/tesseract.dev.js --standalone Tesseract\\\" \\\"watchify src/browser/worker.js  -t [ envify --TESS_ENV development ] -t [ babelify --presets [ es2015 ] ] -o dist/worker.dev.js\\\" \\\"http-server -p 7355\\\"\"},\"version\":\"1.0.19\"}");
 
 /***/ }),
 
@@ -82507,7 +82765,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row" }, [
@@ -82573,7 +82831,7 @@ var render = function() {
                 ),
                 _vm._v(" "),
                 _c(
-                  "table",
+                  "div",
                   {
                     directives: [
                       {
@@ -82582,30 +82840,487 @@ var render = function() {
                         value: !_vm.ocultarTabla,
                         expression: "!ocultarTabla"
                       }
-                    ],
-                    staticClass:
-                      "table table-striped table-condensed table-bordered table-sm table-hover"
+                    ]
                   },
                   [
-                    _vm._m(0),
+                    _c("h4", { staticClass: "mb-4" }, [
+                      _vm._v(
+                        "\n                                    Lista de Comprobantes\n                                    "
+                      ),
+                      _c(
+                        "div",
+                        { staticClass: "btn-group btn-group-sm float-right" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success",
+                              attrs: {
+                                disabled: _vm.disabledGuardar,
+                                title: "Guardar Comprobantes"
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-save fa-2x",
+                                attrs: { "aria-hidden": "true" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { title: "Regresar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.reiniciar()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-arrow-left fa-2x",
+                                attrs: { "aria-hidden": "true" }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.comprobantes, function(item, index) {
-                        return _c("tr", { key: item.key }, [
-                          _c("td", [_vm._v(_vm._s(index + 1))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.fechaEmision))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.ruc))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.totalSinImpuestos))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(item.importeTotal))])
-                        ])
-                      }),
-                      0
-                    )
+                    _c("ul", { staticClass: "nav nav-tabs" }, [
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link active",
+                            attrs: { "data-toggle": "tab", href: "#factura" }
+                          },
+                          [
+                            _vm._v("Facturas "),
+                            _c("span", {
+                              staticClass: "badge badge-primary",
+                              domProps: {
+                                textContent: _vm._s(_vm.contFacturas)
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            attrs: {
+                              "data-toggle": "tab",
+                              href: "#nota_credito"
+                            }
+                          },
+                          [
+                            _vm._v("Notas de Crédito "),
+                            _c("span", {
+                              staticClass: "badge badge-success",
+                              domProps: {
+                                textContent: _vm._s(_vm.contNotaCredito)
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            attrs: {
+                              "data-toggle": "tab",
+                              href: "#nota_debito"
+                            }
+                          },
+                          [
+                            _vm._v("Notas de Débito "),
+                            _c("span", {
+                              staticClass: "badge badge-info",
+                              domProps: {
+                                textContent: _vm._s(_vm.contNotaDebito)
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            attrs: {
+                              "data-toggle": "tab",
+                              href: "#retenciones"
+                            }
+                          },
+                          [
+                            _vm._v("Comprobantes de Retención "),
+                            _c("span", {
+                              staticClass: "badge badge-warning",
+                              domProps: {
+                                textContent: _vm._s(_vm.contRetenciones)
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            attrs: {
+                              "data-toggle": "tab",
+                              href: "#liquidaciones"
+                            }
+                          },
+                          [
+                            _vm._v("Liquidaciones "),
+                            _c("span", {
+                              staticClass: "badge badge-secondary",
+                              domProps: {
+                                textContent: _vm._s(_vm.contLiquidaciones)
+                              }
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "nav-item" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "nav-link",
+                            attrs: { "data-toggle": "tab", href: "#errores" }
+                          },
+                          [
+                            _vm._v("Errores "),
+                            _c("span", {
+                              staticClass: "badge badge-danger",
+                              domProps: { textContent: _vm._s(_vm.contErrores) }
+                            })
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "tab-content" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane container active px-0 pt-2",
+                          attrs: { id: "factura" }
+                        },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-striped table-condensed table-bordered table-sm table-hover"
+                            },
+                            [
+                              _vm._m(0),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.facturasOrderBy, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c("tr", { key: item.key }, [
+                                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.fechaEmision))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tipoComprobante))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.subTotal))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.descuento))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tarifaDifCero))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.tarifaCero))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.iva))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.importeTotal))
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane container fade px-0 pt-2",
+                          attrs: { id: "nota_credito" }
+                        },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-striped table-condensed table-bordered table-sm table-hover"
+                            },
+                            [
+                              _vm._m(1),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.notasCredOrderBy, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c("tr", { key: item.key }, [
+                                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.fechaEmision))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tipoComprobante))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tarifaDifCero))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.tarifaCero))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.iva))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.importeTotal))
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane container fade px-0 pt-2",
+                          attrs: { id: "nota_debito" }
+                        },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-striped table-condensed table-bordered table-sm table-hover"
+                            },
+                            [
+                              _vm._m(2),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.notasDebOrderBy, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c("tr", { key: item.key }, [
+                                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.fechaEmision))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tipoComprobante))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tarifaDifCero))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.tarifaCero))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.iva))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.importeTotal))
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane container fade px-0 pt-2",
+                          attrs: { id: "retenciones" }
+                        },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-striped table-condensed table-bordered table-sm table-hover"
+                            },
+                            [
+                              _vm._m(3),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.retenOrderBy, function(item, index) {
+                                  return _c("tr", { key: item.key }, [
+                                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.fechaEmision))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tipoComprobante))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.tipoImp))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.porcRet))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.baseImponible))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.valorRet))])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane container fade px-0 pt-2",
+                          attrs: { id: "liquidaciones" }
+                        },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-striped table-condensed table-bordered table-sm table-hover"
+                            },
+                            [
+                              _vm._m(4),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.liquidacionesOrderBy, function(
+                                  item,
+                                  index
+                                ) {
+                                  return _c("tr", { key: item.key }, [
+                                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.fechaEmision))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tipoComprobante))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.subTotal))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.descuento))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.tarifaDifCero))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.tarifaCero))]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.iva))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(item.importeTotal))
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "tab-pane container fade px-0 pt-2",
+                          attrs: { id: "errores" }
+                        },
+                        [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-striped table-condensed table-bordered table-sm table-hover"
+                            },
+                            [
+                              _vm._m(5),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.errores, function(item, index) {
+                                  return _c("tr", { key: item.key }, [
+                                    _c("td", [_vm._v(_vm._s(index + 1))]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-left" }, [
+                                      _vm._v(_vm._s(item.ClaveAcceso))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(item.mensaje))])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ])
                   ]
                 )
               ])
@@ -82626,11 +83341,115 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", [_vm._v("Fecha Emisión")]),
       _vm._v(" "),
-      _c("th", [_vm._v("RUC")]),
+      _c("th", [_vm._v("T. Comprobante")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Total Sin Impuesto")]),
+      _c("th", [_vm._v("SubTotal")]),
       _vm._v(" "),
-      _c("th", [_vm._v("Importe Total")])
+      _c("th", [_vm._v("Descuento")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Dif. Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Iva")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Total")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("N°")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Fecha Emisión")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("T. Comprobante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Dif. Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Iva")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Total")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("N°")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Fecha Emisión")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("T. Comprobante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Dif. Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Iva")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Total")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("N°")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Fecha Emisión")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("T. Comprobante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("T. Impuesto")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("% Retenido")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Base Imponible")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Valor Ret.")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("N°")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Fecha Emisión")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("T. Comprobante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("SubTotal")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Descuento")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Dif. Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tarifa Cero")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Iva")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Total")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("th", [_vm._v("N°")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Clave Acceso")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Mensaje")])
     ])
   }
 ]
@@ -101657,8 +102476,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\laragon\www\financiero\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\laragon\www\financiero\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\financiero\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\financiero\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
