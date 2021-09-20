@@ -2370,7 +2370,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       form.submit();
     },
     reiniciar: function reiniciar() {
-      Object.assign(this.$data, this.$options.data());
+      //Object.assign(this.$data, this.$options.data());
+      window.location.href = "/admin/ingreso_facturas/sri";
     }
   },
   computed: {

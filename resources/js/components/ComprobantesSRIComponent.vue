@@ -357,7 +357,8 @@
                 document.body.appendChild(form); form.submit();
             },
             reiniciar(){
-                Object.assign(this.$data, this.$options.data());
+                //Object.assign(this.$data, this.$options.data());
+                window.location.href="/admin/ingreso_facturas/sri";
             },
 
         },
