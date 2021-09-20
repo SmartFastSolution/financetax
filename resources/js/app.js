@@ -23,6 +23,9 @@ require('datatables.net-buttons/js/buttons.html5')
 require('datatables.net-datetime')
 import print from 'datatables.net-buttons/js/buttons.print'
 
+import VuePaginate from 'vue-paginate'
+Vue.use(VuePaginate)
+
 Vue.prototype.$tablaGlobal = function(nombre_tabla){
     this.$nextTick(()=>{
         $(nombre_tabla).DataTable().destroy();

@@ -31,171 +31,188 @@
                                         </div>
                                     </h4>
                                     <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-toggle="tab" href="#factura">Facturas <span v-text="contFacturas" class="badge badge-primary"></span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#nota_credito">Notas de Crédito <span v-text="contNotaCredito" class="badge badge-success"></span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#nota_debito">Notas de Débito <span v-text="contNotaDebito" class="badge badge-info"></span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#retenciones">Comprobantes de Retención <span v-text="contRetenciones" class="badge badge-warning"></span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#liquidaciones">Liquidaciones <span v-text="contLiquidaciones" class="badge badge-secondary"></span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#errores">Errores <span v-text="contErrores" class="badge badge-danger"></span></a>
-                                    </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#factura">Facturas <span v-text="contFacturas" class="badge badge-primary"></span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#nota_credito">Notas de Crédito <span v-text="contNotaCredito" class="badge badge-success"></span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#nota_debito">Notas de Débito <span v-text="contNotaDebito" class="badge badge-info"></span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#retenciones">Comprobantes de Retención <span v-text="contRetenciones" class="badge badge-warning"></span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#liquidaciones">Liquidaciones <span v-text="contLiquidaciones" class="badge badge-secondary"></span></a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#errores">Errores <span v-text="contErrores" class="badge badge-danger"></span></a>
+                                        </li>
                                     </ul>
-
                                     <!-- Tab panes -->
                                     <div class="tab-content">
                                         <div class="tab-pane container active px-0 pt-2" id="factura">
-                                            <table class="table table-striped table-condensed table-bordered table-sm table-hover">
-                                                <thead>
-                                                    <th>N°</th>
-                                                    <th>Fecha Emisión</th>
-                                                    <th>T. Comprobante</th>
-                                                    <th>SubTotal</th>
-                                                    <th>Descuento</th>
-                                                    <th>Tarifa Dif. Cero</th>
-                                                    <th>Tarifa Cero</th>
-                                                    <th>Iva</th>
-                                                    <th>Total</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in facturasOrderBy" :key="item.key">
-                                                        <td>{{ index + 1 }}</td>
-                                                        <td>{{ item.fechaEmision }}</td>
-                                                        <td>{{ item.tipoComprobante }}</td>
-                                                        <td>{{ item.subTotal }}</td>
-                                                        <td>{{ item.descuento }}</td>
-                                                        <td>{{ item.tarifaDifCero }}</td>
-                                                        <td>{{ item.tarifaCero }}</td>
-                                                        <td>{{ item.iva }}</td>
-                                                        <td>{{ item.importeTotal }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table  table-striped table-condensed table-bordered table-sm table-hover" style="width:100%;">
+                                                    <thead>
+                                                        <th>N°</th>
+                                                        <th>Fecha Emisión</th>
+                                                        <th>T. Comprobante</th>
+                                                        <th>SubTotal</th>
+                                                        <th>Descuento</th>
+                                                        <th>Tarifa Dif. Cero</th>
+                                                        <th>Tarifa Cero</th>
+                                                        <th>Iva</th>
+                                                        <th>Total</th>
+                                                    </thead>
+                                                    <paginate name="facturas" :list="facturas" :per="numPagination" tag="tbody">
+                                                        <tr v-for="(item,index) in paginated('facturas') " :key="item.key">
+                                                            <td>{{ index + 1 }}</td>
+                                                            <td>{{ item.fechaEmision }}</td>
+                                                            <td>{{ item.tipoComprobante }}</td>
+                                                            <td>{{ item.subTotal }}</td>
+                                                            <td>{{ item.descuento }}</td>
+                                                            <td>{{ item.tarifaDifCero }}</td>
+                                                            <td>{{ item.tarifaCero }}</td>
+                                                            <td>{{ item.iva }}</td>
+                                                            <td>{{ item.importeTotal }}</td>
+                                                        </tr>
+                                                    </paginate>
+                                                </table>
+                                                <paginate-links for="facturas" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                            </div>
                                         </div>
                                         <div class="tab-pane container fade px-0 pt-2" id="nota_credito">
-                                            <table class="table table-striped table-condensed table-bordered table-sm table-hover">
-                                                <thead>
-                                                    <th>N°</th>
-                                                    <th>Fecha Emisión</th>
-                                                    <th>T. Comprobante</th>
-                                                    <th>Tarifa Dif. Cero</th>
-                                                    <th>Tarifa Cero</th>
-                                                    <th>Iva</th>
-                                                    <th>Total</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in notasCredOrderBy" :key="item.key">
-                                                        <td>{{ index + 1 }}</td>
-                                                        <td>{{ item.fechaEmision }}</td>
-                                                        <td>{{ item.tipoComprobante }}</td>
-                                                        <td>{{ item.tarifaDifCero }}</td>
-                                                        <td>{{ item.tarifaCero }}</td>
-                                                        <td>{{ item.iva }}</td>
-                                                        <td>{{ item.importeTotal }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-condensed table-bordered table-sm table-hover">
+                                                    <thead>
+                                                        <th>N°</th>
+                                                        <th>Fecha Emisión</th>
+                                                        <th>T. Comprobante</th>
+                                                        <th>Tarifa Dif. Cero</th>
+                                                        <th>Tarifa Cero</th>
+                                                        <th>Iva</th>
+                                                        <th>Total</th>
+                                                    </thead>
+                                                    <paginate name="notas_credito" :list="notas_credito" :per="numPagination" tag="tbody">
+                                                        <tr v-for="(item,index) in paginated('notas_credito')" :key="item.key">
+                                                            <td>{{ index + 1 }}</td>
+                                                            <td>{{ item.fechaEmision }}</td>
+                                                            <td>{{ item.tipoComprobante }}</td>
+                                                            <td>{{ item.tarifaDifCero }}</td>
+                                                            <td>{{ item.tarifaCero }}</td>
+                                                            <td>{{ item.iva }}</td>
+                                                            <td>{{ item.importeTotal }}</td>
+                                                        </tr>
+                                                    </paginate>
+                                                </table>
+                                                <paginate-links for="notas_credito" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                            </div>
                                         </div>
                                         <div class="tab-pane container fade px-0 pt-2" id="nota_debito">
-                                            <table class="table table-striped table-condensed table-bordered table-sm table-hover">
-                                                <thead>
-                                                    <th>N°</th>
-                                                    <th>Fecha Emisión</th>
-                                                    <th>T. Comprobante</th>
-                                                    <th>Tarifa Dif. Cero</th>
-                                                    <th>Tarifa Cero</th>
-                                                    <th>Iva</th>
-                                                    <th>Total</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in notasDebOrderBy" :key="item.key">
-                                                        <td>{{ index + 1 }}</td>
-                                                        <td>{{ item.fechaEmision }}</td>
-                                                        <td>{{ item.tipoComprobante }}</td>
-                                                        <td>{{ item.tarifaDifCero }}</td>
-                                                        <td>{{ item.tarifaCero }}</td>
-                                                        <td>{{ item.iva }}</td>
-                                                        <td>{{ item.importeTotal }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-condensed table-bordered table-sm table-hover">
+                                                    <thead>
+                                                        <th>N°</th>
+                                                        <th>Fecha Emisión</th>
+                                                        <th>T. Comprobante</th>
+                                                        <th>Tarifa Dif. Cero</th>
+                                                        <th>Tarifa Cero</th>
+                                                        <th>Iva</th>
+                                                        <th>Total</th>
+                                                    </thead>
+                                                    <paginate name="notas_debito" :list="notas_debito" :per="numPagination" tag="tbody">
+                                                        <tr v-for="(item,index) in paginated('notas_debito')" :key="item.key">
+                                                            <td>{{ index + 1 }}</td>
+                                                            <td>{{ item.fechaEmision }}</td>
+                                                            <td>{{ item.tipoComprobante }}</td>
+                                                            <td>{{ item.tarifaDifCero }}</td>
+                                                            <td>{{ item.tarifaCero }}</td>
+                                                            <td>{{ item.iva }}</td>
+                                                            <td>{{ item.importeTotal }}</td>
+                                                        </tr>
+                                                    </paginate>
+                                                </table>
+                                                <paginate-links for="notas_debito" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                            </div>
                                         </div>
                                         <div class="tab-pane container fade px-0 pt-2" id="retenciones">
-                                            <table class="table table-striped table-condensed table-bordered table-sm table-hover">
-                                                <thead>
-                                                    <th>N°</th>
-                                                    <th>Fecha Emisión</th>
-                                                    <th>T. Comprobante</th>
-                                                    <th>T. Impuesto</th>
-                                                    <th>% Retenido</th>
-                                                    <th>Base Imponible</th>
-                                                    <th>Valor Ret.</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in retenOrderBy" :key="item.key">
-                                                        <td>{{ index + 1 }}</td>
-                                                        <td>{{ item.fechaEmision }}</td>
-                                                        <td>{{ item.tipoComprobante }}</td>
-                                                        <td>{{ item.tipoImp }}</td>
-                                                        <td>{{ item.porcRet }}</td>
-                                                        <td>{{ item.baseImponible }}</td>
-                                                        <td>{{ item.valorRet }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-condensed table-bordered table-sm table-hover">
+                                                    <thead>
+                                                        <th>N°</th>
+                                                        <th>Fecha Emisión</th>
+                                                        <th>T. Comprobante</th>
+                                                        <th>T. Impuesto</th>
+                                                        <th>% Retenido</th>
+                                                        <th>Base Imponible</th>
+                                                        <th>Valor Ret.</th>
+                                                    </thead>
+                                                    <paginate name="retenciones" :list="retenciones" :per="numPagination" tag="tbody">
+                                                        <tr v-for="(item,index) in paginated('retenciones')" :key="item.key">
+                                                            <td>{{ index + 1 }}</td>
+                                                            <td>{{ item.fechaEmision }}</td>
+                                                            <td>{{ item.tipoComprobante }}</td>
+                                                            <td>{{ item.tipoImp }}</td>
+                                                            <td>{{ item.porcRet }}</td>
+                                                            <td>{{ item.baseImponible }}</td>
+                                                            <td>{{ item.valorRet }}</td>
+                                                        </tr>
+                                                    </paginate>
+                                                </table>
+                                                <paginate-links for="retenciones" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                            </div>
                                         </div>
                                         <div class="tab-pane container fade px-0 pt-2" id="liquidaciones">
-                                            <table class="table table-striped table-condensed table-bordered table-sm table-hover">
-                                                <thead>
-                                                    <th>N°</th>
-                                                    <th>Fecha Emisión</th>
-                                                    <th>T. Comprobante</th>
-                                                    <th>SubTotal</th>
-                                                    <th>Descuento</th>
-                                                    <th>Tarifa Dif. Cero</th>
-                                                    <th>Tarifa Cero</th>
-                                                    <th>Iva</th>
-                                                    <th>Total</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in liquidacionesOrderBy" :key="item.key">
-                                                        <td>{{ index + 1 }}</td>
-                                                        <td>{{ item.fechaEmision }}</td>
-                                                        <td>{{ item.tipoComprobante }}</td>
-                                                        <td>{{ item.subTotal }}</td>
-                                                        <td>{{ item.descuento }}</td>
-                                                        <td>{{ item.tarifaDifCero }}</td>
-                                                        <td>{{ item.tarifaCero }}</td>
-                                                        <td>{{ item.iva }}</td>
-                                                        <td>{{ item.importeTotal }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-condensed table-bordered table-sm table-hover">
+                                                    <thead>
+                                                        <th>N°</th>
+                                                        <th>Fecha Emisión</th>
+                                                        <th>T. Comprobante</th>
+                                                        <th>SubTotal</th>
+                                                        <th>Descuento</th>
+                                                        <th>Tarifa Dif. Cero</th>
+                                                        <th>Tarifa Cero</th>
+                                                        <th>Iva</th>
+                                                        <th>Total</th>
+                                                    </thead>
+                                                    <paginate name="liquidaciones" :list="liquidaciones" :per="numPagination" tag="tbody">
+                                                        <tr v-for="(item,index) in paginated('liquidaciones')" :key="item.key">
+                                                            <td>{{ index + 1 }}</td>
+                                                            <td>{{ item.fechaEmision }}</td>
+                                                            <td>{{ item.tipoComprobante }}</td>
+                                                            <td>{{ item.subTotal }}</td>
+                                                            <td>{{ item.descuento }}</td>
+                                                            <td>{{ item.tarifaDifCero }}</td>
+                                                            <td>{{ item.tarifaCero }}</td>
+                                                            <td>{{ item.iva }}</td>
+                                                            <td>{{ item.importeTotal }}</td>
+                                                        </tr>
+                                                    </paginate>
+                                                </table>
+                                                <paginate-links for="liquidaciones" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                            </div>
                                         </div>
                                         <div class="tab-pane container fade px-0 pt-2" id="errores">
-                                            <table class="table table-striped table-condensed table-bordered table-sm table-hover">
-                                                <thead>
-                                                    <th>N°</th>
-                                                    <th>Clave Acceso</th>
-                                                    <th>Mensaje</th>
-                                                </thead>
-                                                <tbody>
-                                                    <tr v-for="(item,index) in errores" :key="item.key">
-                                                        <td>{{ index + 1 }}</td>
-                                                        <td class="text-left">{{ item.ClaveAcceso }}</td>
-                                                        <td>{{ item.mensaje }}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-condensed table-bordered table-sm table-hover">
+                                                    <thead>
+                                                        <th>N°</th>
+                                                        <th>Clave Acceso</th>
+                                                        <th>Mensaje</th>
+                                                    </thead>
+                                                    <paginate name="errores" :list="errores" :per="numPagination" tag="tbody">
+                                                        <tr v-for="(item,index) in paginated('errores')" :key="item.key">
+                                                            <td>{{ index + 1 }}</td>
+                                                            <td class="text-left">{{ item.ClaveAcceso }}</td>
+                                                            <td>{{ item.mensaje }}</td>
+                                                        </tr>
+                                                    </paginate>
+                                                </table>
+                                                <paginate-links for="errores" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -249,6 +266,8 @@
                 contLiquidaciones: 0,
                 contErrores: 0,
                 disabledGuardar: true,
+                paginate: ['facturas','notas_credito','notas_debito','retenciones','liquidaciones','errores'],
+                numPagination: 10,
             }
         },
         components: {
@@ -361,3 +380,9 @@
         }
     }
 </script>
+
+<style>
+.page-item {
+    cursor: pointer;
+}
+</style>
