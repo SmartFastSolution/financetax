@@ -11,8 +11,8 @@ class Razoncorriente extends Model
        
         'activo_corriente',
         'pasivo_corriente',
-        'razon_social',
-        'ano',
+        'resultado',
+        'periodo',
         'user_id',
     ];
 }

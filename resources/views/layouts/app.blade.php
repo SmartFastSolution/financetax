@@ -13,6 +13,7 @@
    
   
     @livewireStyles
+   
     
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">  
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
@@ -269,6 +270,7 @@
        
     <script src="{{ asset('js/app.js') }}"></script>
     @livewireScripts
+    
     <!-- General JS Scripts -->
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
@@ -280,7 +282,12 @@
 
   
     <script src="{{ asset('js/eventos.js') }}"></script>
+  
+   
 
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+    
+    @livewireChartsScripts
     @yield('js')
 
 </body>

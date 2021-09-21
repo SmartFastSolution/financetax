@@ -22,8 +22,7 @@ class RazoncorrienteImport implements ToModel, WithHeadingRow
             
             'activo_corriente'   => $row['activo_corriente'],
             'pasivo_corriente'   => $row['pasivo_corriente'],
-            'ano'                => $row['ano'],
-            'razon_social'       => $row['razon_social'],
+            'periodo'            => $row['periodo'],
             'user_id'            => Auth::user()->id,
         ]);
     }

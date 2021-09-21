@@ -15,12 +15,12 @@ class CreateRazoncorrientesTable extends Migration
     {
         Schema::create('razoncorrientes', function (Blueprint $table) {
             $table->id();
-            $table->string('ano')->nullable();
+            $table->string('periodo')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string("activo_corriente")->nullable();
             $table->string("pasivo_corriente")->nullable();
-            $table->float('razon_social', 6, 3)->nullable();
+            $table->float('resultado', 6, 3)->nullable();
             $table->timestamps();
         });
     }
