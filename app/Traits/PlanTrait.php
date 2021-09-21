@@ -36,7 +36,7 @@ trait PlanTrait
 
 
     public function UpdatePlan($request){
-            
+
         $p                   =  Plan::find($request->plan_id);
         $p->descripcion      = $request->descripcion;
         $p->costo            = $request->costo;
@@ -62,5 +62,5 @@ trait PlanTrait
         $response = array('mensaje' => "Registro Actualizado Correctamente");
         return $response;
     }
-    
+
 }

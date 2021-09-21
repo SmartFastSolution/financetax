@@ -22,8 +22,8 @@ class Plan extends Model
        {
            return $this->morphOne('App\Document', 'documentable');
        }
-   
-   
+
+
        public function subservicio(){
            return $this->belongsTo('App\Servicios\Subservice');
        }

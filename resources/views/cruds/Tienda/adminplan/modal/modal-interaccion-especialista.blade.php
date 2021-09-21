@@ -45,21 +45,18 @@
                     </div>
                 </div>
 
-                <!-- Documentos -->
-                <!-- <div class="row">
-                    <div class="form-group col-md-12">
-                        <div class="mb-3">
-                            <label for="filename"> Elegir Documentos</label>
-                            <input type="file" wire:model="documento" multiple class="form-control">
-                            @error('documento') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
+                <div class="form-group col-md-12">
+                        <label class="font-weight-bold text-dark" for="inputPassword4">Documentos</label>
+                        <input type="file" wire:model.defer="documentos" multiple>
+                        @error('documentos')
+                        <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
+                        @enderror
                     </div>
-                </div> -->
+
 
             </div>
             <div class="modal-footer br">
-
-                <button type="button" class="btn btn-success" wire:click="enviarMensaje">Enviar </button>
+            <button type="submit" wire:click="enviarMensaje" class="btn btn-success">Enviar </button>
 
             </div>
         </div>
