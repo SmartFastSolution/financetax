@@ -275,16 +275,8 @@
     <script src="{{ asset('assets/js/app.min.js') }}"></script>
     <script src="{{ asset('assets/js/scripts.js') }}"></script>
     <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js') }}"></script>
-    <script src="{{ asset('//cdn.jsdelivr.net/npm/sweetalert2@11') }}"></script>
-    {{-- <script src="{{ asset('../node_modules/ckeditor4/ckeditor.js') }}"></script>
-    <script src="{{ asset('../node_modules/ckeditor4-vue/dist/ckeditor.js') }}"></script> --}}
-    
-
-  
+    <script src="{{ asset('//cdn.jsdelivr.net/npm/sweetalert2@11') }}"></script>  
     <script src="{{ asset('js/eventos.js') }}"></script>
-  
-   
-
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
     
     @livewireChartsScripts

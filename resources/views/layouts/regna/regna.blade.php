@@ -42,10 +42,9 @@
     <div class="container">
 
       <div id="logo" class="pull-left">
-        {{-- <a href="index.html"><img src="regna/assets/img/logosolution1.png" alt=""></a> --}}
+     
         <a href="{{ url('/page') }}"> <p style="color: white">SolutionFinanceTax</p> </a>
-        <!-- Uncomment below if you prefer to use a text logo -->
-        <!--<h1><a href="#hero">Regna</a></h1>-->
+       
       </div>
 
       <nav id="nav-menu-container">
@@ -115,16 +114,11 @@
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong>Regna</strong>. All Rights Reserved
+        &copy; Copyright <strong></strong>. Todos Los Derechos Reservados
       </div>
       <div class="credits">
-        <!--
-        All the links in the footer should remain intact.
-        You can delete the links only if you purchased the pro version.
-        Licensing information: https://bootstrapmade.com/license/
-        Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/buy/?theme=Regna
-      -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+       
+        Creado por <a href="">SmartFastSolution</a>
       </div>
     </div>
   </footer><!-- End Footer -->
