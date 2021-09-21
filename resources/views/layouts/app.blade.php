@@ -4,15 +4,15 @@
 <!-- Copied from http://radixtouch.in/templates/admin/aegis/source/light/index.html by Cyotek WebCopy 1.7.0.600, Saturday, September 21, 2019, 2:51:57 AM -->
 
 <head>
-   
+
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>SOLUTIONFINANCETAX</title>
     <!-- General CSS Files -->
-   
-  
+
+
     @livewireStyles
    
     
@@ -21,7 +21,7 @@
 
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/bundles/izitoast/css/iziToast.min.css') }}">
-   
+
     <!-- Template CSS -->
 
     <link href="{{ asset('assets/datatables/css/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
@@ -30,15 +30,10 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
-    @yield('style')
 
 
-
-    <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
     @laravelPWA
     @yield('style')
-   
-    
 </head>
 
 <body>
@@ -268,7 +263,7 @@
             </footer>
         </div>
 
-       
+
     <script src="{{ asset('js/app.js') }}"></script>
     @livewireScripts
     
