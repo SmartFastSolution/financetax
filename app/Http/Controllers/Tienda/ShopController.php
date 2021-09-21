@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Tienda;
 
+use App\DocumentosInteraccion;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TiendaRequest;
 use App\Servicios\Service;
@@ -11,6 +13,9 @@ use App\Servicios\Plan;
 use App\Servicios\Tipoplan;
 use App\Tienda\Shop;
 use App\Traits\ShopTrait;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ShopController extends Controller
 {
@@ -72,7 +77,7 @@ class ShopController extends Controller
 
 
     //almacenamiento del data
-    public function Store(TiendaRequest $request)
+    public function Storee(TiendaRequest $request)
     {
 
         return response()->json($this->CreateData($request), 201);
@@ -143,6 +148,63 @@ class ShopController extends Controller
     {
 
         return view('cruds.cliente.listacompra');
+    }
+
+    /* public function store(Request $request)
+    {
+        $max_size = (int)ini_get('upload_max_filesize') * 10240;
+        $files = $request->file('files');
+        $user_id = Auth::id();
+
+
+
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                $fileName = Str::slug($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension() ;
+
+                if (Storage::putFileAs('/public/' . $user_id . '/', $file, $fileName)) {
+                    DocumentosInteraccion::create([
+                        'user_id'               => $user_id,
+                        'nombre'                => $fileName,
+                    ]);
+                }
+            }
+
+            return back();
+
+        } else {
+            return 'Error';
+        }
+
+    } */
+
+
+    public function store(Request $request)
+    {
+        $max_size = (int)ini_get('upload_max_filesize') * 10240;
+        $files = $request->file('files');
+        $user_id = Auth::id();
+
+
+
+        if ($request->hasFile('files')) {
+            foreach ($files as $file) {
+                $fileName = Str::slug($file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension() ;
+
+                if (Storage::putFileAs('/public/' . $user_id . '/', $file, $fileName)) {
+                    DocumentosInteraccion::create([
+                        'user_id'               => $user_id,
+                        'nombre'                => $fileName,
+                    ]);
+                }
+            }
+
+            return back();
+
+        } else {
+            return 'Error';
+        }
+
     }
 
 

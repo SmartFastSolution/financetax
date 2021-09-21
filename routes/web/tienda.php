@@ -11,8 +11,8 @@ Route::prefix('tienda')->group(function(){
         Route::get('/servicios/{id}','Tienda\ShopController@access')->name('subservicios');   //ruta para acceder a los subservicios de cada servicio
         Route::get('/detalle-subservicios/{id}','Tienda\ShopController@access2')->name('subservicios.detalle');
         Route::post('/obtener-plan', 'Tienda\ShopController@getPlanes')->name('tienda.obtener.plan');  //ruta obtener el plan del tipo de plan
-        Route::post('/storeplan', 'Tienda\ShopController@Store')->name('store.plan.cliente'); //crud de almacenamiento de un plan
-
+        Route::post('/storeplan', 'Tienda\ShopController@Storee')->name('store.plan.cliente'); //crud de almacenamiento de un plan
+        Route::post('/upload', 'Tienda\ShopController@store')->name('documentos.files.stores'); //para subir requisitos en la interaccion
 
     });
 
@@ -21,6 +21,11 @@ Route::prefix('tienda')->group(function(){
         Route::get('/lista-compra', 'Tienda\ShopController@ListaPlanesCliente')->name('cliente.lista.index');
         Route::get('/show-detalle-compra/{shop}/show', 'Tienda\ClienteController@ShowDataCliente')->name('cliente.detalle.compra');
         Route::get('/interaccion-compra/{shop}/show', 'Tienda\ClienteController@InteraccionCliente')->name('cliente.interaccion');
+        Route::post('/upload', 'Tienda\ClienteController@store')->name('documentos.files.stores'); //para subir requisitos en la interaccion
+
+
+
+
     });
     Route::group(['middleware'=>['role_or_permission:super-admin|c-admtienda']], function(){
         //RUTA DE LISTA DE PLANES SOLICITADOS POR EL CLIENTE

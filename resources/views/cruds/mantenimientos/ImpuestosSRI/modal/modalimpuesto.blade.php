@@ -18,7 +18,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputEmail3" class=" text-dark font-weight-bold">Descripción</label>
                         <input type="text" wire:model.defer="descripcion"
-                            class="form-control @error('descripcion') is-invalid @enderror" placeholder="Cuenta">
+                            class="form-control @error('descripcion') is-invalid @enderror" placeholder="Descripción">
                         @error('descripcion')
                             <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
                         @enderror
@@ -26,7 +26,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputEmail3" class=" text-dark font-weight-bold">Codigo SRI</label>
                         <input type="text" wire:model.defer="codigosri"
-                            class="form-control @error('codigosri') is-invalid @enderror" placeholder="Cuenta">
+                            class="form-control @error('codigosri') is-invalid @enderror" placeholder="Codigo SRI">
                         @error('codigosri')
                             <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
                         @enderror
@@ -36,7 +36,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputEmail3" class=" text-dark font-weight-bold">Porcentaje</label>
                         <input type="numb" wire:model.defer="porcentaje"
-                            class="form-control @error('porcentaje') is-invalid @enderror" placeholder="Codigo">
+                            class="form-control @error('porcentaje') is-invalid @enderror" placeholder="0.00">
                         @error('porcentaje')
                             <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
                         @enderror
@@ -44,7 +44,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputEmail3" class=" text-dark font-weight-bold">Fecha Actualización</label>
                         <input type="date" wire:model.defer="fechaactualizacion"
-                            class="form-control @error('fechaactualizacion') is-invalid @enderror" placeholder="Cuenta">
+                            class="form-control @error('fechaactualizacion') is-invalid @enderror" placeholder="">
                         @error('fechaactualizacion')
                             <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
                         @enderror
@@ -75,10 +75,10 @@
             <div class="modal-footer br">
 
                 @if ($editMode)
-                    <button type="button" class="btn btn-warning" wire:click="Update">Actualizar Plan</button>
+                    <button type="button" class="btn btn-warning" wire:click="Update">Actualizar Impuesto</button>
                 @else
                     @if ($createMode) disabled @endif
-                    <button type="button" class="btn btn-primary" @if ($createMode) disabled @endif wire:click="Create">Crear Plan</button>
+                    <button type="button" class="btn btn-primary" @if ($createMode) disabled @endif wire:click="Create">Crear Impuesto</button>
                 @endif
 
             </div>

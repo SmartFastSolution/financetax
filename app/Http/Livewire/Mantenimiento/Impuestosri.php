@@ -67,7 +67,7 @@ class Impuestosri extends Component
         $this->validate([
             'descripcion'          =>'required',
             'codigosri'            =>'required',
-            'porcentaje'           =>'required',
+            'porcentaje'           => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
             'fechaactualizacion'   =>'required',
            
 
@@ -113,7 +113,7 @@ class Impuestosri extends Component
         $this->validate([
             'descripcion'          =>'required',
             'codigosri'            =>'required',
-            'porcentaje'           =>'required',
+            'porcentaje'           => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
             'fechaactualizacion'   =>'required',
            
 

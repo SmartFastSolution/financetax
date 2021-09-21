@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Cliente;
 
+use App\DocumentosInteraccion;
 use App\Interaccion;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -11,6 +13,7 @@ class ClienteInteraccion extends Component
     public $cliente;
     public $interaccion;
     public $mensajes;
+
 
 
     public function mount()
@@ -23,7 +26,22 @@ class ClienteInteraccion extends Component
     public function render()
     {
         $data = Interaccion::where('cliente_id', $this->id)->get();
-        //dd($data);
+
+        // $data = Interaccion::where('cliente_id', $this->id)
+        // ->with(['documentableinteraccion' => function (MorphTo $morphTo) {
+        //     $morphTo->morphWith([
+        //         DocumentosInteraccion::class => ['documentableinteraccion'],
+        //     ]);
+        // }])->get();
+
+
+       // $documentos = DocumentosInteraccion::where('user_id', $this->id)->get();
+         //dd($data);
+
+
+
+
+
         return view('livewire.cliente.cliente-interaccion', compact('data'));
     }
 
@@ -31,8 +49,8 @@ class ClienteInteraccion extends Component
     public function actualizarBandeja()
     {
         /* Se traen los datos de la tabla Interacción */
-        $mensajes = Interaccion::where('cliente_id', $this->cliente)
-            ->get();
-        /* dd($mensajes); */
+        $mensajes = Interaccion::where('cliente_id', $this->cliente)->get();
+        $documentos = DocumentosInteraccion::where('user_id', Auth::id())->get();
+       /*  dd($documentos); */
     }
 }

@@ -3,10 +3,13 @@
 namespace App\Http\Livewire\Cliente;
 
 use App\Interaccion as AppInteraccion;
+use App\DocumentosInteraccion;
 use Livewire\Component;
 use App\Tienda\Shop;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class Interaccion extends Component
 
@@ -15,61 +18,106 @@ class Interaccion extends Component
 
     public $compra = '';
     public $shop;
-    public $especialista ;
-    public $detalle ='';
+    public $especialista;
+    public $detalle = '';
     public $fecha;
-    public $observacion ='';
-    public $documento = [];//es un array
+    public $observacion = '';
+    public $documentos = []; //es un array
     public $createMode          = false;
+    public $url;
+
+
 
     public function mount(Shop $compra)
     {
-        $this-> especialista = $compra->especialista->id;
-        $this-> shop = $compra->id;
-        $this-> compra = $compra;
+        $this->especialista = $compra->especialista->id;
+        $this->shop = $compra->id;
+        $this->compra = $compra;
     }
 
 
     public function render()
     {
-        $data = Shop::where('especialista_id', $this->especialista)
-                    ->where('id', $this->shop)
-            ->get();
-            //dd($data);
+        // $data = Shop::where('especialista_id', $this->especialista)
+        //     ->where('id', $this->shop)
+        //     ->with('interaccion')
+        //     ->get();
+
+        $data = AppInteraccion::where('especialista_id', $this->especialista)
+            ->where('shop_id', $this->shop)
+            ->with(['docs' => function ($query) {
+                $query->select('id', 'documento_interaccion');
+            }])
+            ->with('docs')->get();
+
+
+        /* dd($data); */
         return view('livewire.cliente.interaccion', compact('data'));
     }
 
 
-    public function resetModal(){
-        $this->reset(['createMode','detalle','observacion','fecha']);
+    public function resetModal()
+    {
+        $this->reset(['createMode', 'detalle', 'observacion', 'fecha', 'documentos']);
         $this->resetValidation();
     }
 
-    public function enviarMensaje(){
-
+    public function enviarMensaje()
+    {
         $this->validate([
             'detalle'     => 'required',
             'observacion'      => 'required',
             'fecha'      => 'required',
-        ],[
-            'detalle.required'        => 'No has agregado un Detalle ',
-            'observacion.required'         => 'No has agregado una Observacion',
-            'fecha.required'         => 'No has selecionado una Fecha',
+        ], [
+            'detalle.required'              => 'No has agregado un Detalle ',
+            'observacion.required'          => 'No has agregado una Observacion',
+            'fecha.required'                => 'No has selecionado una Fecha',
+
         ]);
 
-
         $this->createMode = true;
+
+
         $message                       = new AppInteraccion;
         $message->cliente_id           = Auth::user()->id;
         $message->especialista_id      = $this->especialista;
         $message->fecha                = $this->fecha;
         $message->detalle              = $this->detalle;
         $message->observacion          = $this->observacion;
+        $message->shop_id              = $this->shop;
         $message->save();
+        $documentos = $this->StoreMultipleDoc($message);
         $this->resetModal();
-        $this->emit('success',['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#modalInteraccion']);
+        $this->emit('success', ['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#modalInteraccion']);
+
         $this->createMode = false;
     }
 
 
+    public function StoreMultipleDoc($message)
+    {
+        foreach ($this->documentos as $key => $doc) {
+            $name[] =  $doc->getClientOriginalName();
+            $archivo = Str::slug($doc->getClientOriginalName()) . '.' . $doc->getClientOriginalExtension() ;
+
+
+            if (Storage::putFileAs('/public/'. '/', $doc, $archivo)) {
+                DocumentosInteraccion::create([
+                    'interaccion_id'            => $message->id,
+                    'documento_interaccion'     => $name[$key],
+                    'url_archivo'               =>  $archivo,
+                    'user_id'                   => Auth::user()->id,
+                ]);
+            }
+
+                /*  $data2 = array(
+                    'interaccion_id' => $message->id,
+                    'documento_interaccion' => $name[$key],
+                    'url_archivo '     => $archivo,
+                    'user_id'          => Auth::user()->id,
+                ); */
+
+        }
+
+    }
 }

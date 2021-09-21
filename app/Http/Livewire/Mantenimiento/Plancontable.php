@@ -30,10 +30,14 @@ class Plancontable extends Component
     public $createMode          = false;
     public $filternivel         ='';
     public $uid;
-    public $empresas =[];
-    public $tipocuenta=[];
-
-    public $cuenta, $codigo, $nivel, $user_id, $user_empresa_id, $tipocuenta_id;
+    public $empresas            =[];
+    public $tipocuenta          =[];
+    public $user_empresa_id     ='';
+    public $tipocuenta_id       ='';
+    public $nivel               ='';
+    public $codigo              ='';
+    public $cuenta              ='';
+    public $user_id;
 
 
     public function mount(){
@@ -45,7 +49,6 @@ class Plancontable extends Component
 
         $this->tipocuenta= Tipocuenta::all(['id', 'descripcion']);
         $this->empresas= UserEmpresa::where('user_id', $this->uid)->get();
-        // $this->empresas= UserEmpresa::where('user_id', $this->uid);
 
         $data = Pcontable::join('user_empresas','plancontables.user_empresa_id','=','user_empresas.id')
         ->join('tipocuentas','plancontables.tipocuenta_id','=','tipocuentas.id')

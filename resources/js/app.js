@@ -2,6 +2,9 @@
 
  require('./bootstrap');
 
+// import * as FilePond from 'filepond';
+
+
 
 window.Vue = require('vue');
 
@@ -79,6 +82,14 @@ Vue.component('grafico-contabilidad-component', require('./components/GraficoCon
 Vue.component('gasto-factura-component', require('./components/GastoFacturaComponent.vue').default);
 Vue.component('ingreso-factura-component', require('./components/IngresoFacturaComponent.vue').default);
 
+
+/*     //Filepond
+    const inputElement = document.querySelector('input[type="filepond"]');
+    const pond = FilePond.create(inputElement);
+
+    FilePond.setOptions({
+        server: 'dashboard/user/upload'
+    }) */
 
 
 const app = new Vue({

@@ -14,7 +14,18 @@ class Interaccion extends Model
     ];
 
 
-  /*  public function posts (){
-        return $this->belongsTo('App\Tienda\Shop');
-    } */
+    // public function documento()
+    // {
+    //     return $this->morphOne('App\DocumentosInteraccion', 'documentableinteraccion');
+    // }
+
+
+
+    public function docs(){
+        return $this->hasMany('App\DocumentosInteraccion');
+    }
+
+    public function Shop (){
+        return $this->hasMany('App\Shop');
+    }
 }

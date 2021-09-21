@@ -26,7 +26,8 @@ class Proyecciongasto extends Component
         public $estado              = 'activo';
         public $editMode            = false;
         public $createMode          = false;
-        public $descripcion, $codigosri, $porcentaje, $fechaactualizacion;
+        public $fechaactualizacion              = '';
+        public $descripcion, $codigosri, $porcentaje;
 
 
     public function mount (){
@@ -66,7 +67,7 @@ class Proyecciongasto extends Component
         $this->validate([
             'descripcion'          =>'required',
             'codigosri'            =>'required',
-            'porcentaje'           =>'required',
+            'porcentaje'           => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
             'fechaactualizacion'   =>'required',
            
 
@@ -111,7 +112,7 @@ class Proyecciongasto extends Component
         $this->validate([
             'descripcion'          =>'required',
             'codigosri'            =>'required',
-            'porcentaje'           =>'required',
+            'porcentaje'           => 'required|numeric|regex:/^[\d]{0,11}(\.[\d]{1,2})?$/',
             'fechaactualizacion'   =>'required',
            
 

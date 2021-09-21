@@ -62,7 +62,7 @@
                     <div class="form-group col-md-6">
                         <label for="inputEmail3" class=" text-dark font-weight-bold">Nivel</label>
                         <input type="text" wire:model.defer="nivel"
-                            class="form-control @error('nivel') is-invalid @enderror" placeholder="Cuenta">
+                            class="form-control @error('nivel') is-invalid @enderror" placeholder="Nivel">
                         @error('nivel')
                             <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
                         @enderror
@@ -95,10 +95,10 @@
             <div class="modal-footer br">
 
                 @if ($editMode)
-                    <button type="button" class="btn btn-warning" wire:click="Update">Actualizar Plan</button>
+                    <button type="button" class="btn btn-warning" wire:click="Update">Actualizar Plan Contable</button>
                 @else
                     @if ($createMode) disabled @endif
-                    <button type="button" class="btn btn-primary" @if ($createMode) disabled @endif wire:click="Create">Crear Plan</button>
+                    <button type="button" class="btn btn-primary" @if ($createMode) disabled @endif wire:click="Create">Crear Plan Contable</button>
                 @endif
 
             </div>

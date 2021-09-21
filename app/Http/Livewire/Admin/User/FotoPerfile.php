@@ -21,7 +21,7 @@ class FotoPerfile extends Component
 
     protected $rules = [
         'image' => 'required|mimes:jpg,jpeg,bmp,png',
-        
+
     ];
 
     public function StoreImage(){
@@ -32,7 +32,7 @@ class FotoPerfile extends Component
         $user  = Auth::user();
         $user->image      = $image;
         $user->save();
-     
+
         $this->emit('info',['mensaje' => 'Foto Actualizados Correctamente']);
     }
 }

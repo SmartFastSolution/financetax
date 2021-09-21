@@ -28,11 +28,15 @@ class Shop extends Model
         return $this->belongsTo('App\User', 'especialista_id');
     }
 
-    public function interaccion()
+    public function interaccions()
     {
-        return $this->hasOne('App\Interaccion', 'user');
+        return $this->belongsTo('App\Interaccion');
     }
 
+    public function documento()
+    {
+        return $this->morphOne('App\Document', 'documentable');
+    }
 
 
 

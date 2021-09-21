@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Tienda;
 
+use App\DocumentosInteraccion;
 use App\Interaccion;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -22,7 +23,9 @@ class EspecialistaInteraccion extends Component
     public function render()
     {
         $data = Interaccion::where('especialista_id', $this->id)->get();
-        //dd($data);
+        /* $documentos = DocumentosInteraccion::where('user_id', $this->id)->get(); */
+
+        //dd($documentos);
 
         return view('livewire.tienda.especialista-interaccion',compact('data'));
     }
@@ -32,8 +35,8 @@ class EspecialistaInteraccion extends Component
     public function actualizarBandeja()
     {
         /* Se traen los datos de la tabla Interacción */
-        $mensajes = Interaccion::where('especialista_id', $this->espe)
-            ->get();
+        $mensajes = Interaccion::where('especialista_id', $this->espe)->get();
+        $documentos = DocumentosInteraccion::where('user_id', Auth::id())->get();
 
 
         /* dd($mensajes); */

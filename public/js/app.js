@@ -101165,7 +101165,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_search_select_dist_VueSearchSelect_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_search_select_dist_VueSearchSelect_css__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var vue_search_select__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-search-select */ "./node_modules/vue-search-select/dist/VueSearchSelect.common.js");
 /* harmony import */ var vue_search_select__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(vue_search_select__WEBPACK_IMPORTED_MODULE_9__);
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // import * as FilePond from 'filepond';
+
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
@@ -101244,6 +101245,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ingreso-manual-component',
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('grafico-contabilidad-component', __webpack_require__(/*! ./components/GraficoContabilidadComponent.vue */ "./resources/js/components/GraficoContabilidadComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('gasto-factura-component', __webpack_require__(/*! ./components/GastoFacturaComponent.vue */ "./resources/js/components/GastoFacturaComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('ingreso-factura-component', __webpack_require__(/*! ./components/IngresoFacturaComponent.vue */ "./resources/js/components/IngresoFacturaComponent.vue")["default"]);
+/*     //Filepond
+    const inputElement = document.querySelector('input[type="filepond"]');
+    const pond = FilePond.create(inputElement);
+
+    FilePond.setOptions({
+        server: 'dashboard/user/upload'
+    }) */
+
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app'
 });
