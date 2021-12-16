@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 
 
 
@@ -42,6 +43,12 @@ Route::get('/nosotros-solution', 'Vista\VistaController@Nosotros')->name('landin
 Route::get('/nuestro-equipo', 'Vista\VistaController@Nuestro_equipo')->name('landing.nuestro.equipo.tax');
 Route::get('/servicios', 'Vista\VistaController@Servicios')->name('landing.servicios.tax');
 Route::get('/contactenos', 'Vista\VistaController@Contactenos')->name('landing.contactenos.tax');
+
+
+Route::get('forget-password', [ForgotPasswordController::class, 'showForgetPasswordForm'])->name('forget.password.get');
+Route::post('send-password', [ForgotPasswordController::class, 'submitForgetPasswordForm'])->name('send.password'); 
+Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
+Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
 
 

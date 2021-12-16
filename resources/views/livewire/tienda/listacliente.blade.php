@@ -44,7 +44,7 @@
                           </th>
                           <th class="px-4 py-2 text-center">Costo</th>
                           <th class="px-4 py-2 text-center">Estado</th>
-                          <th class="px-4 py-2 text-center" colspan="2">Acción</th>
+                          <th class="px-4 py-2 text-center" colspan="3">Acción</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -69,6 +69,22 @@
                                            wire:click.prevent="Interaccion({{ $compra->id }})">
                                           <i class="fas fa-inbox"></i>
                                       </button>
+                                  </td>
+                                  <td width="50px">
+                               
+                                  <div class="dropdown">
+                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Servicios
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @isset($acciones[$compra->id])
+                                        @foreach ($acciones[$compra->id] as $accion)
+                                            <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}">{{$rutasNombre[$accion]}}</a>
+                                        @endforeach
+                                    @endisset
+                                    </div>
+                                    </div>
+                                   
                                   </td>
                               </tr>
                           @endforeach

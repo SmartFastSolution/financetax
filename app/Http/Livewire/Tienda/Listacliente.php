@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Tienda;
 
 use App\Tienda\Shop;
+use App\Accion;
+use App\Servicios\ServicioAccion;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -41,6 +43,9 @@ class Listacliente extends Component
 
     public function render()
     {
+        $rutas = [];
+        $acciones = [];
+        $nombres = [];
         $data = Shop::where('user_id', $this->uid)
         ->join('users','shops.especialista_id', '=','users.id')
         ->join('subservices','shops.subservice_id', '=','subservices.id')
@@ -50,10 +55,26 @@ class Listacliente extends Component
             ->orWhere('users.name', 'like', '%' . $this->search . '%');
         })
         ->where('shops.estado','!=','pendiente')
-        ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista')
+        ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
+                 'subservices.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan')
          ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
          ->paginate($this->perPage);
-        return view('livewire.tienda.listacliente', compact('data'));
+
+         $rutasNombre = Accion::pluck('descripcion','ruta');
+
+        foreach ($data as $key => $value) {
+            $servicioAccion = ServicioAccion::where('shop_id', $value->id)
+                            ->join('acciones','servicio_accion.accion_id', '=','acciones.id')
+                            ->select('servicio_accion.*','acciones.ruta as ruta', 'acciones.descripcion as nombreRuta')->get();
+            if(!$servicioAccion->isEmpty()){
+                foreach ($servicioAccion as $keyserv => $valueserv) {
+                    array_push($rutas, $valueserv->ruta);
+                }
+                $acciones[$value->id] = $rutas;
+            }
+        }
+
+        return view('livewire.tienda.listacliente', compact('data', 'acciones', 'rutasNombre'));
     }
 
 

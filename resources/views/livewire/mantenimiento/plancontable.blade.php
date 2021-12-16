@@ -43,6 +43,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th class="px-4 py-2"></th>
                             <th class="px-4 py-2 text-center ">
                                Razón Social
                                 <a class="text-primary" wire:click.prevent="sortBy('empresa')" role="button">
@@ -55,18 +56,6 @@
                                      @include('includes._sort-icon', ['field' => 'cuenta'])
                                  </a>
                              </th>
-                             <th class="px-4 py-2 text-center ">
-                                Tipo Cuenta
-                                  <a class="text-primary" wire:click.prevent="sortBy('tipoc')" role="button">
-                                      @include('includes._sort-icon', ['field' => 'tipoc'])
-                                  </a>
-                              </th>
-                            <th class="px-4 py-2 text-center ">
-                               Código
-                            </th>
-                            <th class="px-4 py-2 text-center ">
-                                Nivel
-                            </th>
                             <th class="px-4 py-2 text-center">Estado</th>
                             <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                         </tr>
@@ -75,11 +64,15 @@
                         @if ($data->isNotEmpty())
                             @foreach ($data as $p)
                                 <tr>
+                                    <td class="text-center" >
+                                        <button type="button" class="btn btn-primary rounded-circle accordion-toggle-btn accordion-toggle collapsed" 
+                                                onclick="mostrarInfo('infoHide{{ $p->id }}')" id="accordion{{ $p->id }}" data-toggle="collapse" 
+                                                data-parent="#accordion{{ $p->id }}" href="#collapse{{ $p->id }}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </td>
                                     <td class="text-center "> {{ $p->empresa }}</td>
                                     <td class="text-center "> {{ $p->cuenta  }}</td>
-                                    <td class="text-center "> {{ $p->tipoc   }}</td>
-                                    <td class="text-center "> {{ $p->codigo  }}</td>
-                                    <td class="text-center "> {{ $p->nivel   }}</td>
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"
                                             wire:click.prevent="estadochange('{{ $p->id }}')"
@@ -99,6 +92,27 @@
                                             wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar esta Cuenta?','eliminarCuenta', {{ $p->id }})">
                                             Eliminar
                                         </button>
+                                    </td>
+                                </tr>
+                                <tr id="infoHide{{ $p->id }}" style="visibility:collapse">
+                                    <td></td>
+                                    <td colspan="4" >
+                                        <div id="collapse{{ $p->id }}" class="collapse in p-3">
+                                            <div class="row">
+                                                <div class="col-2"><b>Tipo Cuenta</b></div>
+                                                <div class="col-6">{{ $p->tipoc }}</div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-2"><b>C&oacute;digo</b></div>
+                                                <div class="col-6">{{ $p->codigo }}</div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-2"><b>Nivel</b></div>
+                                                <div class="col-6">{{ $p->nivel }}</div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

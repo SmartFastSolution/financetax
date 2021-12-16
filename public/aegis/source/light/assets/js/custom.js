@@ -19,3 +19,12 @@ var cleave = new Cleave('.purchase-code', {
     blocks: [4, 4, 4, 4],
     uppercase: true
   });
+
+function mostrarInfo(id) {
+  var row = document.getElementById(id);
+  if (row.style.visibility === "collapse") {
+      row.style.visibility = "visible";
+  } else {
+      row.style.visibility = "collapse";
+  }
+}

@@ -11,6 +11,7 @@ class Plan extends Model
         'fecha_vigencia',
         'descripcion',
         'costo',
+        'slug',
        ];
 
 

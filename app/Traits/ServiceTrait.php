@@ -20,6 +20,7 @@ trait ServiceTrait
         $s->nombre           = $request->nombre;
         $s->tiposervicio_id  = $request->tiposervicio_id;
         $s->descripcion      = $request->descripcion;
+        $s->slug             = strtolower(str_replace(" ","-",$request->nombre));
         $s->estado           = $request->estado;
         $s->save();
    

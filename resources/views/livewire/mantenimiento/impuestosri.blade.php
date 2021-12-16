@@ -26,6 +26,7 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th class="px-4 py-2"></th>
                             <th class="px-4 py-2 text-center ">
                                Descripción
                                 <a class="text-primary" wire:click.prevent="sortBy('descripcion')" role="button">
@@ -35,13 +36,6 @@
                             <th class="px-4 py-2 text-center ">
                                 Código SRI
                              </th>
-                             <th class="px-4 py-2 text-center ">
-                               Porcentaje
-                              </th>
-                            
-                            <th class="px-4 py-2 text-center ">
-                                Fecha Actualización
-                            </th>
                             <th class="px-4 py-2 text-center">Estado</th>
                             <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                         </tr>
@@ -50,10 +44,15 @@
                         @if ($data->isNotEmpty())
                             @foreach ($data as $p)
                                 <tr>
+                                    <td class="text-center" >
+                                        <button type="button" class="btn btn-primary rounded-circle accordion-toggle-btn accordion-toggle collapsed" 
+                                                onclick="mostrarInfo('infoHide{{ $p->id }}')" id="accordion{{ $p->id }}" data-toggle="collapse" 
+                                                data-parent="#accordion{{ $p->id }}" href="#collapse{{ $p->id }}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </td>
                                     <td class="text-center "> {{ $p->descripcion }}</td>
                                     <td class="text-center "> {{ $p->codigosri  }}</td>
-                                    <td class="text-center "> {{ $p->porcentaje   }}</td>
-                                    <td class="text-center "> {{ $p->fechaactualizacion  }}</td>
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"
                                             wire:click.prevent="estadochange('{{ $p->id }}')"
@@ -73,6 +72,22 @@
                                             wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar esta Cuenta?','EliminarImpuesto', {{ $p->id }})">
                                             Eliminar
                                         </button>
+                                    </td>
+                                </tr>
+                                <tr id="infoHide{{ $p->id }}" style="visibility:collapse">
+                                    <td></td>
+                                    <td colspan="4" >
+                                        <div id="collapse{{ $p->id }}" class="collapse in p-3">
+                                            <div class="row">
+                                                <div class="col-3"><b>Porcentaje</b></div>
+                                                <div class="col-5">{{ $p->porcentaje }}</div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-3"><b>Fecha Actualizaci&oacute;n</b></div>
+                                                <div class="col-5">{{ $p->fechaactualizacion }}</div>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

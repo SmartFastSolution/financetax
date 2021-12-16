@@ -23,6 +23,7 @@
                <table class="table table-striped">
                   <thead>
                      <tr>
+                        <th class="px-4 py-2"></th>
                         <th class="px-4 py-2 text-center ">
                           Sub Servicio
                            <a class="text-primary" wire:click.prevent="sortBy('subservicio')" role="button">
@@ -30,13 +31,6 @@
                                @include('includes._sort-icon', ['field' => 'subservicio'])
                            </a>
                        </th>
-                         <th class="px-4 py-2 text-center ">
-                             Tipo  Plan
-                             <a class="text-primary" wire:click.prevent="sortBy('tipoplan')" role="button">
-         
-                                 @include('includes._sort-icon', ['field' => 'tipoplan'])
-                             </a>
-                         </th>
                          {{-- <th class="px-4 py-2 text-center ">
                              Descripción
                              <a class="text-primary" wire:click.prevent="sortBy('descripcion')" role="button">
@@ -44,7 +38,6 @@
                                  @include('includes._sort-icon', ['field' => 'descripcion'])
                              </a>
                          </th> --}}
-                         <th class="px-4 py-2 text-center">Precio</th>
                          <th class="px-4 py-2 text-center">Estado</th>
                          <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                      </tr>
@@ -53,10 +46,15 @@
                      @if ($data->isNotEmpty())
                      @foreach ($data as $plan)
                      <tr>
-                        <td class="text-center ">{{ $plan->subservicio }}</td>
-                        <td class="text-center ">{{ $plan->tipoplan }}</td>
+                        <td class="text-center" >
+                            <button type="button" class="btn btn-primary rounded-circle accordion-toggle-btn accordion-toggle collapsed" 
+                                    onclick="mostrarInfo('infoHide{{ $plan->id }}')" id="accordion{{ $plan->id }}" data-toggle="collapse" 
+                                    data-parent="#accordion{{ $plan->id }}" href="#collapse{{ $plan->id }}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </td>
+                        <td class="text-left ">{{ $plan->subservicio }}</td>
                         {{-- <td class="text-center ">{{ $plan->descripcion }}</td> --}}
-                        <td class="text-center ">${{ $plan->costo }}</td>
                         <td class="text-center ">
                            <span style="cursor: pointer;"
                                wire:click.prevent="estadochange('{{ $plan->id }}')"
@@ -77,6 +75,22 @@
                         </button>
                     </td>
                      </tr>
+                     <tr id="infoHide{{ $plan->id }}" style="visibility:collapse">
+                        <td></td>
+                        <td colspan="4" >
+                            <div id="collapse{{ $plan->id }}" class="collapse in p-3">
+                                <div class="row">
+                                    <div class="col-2"><b>Tipo Plan</b></div>
+                                    <div class="col-6">{{ $plan->tipoplan }}</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-2"><b>Precio</b></div>
+                                    <div class="col-6">${{ $plan->costo }}</div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
                      @endforeach
                      @else
                      <tr>

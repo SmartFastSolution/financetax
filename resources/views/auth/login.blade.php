@@ -57,7 +57,7 @@
                                             <label for="password" class="control-label">Contraseña</label>
                                             <div class="float-right">
                                                 @if (Route::has('password.request'))
-                                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                    <a class="btn btn-link" href="{{ route('forget.password.get') }}">
                                                         {{ __('Olvidaste Tu Contraseña?') }}
                                                     </a>
                                                 @endif

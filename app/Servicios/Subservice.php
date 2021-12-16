@@ -10,7 +10,7 @@ class Subservice extends Model
 
         'nombre',
         'descripcion',
-   
+        'slug',
        ];
 
        public function documento()

@@ -12,7 +12,7 @@ class Service extends Model
 
         'nombre',
         'descripcion',
-   
+        'slug',
        ];
 
        

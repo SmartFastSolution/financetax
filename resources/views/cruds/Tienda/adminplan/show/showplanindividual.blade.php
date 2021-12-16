@@ -106,6 +106,10 @@
                                     <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings" role="tab"
                                         aria-selected="false">Plan</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="empresas-tab2" data-toggle="tab" href="#empresas" role="tab"
+                                        aria-selected="false">Empresas</a>
+                                </li>
                             </ul>
                             <div class="tab-content tab-bordered" id="myTab3Content">
                                 <div class="tab-pane fade show active" id="about" role="tabpanel"
@@ -134,6 +138,32 @@
                                             {!!htmlspecialchars_decode($compra->plan->descripcion)!!}
                                         </p>
                                       
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="empresas" role="tabpanel" aria-labelledby="empresas-tab2">
+                                    <div class="card-header">
+                                        <h4>Detalle de Empresas</h4>
+                                    </div>
+                                    <div class="card-body">
+
+                                    <table class="table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">RUC</th>
+                                                <th scope="col">Raz&oacute;n Social</th>
+                                                <th scope="col">Clave de Acceso</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($empresasUser as $eu)
+                                            <tr>
+                                                <td>{{$eu->ruc}}</td>
+                                                <td>{{$eu->razon_social}}</td>
+                                                <td>{{$eu->clave_acceso}}</td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                     </div>
                                 </div>
                             </div>

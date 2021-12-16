@@ -17,22 +17,17 @@
                 </div>
             </div>
 
+            <!-- div class="row table-responsive" id="tabla-columnas-responsive" -->
             <div class="row table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <th class="px-4 py-2"></th>
                             <th class="px-4 py-2 text-center ">
                                 Cliente
                                 <a class="text-primary" wire:click.prevent="sortBy('cliente')" role="button">
 
                                     @include('includes._sort-icon', ['field' => 'cliente'])
-                                </a>
-                            </th>
-                            <th class="px-4 py-2 text-center ">
-                                SubServicio
-                                <a class="text-primary" wire:click.prevent="sortBy('sub')" role="button">
-
-                                    @include('includes._sort-icon', ['field' => 'sub'])
                                 </a>
                             </th>
                             <th class="px-4 py-2 text-center ">
@@ -42,7 +37,6 @@
                                     @include('includes._sort-icon', ['field' => 'tipoplan'])
                                 </a>
                             </th>
-                            <th class="px-4 py-2 text-center">Costo</th>
                             <th class="px-4 py-2 text-center">Estado</th>
                             <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                         </tr>
@@ -51,10 +45,13 @@
                         @if ($data->isNotEmpty())
                             @foreach ($data as $compra)
                                 <tr>
-                                    <td class="text-center ">{{ $compra->cliente }}</td>
-                                    <td class="text-center ">{{ $compra->sub }}</td>
-                                    <td class="text-center ">{{ $compra->tipoplan }}</td>
-                                    <td class="text-center ">${{ $compra->costo }}</td>
+                                    <td class="text-center" >
+                                        <button type="button" class="btn btn-primary rounded-circle accordion-toggle-btn accordion-toggle collapsed" onclick="mostrarInfo('infoHide{{ $compra->id }}')" id="accordion{{ $compra->id }}" data-toggle="collapse" data-parent="#accordion{{ $compra->id }}" href="#collapse{{ $compra->id }}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </td>
+                                    <td >{{ $compra->cliente }}</td>
+                                    <td >{{ $compra->tipoplan }}</td>
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"
                                             wire:click.prevent="estadochange('{{ $compra->id }}')"
@@ -76,6 +73,22 @@
                                       </button>
                                   </td>
 
+                                </tr>
+                                <tr id="infoHide{{ $compra->id }}" style="visibility:collapse">
+                                    <td></td>
+                                    <td colspan="4" >
+                                        <div id="collapse{{ $compra->id }}" class="collapse in p-3">
+                                            <div class="row">
+                                                <div class="col-2"><b>SubServicio</b></div>
+                                                <div class="col-6">{{ $compra->sub }}</div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-2"><b>Costo</b></div>
+                                                <div class="col-6">${{ $compra->costo }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                         @else

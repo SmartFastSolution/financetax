@@ -31,6 +31,7 @@
 
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
 
+    <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/custom.css') }}">
 
     @laravelPWA
     @yield('style')
@@ -156,12 +157,7 @@
                     </div>
                     <div class="sidebar-user">
                         <div class="sidebar-user-picture">
-                            @if (Auth::user()->avatar)
-                                <img src="{{ Auth::user()->avatar }}" class="img-fluid mr-2" alt="avatar">
-                            @else
-                                <img alt="image" src="{{ Avatar::create(Auth::user()->name)->setChars(2) }}">
-                            @endif
-
+                            <img alt="image" src="{{ Avatar::create(Auth::user()->name)->setChars(2) }}">
                         </div>
                         <div class="sidebar-user-details">
                             <div class="user-name"> {{ Auth::user()->name }}</div>
@@ -274,7 +270,7 @@
     <script src="{{ asset('//cdn.jsdelivr.net/npm/sweetalert2@11') }}"></script>  
     <script src="{{ asset('js/eventos.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
-    
+    <script src="{{ asset('aegis/source/light/assets/js/custom.js') }}"></script>
     @livewireChartsScripts
     @yield('js')
 

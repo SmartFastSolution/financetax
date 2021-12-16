@@ -22,13 +22,7 @@
                <table class="table table-striped">
                   <thead>
                      <tr>
-                        <th class="px-4 py-2 text-center ">
-                           Servicio
-                           <a class="text-primary" wire:click.prevent="sortBy('servicio')" role="button">
-         
-                               @include('includes._sort-icon', ['field' => 'servicio'])
-                           </a>
-                       </th>
+                        <th class="px-4 py-2"></th>
                          <th class="px-4 py-2 text-center ">
                              Sub Servicio
                              <a class="text-primary" wire:click.prevent="sortBy('nombre')" role="button">
@@ -51,8 +45,14 @@
                      @if ($data->isNotEmpty())
                      @foreach ($data as $subservice)
                      <tr>
-                        <td class="text-center ">{{ $subservice->servicio }}</td>
-                        <td class="text-center ">{{ $subservice->nombre }}</td>
+                        <td class="text-center" >
+                            <button type="button" class="btn btn-primary rounded-circle accordion-toggle-btn accordion-toggle collapsed" 
+                                    onclick="mostrarInfo('infoHide{{ $subservice->id }}')" id="accordion{{ $subservice->id }}" data-toggle="collapse" 
+                                    data-parent="#accordion{{ $subservice->id }}" href="#collapse{{ $subservice->id }}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </td>
+                        <td class="text-left ">{{ $subservice->nombre }}</td>
                         {{-- <td class="text-center ">{{ $subservice->descripcion }}</td> --}}
                         <td class="text-center ">
                            <span style="cursor: pointer;"
@@ -74,6 +74,18 @@
                         </button>
                     </td>
                      </tr>
+                     <tr id="infoHide{{ $subservice->id }}" style="visibility:collapse">
+                        <td></td>
+                        <td colspan="4" >
+                            <div id="collapse{{ $subservice->id }}" class="collapse in p-3">
+                                <div class="row">
+                                    <div class="col-2"><b>Servicio</b></div>
+                                    <div class="col-6">{{ $subservice->servicio }}</div>
+                                </div>
+                                <br>
+                            </div>
+                        </td>
+                    </tr>
                      @endforeach
                      @else
                      <tr>

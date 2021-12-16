@@ -27,7 +27,7 @@
             {!!htmlspecialchars_decode($p->descripcion)!!}
           </p>
           <div class="article-cta">
-            <a href="{{route('subservicios', $p->id)}}"> Leer Más <i class="fas fa-chevron-right"></i></a>
+            <a href="{{route('subservicios', $p->slug)}}"> Leer Más <i class="fas fa-chevron-right"></i></a>
           </div>
         </div>
       </article>

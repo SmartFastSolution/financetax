@@ -50,4 +50,19 @@ class User extends Authenticatable
     public function city (){
         return $this->belongsTo('App\City');
     }
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function role()
+    {
+        return $this->belongsTo('App\Role', 'roles');
+    }
 }

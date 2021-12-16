@@ -7,7 +7,7 @@
 @livewire('tienda.interaccion', ['compra' => $compra], key($compra->id))
 
 
-@livewire('tienda.especialista-interaccion')
+@livewire('tienda.especialista-interaccion', ['compra' => $compra])
 
 
 

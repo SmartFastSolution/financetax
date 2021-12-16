@@ -6,6 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shop extends Model
 {
+    protected $guard_name = 'shops';
+
+    protected $fillable =[
+        'costo',
+        'user_id',
+        'tipoplan_id',
+        'plan_id',
+        'subservice_id',
+        'estado',
+        'especialista_id',
+        'accion_id',
+       ];
+
     public function cliente()
     {
         return $this->belongsTo('App\User', 'user_id');

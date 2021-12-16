@@ -66,6 +66,7 @@ class Planes extends Component
     }
 
     public function editPlan($id){
+        $plan = Plan::find($id);
 
         return redirect()->to("servicios/crear-plan?plans={$id}");
 
