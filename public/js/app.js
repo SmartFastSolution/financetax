@@ -3064,6 +3064,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var v_money__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(v_money__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var tesseract_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tesseract.js */ "./node_modules/tesseract.js/src/index.js");
 /* harmony import */ var tesseract_js__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(tesseract_js__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var highcharts_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! highcharts-vue */ "./node_modules/highcharts-vue/dist/highcharts-vue.min.js");
+/* harmony import */ var highcharts_vue__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(highcharts_vue__WEBPACK_IMPORTED_MODULE_7__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3240,12 +3242,51 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 
 
+
+/*var elemento = document.getElementById('btnDetalle');
+elemento.addEventListener("click", function() {
+   alert("You clicked me");
+}​);​
+
+function myFunction(idElemento) {
+    var elemento = document.getElementById(idElemento);
+    if(idElemento == "tblTransacciones"){
+        //elemento.style.display = "block";
+        var elementoOculta = document.getElementById("divGraficos");
+        elementoOculta.style.display = "none";
+    }else if(idElemento == "divGraficos"){
+        //elemento.style.display = "block";
+        var elementoOculta = document.getElementById("tblTransacciones");
+        elementoOculta.style.display = "none";
+    }
+    elemento.style.display = "block";
+}*/
 
 function validaFormulario() {
   var respuesta = true;
@@ -3273,7 +3314,7 @@ function validaFormulario() {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan'],
+  props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos'],
   data: function data() {
     var arrayComprobantes = [];
 
@@ -3298,7 +3339,7 @@ function validaFormulario() {
       imagenMiniatura: '',
       imgFactura: '',
       comprobante: {
-        fecha: moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY-MM-DD'),
+        fecha: moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY/MM/DD'),
         tipo_transaccion: '',
         cuenta: '',
         tarifacero: 0,
@@ -3313,7 +3354,100 @@ function validaFormulario() {
       categoria: [],
       transacciones: arrayComprobantes,
       cuentas: [],
-      empresa: []
+      empresa: [],
+      chartOptions: {
+        series: [{
+          color: '#21618c',
+          data: [{
+            name: 'INGRESOS',
+            color: '#28a745',
+            y: parseFloat(this.sumaIngresos)
+          }, {
+            name: 'EGRESOS',
+            color: '#dc3545',
+            y: parseFloat(this.sumaEgresos)
+          }]
+        }],
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'Gráfico Barras'
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: false
+            }
+          },
+          column: {
+            pointWidth: 125,
+            borderWidth: 1
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        yAxis: {
+          allowDecimals: false,
+          title: {
+            text: ''
+          }
+        },
+        xAxis: {
+          categories: ['INGRESOS', 'EGRESOS']
+        },
+        tooltip: {
+          formatter: function formatter() {
+            return parseFloat(this.y).toFixed(2);
+          }
+        }
+      },
+      chartOptionsPie: {
+        series: [{
+          color: '#21618c',
+          data: [{
+            name: 'INGRESOS',
+            color: '#28a745',
+            y: parseFloat(this.sumaIngresos)
+          }, {
+            name: 'EGRESOS',
+            color: '#dc3545',
+            y: parseFloat(this.sumaEgresos)
+          }]
+        }],
+        chart: {
+          type: 'pie'
+        },
+        title: {
+          text: 'Gráfico Pastel'
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: false
+            }
+          },
+          column: {
+            pointWidth: 125,
+            borderWidth: 1
+          }
+        },
+        legend: {
+          enabled: false
+        },
+        yAxis: {
+          allowDecimals: false,
+          title: {
+            text: ''
+          }
+        },
+        tooltip: {
+          formatter: function formatter() {
+            return parseFloat(this.y).toFixed(2);
+          }
+        }
+      }
     };
   },
   created: function created() {
@@ -3324,7 +3458,23 @@ function validaFormulario() {
 
     this.generarDataTable();
   },
+  components: {
+    highcharts: highcharts_vue__WEBPACK_IMPORTED_MODULE_7__["Chart"]
+  },
   methods: {
+    mostrarElementos: function mostrarElementos(idElemento) {
+      var elemento = document.getElementById(idElemento);
+
+      if (idElemento == "tblTransacciones_wrapper") {
+        var elementoOculta = document.getElementById("divGraficos");
+        elementoOculta.style.display = "none";
+      } else if (idElemento == "divGraficos") {
+        var elementoOculta = document.getElementById("tblTransacciones_wrapper");
+        elementoOculta.style.display = "none";
+      }
+
+      elemento.style.display = "block";
+    },
     generarDataTable: function generarDataTable() {
       this.$nextTick(function () {
         var minDateFilter = '';
@@ -3601,7 +3751,7 @@ function validaFormulario() {
       }))();
     },
     resetForm: function resetForm() {
-      this.comprobante.fecha = moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY-MM-DD');
+      this.comprobante.fecha = moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY/MM/DD');
       this.comprobante.tipo_transaccion = '';
       this.comprobante.cuenta = '';
       this.comprobante.tarifacero = 0;
@@ -84748,7 +84898,41 @@ var render = function() {
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
         _c("div", { staticClass: "col-lg-12 col-md-10" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "row justify-content-left" }, [
+            _c(
+              "button",
+              {
+                staticClass: "floated btn btn-success btn-sm",
+                on: {
+                  click: function($event) {
+                    return _vm.mostrarElementos("tblTransacciones_wrapper")
+                  }
+                }
+              },
+              [
+                _vm._v("\r\n                        Detalle  "),
+                _c("i", { staticClass: "fas fa-table" })
+              ]
+            ),
+            _vm._v("\r\n                      \r\n                    "),
+            _c(
+              "button",
+              {
+                staticClass: "floated btn btn-success btn-sm",
+                attrs: { id: "btnGraficos" },
+                on: {
+                  click: function($event) {
+                    return _vm.mostrarElementos("divGraficos")
+                  }
+                }
+              },
+              [
+                _vm._v("\r\n                        Gráficos  "),
+                _c("i", { staticClass: "fas fa-chart-bar" })
+              ]
+            )
+          ]),
+          _c("br"),
           _vm._v(" "),
           _c(
             "table",
@@ -84758,7 +84942,7 @@ var render = function() {
               attrs: { id: "tblTransacciones" }
             },
             [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -84816,6 +85000,34 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
+        {
+          staticClass: "row justify-content-center",
+          staticStyle: { display: "none" },
+          attrs: { id: "divGraficos" }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "col-10" },
+            [_c("highcharts", { attrs: { options: _vm.chartOptions } })],
+            1
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-10" },
+            [_c("highcharts", { attrs: { options: _vm.chartOptionsPie } })],
+            1
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
         { staticClass: "modal", class: { mostrar: _vm.modalNuevoRegistro } },
         [
           _c("div", { staticClass: "modal-dialog modal-md" }, [
@@ -84855,7 +85067,7 @@ var render = function() {
                 [
                   _c("div", { staticClass: "modal-body" }, [
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(2),
+                      _vm._m(1),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c("input", {
@@ -84887,7 +85099,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(3),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -84944,7 +85156,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(4),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85001,7 +85213,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(5),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85058,7 +85270,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85115,7 +85327,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(7),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85139,7 +85351,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(8),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85163,7 +85375,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(9),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85187,7 +85399,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(10),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85211,7 +85423,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(11),
+                      _vm._m(10),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c("input", {
@@ -85245,7 +85457,7 @@ var render = function() {
                     _c("hr"),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(12),
+                      _vm._m(11),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8 text-right" }, [
                         _c(
@@ -85322,7 +85534,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(13)
+                  _vm._m(12)
                 ]
               )
             ])
@@ -85333,34 +85545,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "form-group col-6 col-md-3" }, [
-        _c("label", [_vm._v("Fecha: ")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "input-group input-group-sm" }, [
-          _c("input", {
-            staticClass: "form-control form-control-sm inputDateRange",
-            attrs: { type: "text" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-prepend" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-info resetDateFilter",
-                attrs: { type: "button" }
-              },
-              [_c("i", { staticClass: "fa fa-retweet" })]
-            )
-          ])
-        ])
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

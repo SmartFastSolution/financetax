@@ -4,7 +4,16 @@
     <div class="card">
         <div class="card-body">
             <div class="col-lg-12 col-md-10">
-                <div class="row justify-content-center">
+                <div class="row justify-content-left">
+                    <button class="floated btn btn-success btn-sm" @click="mostrarElementos('tblTransacciones_wrapper')">
+                        Detalle &nbsp;<i class="fas fa-table"></i>
+                    </button>
+                    &nbsp;&nbsp;
+                    <button class="floated btn btn-success btn-sm" id="btnGraficos" @click="mostrarElementos('divGraficos')">
+                        Gr&aacute;ficos &nbsp;<i class="fas fa-chart-bar"></i>
+                    </button>
+                </div></br>
+                <!--div class="row justify-content-center">
                     <div class="form-group col-6 col-md-3">
                         <label>Fecha: </label>
                         <div class="input-group input-group-sm">
@@ -16,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div-->
                 <table id="tblTransacciones" class="table table-striped table-bordered table-sm" style="width:100%;">
                     <thead style="font-size:9.0pt;">
                         <tr>
@@ -42,6 +51,17 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+        </div>
+
+        <div class="row justify-content-center" id="divGraficos" style="display:none;">
+            <div class="col-10">
+                <highcharts :options="chartOptions"></highcharts>
+            </div>
+            </br>
+            </br>
+            <div class="col-10">
+                <highcharts :options="chartOptionsPie"></highcharts>
             </div>
         </div>
 
@@ -175,6 +195,29 @@ import datatableresbs4 from 'datatables.net-responsive-bs4';
 import moment from "moment";
 import {Money} from 'v-money'
 import Tesseract from 'tesseract.js';
+import {Chart} from 'highcharts-vue'
+
+
+/*var elemento = document.getElementById('btnDetalle');
+elemento.addEventListener("click", function() {
+   alert("You clicked me");
+}​);​
+
+function myFunction(idElemento) {
+    var elemento = document.getElementById(idElemento);
+    if(idElemento == "tblTransacciones"){
+        //elemento.style.display = "block";
+        var elementoOculta = document.getElementById("divGraficos");
+        elementoOculta.style.display = "none";
+    }else if(idElemento == "divGraficos"){
+        //elemento.style.display = "block";
+        var elementoOculta = document.getElementById("tblTransacciones");
+        elementoOculta.style.display = "none";
+    }
+    elemento.style.display = "block";
+}*/
+
+
 
 function validaFormulario(){
     let respuesta = true;
@@ -211,7 +254,7 @@ function validaFormulario(){
 }
 
 export default {
-    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan'],
+    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos'],
     data() {
         let arrayComprobantes = [];
         if (this.listaTransacciones.indexOf('},{') > -1)
@@ -234,7 +277,7 @@ export default {
             imagenMiniatura: '',
             imgFactura: '',
             comprobante: {
-                fecha: moment().format('YYYY-MM-DD'),
+                fecha: moment().format('YYYY/MM/DD'),
                 tipo_transaccion: '',
                 cuenta: '',
                 tarifacero: 0,
@@ -250,6 +293,105 @@ export default {
             transacciones:arrayComprobantes,
             cuentas: [],
             empresa: [],
+            chartOptions: {
+                    series: [{
+                        color: '#21618c',
+                        data: [
+                            {
+                                name: 'INGRESOS',
+                                color: '#28a745',
+                                y: parseFloat(this.sumaIngresos)
+                            },
+                            {
+                                name: 'EGRESOS',
+                                color: '#dc3545',
+                                y: parseFloat(this.sumaEgresos)
+                            }
+                        ],
+                    }],
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Gráfico Barras'
+                    },
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                enabled: false,
+                            },
+                        },
+                        column: {
+                            pointWidth: 125,
+                            borderWidth: 1
+                        },
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: ''
+                        }
+                    },
+                    xAxis: {
+                        categories: ['INGRESOS','EGRESOS'],
+                    },
+                    tooltip: {
+                        formatter: function () {
+                        return parseFloat(this.y).toFixed(2);
+                        }
+                    },
+                },
+
+                chartOptionsPie: {
+                    series: [{
+                        color: '#21618c',
+                        data: [
+                            {
+                            name: 'INGRESOS',
+                            color: '#28a745',
+                            y: parseFloat(this.sumaIngresos)
+                            }, {
+                            name: 'EGRESOS',
+                            color: '#dc3545',
+                            y: parseFloat(this.sumaEgresos)
+                            }
+                        ],
+                    }],
+                    chart: {
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'Gráfico Pastel'
+                    },
+                    plotOptions: {
+                        bar: {
+                            dataLabels: {
+                                enabled: false,
+                            },
+                        },
+                        column: {
+                            pointWidth: 125,
+                            borderWidth: 1
+                        },
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: ''
+                        }
+                    },
+                    tooltip: {
+                        formatter: function () {
+                        return parseFloat(this.y).toFixed(2);
+                        }
+                    },
+                },
         }
     },
     created() {
@@ -260,7 +402,21 @@ export default {
         //this.$tablaGlobal("#tblTransacciones");
         this.generarDataTable();
     },
+    components: {
+        highcharts: Chart
+    },
     methods: {
+        mostrarElementos(idElemento){
+            var elemento = document.getElementById(idElemento);
+            if(idElemento == "tblTransacciones_wrapper"){
+                var elementoOculta = document.getElementById("divGraficos");
+                elementoOculta.style.display = "none";
+            }else if(idElemento == "divGraficos"){
+                var elementoOculta = document.getElementById("tblTransacciones_wrapper");
+                elementoOculta.style.display = "none";
+            }
+            elemento.style.display = "block";
+        },
         generarDataTable(){
             this.$nextTick(()=>{
                 var minDateFilter = '';
@@ -455,7 +611,7 @@ export default {
             this.empresa = respuestaEmpresas.data;
         },
         resetForm(){
-            this.comprobante.fecha = moment().format('YYYY-MM-DD');
+            this.comprobante.fecha = moment().format('YYYY/MM/DD');
             this.comprobante.tipo_transaccion = '';
             this.comprobante.cuenta = '';
             this.comprobante.tarifacero = 0;

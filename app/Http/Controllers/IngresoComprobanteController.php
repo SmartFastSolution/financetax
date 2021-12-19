@@ -43,10 +43,25 @@ class IngresoComprobanteController extends Controller
                                              'transacciondiaria.usuarioplan_id as usuarioplan_id')*/
                                     ->whereIn('transacciondiaria.usuarioplan_id', $shop)
                                     ->get();
+
+        $sumaIngresos = 0;
+        $sumaEgresos = 0;
+        $sumaImpuestos = 0;
+        foreach ($transacciones as $key => $value) {
+            if($value->tipo == "EGRESOS"){
+                $sumaEgresos  = $sumaEgresos + ($value->tarifacero + $value->tarifadifcero + $value->iva + $value->importe);
+            }else if($value->tipo == "INGRESOS"){
+                $sumaIngresos = $sumaIngresos + ($value->tarifacero + $value->tarifadifcero + $value->iva + $value->importe);
+            }
+        }
+
         $subservicio = $id;
         $planid = $plan->id;
 
-        return view('admin.ingreso_facturas.ingreso_manual.index', compact('transacciones', 'subservicio', 'planid', 'tipoplan'));
+        //$infoGrafico["ingresos"] = $sumaIngresos;
+        //$infoGrafico["egresos"] = $sumaEgresos;
+
+        return view('admin.ingreso_facturas.ingreso_manual.index', compact('transacciones', 'subservicio', 'planid', 'tipoplan', 'sumaIngresos', 'sumaEgresos'));
     }
 
     public function listarComprobantes()
