@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Sri\SriController;
 use App\Http\Controllers\IngresoComprobanteController;
 
+Route::group(['middleware'=>['role_or_permission:cliente|c-servicios']], function(){
 //Route::view('/admin/ingreso_facturas/sri', 'admin.ingreso_facturas.sri.index')->name('admin.ingreso_facturas.sri.index');
 
 Route::view('/admin/ingreso_facturas/sri/{id}/{tipoplan}', 'admin.ingreso_facturas.sri.index')->name('admin.ingreso_facturas.sri.index');
@@ -17,3 +18,4 @@ Route::get('/admin/ingreso_facturas/listar_categoria', [IngresoComprobanteContro
 Route::get('/admin/ingreso_facturas/listar_cuentas', [IngresoComprobanteController::class,'listarCuentas'])->name('admin.ingreso_facturas.listar_cuentas');
 Route::get('/admin/ingreso_facturas/listar_empresas', [IngresoComprobanteController::class,'listarEmpresas'])->name('admin.ingreso_facturas.listar_empresas');
 Route::post('/admin/ingreso_facturas/store', [IngresoComprobanteController::class,'store'])->name('admin.ingreso_facturas.store');
+});

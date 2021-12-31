@@ -104,7 +104,27 @@
 
         },
 
-        
+        {
+            "url"  : "",
+            "name" : "Ingreso de Facturas",
+            "icon" : "grid",
+            "can"  : "usuarios",
+            "submenu" :[
+                {
+                    "route" : "admin.ingreso_facturas.sri.index",
+                    "url"   : "/admin/ingreso_facturas/sri/id/tipoplan",
+                    "name"  : "Comprobantes SRI",
+                    "can"   :"c-servicios"
+                },
+                {
+                    "route" : "admin.ingreso_facturas.ingreso_manual.index",
+                    "url"   : "/admin/ingreso_facturas/ingreso_manual/id/tipoplan",
+                    "name"  : "Ingreso Manual",
+                    "can"   :"c-servicios"
+                }
+
+            ]
+        },
         {
             "url"  : "",
             "name" : "Servicios",

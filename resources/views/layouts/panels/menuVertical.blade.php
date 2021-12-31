@@ -9,7 +9,7 @@
                <li class="{{active($submenu->url)}}">
                 <a class="nav-link" href="{{ route($submenu->route)}}">{{$submenu->name}}</a>
                </li>
-               @endcan                     
+               @endcan
             @else
             <li class="{{active($submenu->url)}}">
                 <a class="nav-link" href="{{ route($submenu->route)}}">{{$submenu->name}}</a>
