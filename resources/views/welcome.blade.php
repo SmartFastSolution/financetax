@@ -39,7 +39,7 @@
   
             </div>
   
-            <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100"></div>
+            <div class="col-lg-6 background order-lg-2 order-1" data-aos="fade-left" data-aos-delay="100" style="background-size: 100%;"></div>
           </div>
   
         </div>
@@ -218,7 +218,7 @@
               <p class="cta-text"> </p>
             </div>
             <div class="col-lg-3 cta-btn-container text-center">
-              <a class="cta-btn align-middle" href="{{ url('tienda/tienda-solution') }}">Ir Tienda</a> 
+              <a class="cta-btn align-middle" href="{{ url('tienda/tienda-solution') }}">Comenzar</a> 
           
 
             </div>

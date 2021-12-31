@@ -17,6 +17,7 @@ class Shop extends Model
         'estado',
         'especialista_id',
         'accion_id',
+        'user_empresas_id',
        ];
 
     public function cliente()

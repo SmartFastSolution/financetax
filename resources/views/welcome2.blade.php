@@ -22,12 +22,13 @@
         }
 
         .menu-text{
-            font-size: 0.65rem;
+            font-size: 0.70rem;
+            font-family: monospace;
         }
 
         .menu-item,
         .menu-open-button {
-        background: black;
+        background: #8f33ca;
         border-radius: 100%;
         width: 80px;
         height: 80px;
@@ -434,6 +435,7 @@
         <div class="container-sm">
             <br>
             <br>
+            <br>
             <nav class="menu">
                 <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
                 <label class="menu-open-button" for="menu-open">
@@ -442,12 +444,12 @@
                     <span class="lines line-3"></span>
                 </label>
 
-                <a href="/page#services" class="menu-item" style="background-color: #4e555a;"><i class="fas fa-chart-bar menu-icon" aria-hidden="true"><br><span class="menu-text"><b>FINANZAS</b></span></i></a>
-                <a href="/page#services" class="menu-item" style="background-color: #4e555a;"><i class="fa fa-desktop menu-icon"><br><span class="menu-text"><b>WEB</b></span></i></a>
-                <a href="/page#services" class="menu-item" style="background-color: #4e555a;"><i class="far fa-money-bill-alt menu-icon"><br><span class="menu-text"><b>IMPUESTOS</b></span></i></a>
-                <a href="/page#services" class="menu-item" style="background-color: #4e555a;"><i class="fas fa-address-card menu-icon"><br><span class="menu-text"><b>CONTABLES</b></span></i></a>
-                <a href="/page#services" class="menu-item" style="background-color: #4e555a;"><i class="fas fa-chart-line menu-icon"><br><span class="menu-text"><b>INDICADORES</b></span></i></a>
-                <a href="/page#services" class="menu-item" style="background-color: #4e555a;"><i class="fas fa-file-alt menu-icon"><br><span class="menu-text"><b>CONTRATOS</b></span></i></a>
+                <a href="/page#services" class="menu-item" style="background-color: #c22a5e;"><i class="fas fa-chart-bar menu-icon" aria-hidden="true"><br><span class="menu-text"><b>FINANZAS</b></span></i></a>
+                <a href="/page#services" class="menu-item" style="background-color: #c22a5e;"><i class="fa fa-desktop menu-icon"><br><span class="menu-text"><b>WEB</b></span></i></a>
+                <a href="/page#services" class="menu-item" style="background-color: #c22a5e;"><i class="far fa-money-bill-alt menu-icon"><br><span class="menu-text"><b>IMPUESTOS</b></span></i></a>
+                <a href="/page#services" class="menu-item" style="background-color: #c22a5e;"><i class="fas fa-address-card menu-icon"><br><span class="menu-text"><b>CONTABLES</b></span></i></a>
+                <a href="/page#services" class="menu-item" style="background-color: #c22a5e;"><i class="fas fa-chart-line menu-icon"><br><span class="menu-text"><b>INDICADORES</b></span></i></a>
+                <a href="/page#services" class="menu-item" style="background-color: #c22a5e;"><i class="fas fa-file-alt menu-icon"><br><span class="menu-text"><b>CONTRATOS</b></span></i></a>
             </nav>
             <br>
             <br>
@@ -460,8 +462,8 @@
                     SOLUTIONFINANCETAX
                 </h5>
             --}}
-                 <a href="{{ url('/page') }}" class="btn btn-dark btn-lg btn-block" role="button"
-                    aria-pressed="true">EMPIEZA AHORA</a>
+                 <a href="{{ url('/page') }}" class="btn btn-lg btn-block" role="button"
+                    aria-pressed="true" style="background: #8130b4; color: white">CONOCE NUESTROS SERVICIOS AQU&iacute;</a>
             </div>
         </div>
     </section>
@@ -478,7 +480,7 @@
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>SOLUTIONFINANCETAX</h5>
                                 <a href="{{ url('/page') }}" class="btn btn-dark btn-lg btn-block" role="button"
-                                aria-pressed="true">EMPIEZA AHORA</a>
+                                aria-pressed="true">CONOCE NUESTROS SERVICIOS AQU&iacute;</a>
                             </div>
                         </div>
                     </div>
@@ -502,6 +504,8 @@
                 vid.muted = true;
             }
         });
+
+        document.getElementById("menu-open").click();
     </script>
 </body>
 

@@ -49,13 +49,30 @@
                   </thead>
                   <tbody>
                       @if ($data->isNotEmpty())
-                          @foreach ($data as $compra)
-                              <tr>
+                            @foreach ($dataEmpresas as $info => $empresa)
+                            <tr>
+                                <td class="text-center " colspan="8" style="background: aliceblue;"><b>{{ strtoupper($info) }}</b></td>
+                            </tr>
+                            @foreach ($empresa as $compra)
+                                <tr>
                                   <td class="text-center ">{{ $compra->especialista }}</td>
                                   <td class="text-center ">{{ $compra->sub }}</td>
                                   <td class="text-center ">{{ $compra->tipoplan }}</td>
                                   <td class="text-center ">${{ $compra->costo }}</td>
-                                  <td class="text-center ">{{ $compra->estado }}</td>
+
+                                    @switch($compra->estado)
+                                        @case("pendiente")badge  badge-succes
+                                            <td class="text-center "><span class="badge badge-primary">{{ ucfirst($compra->estado) }}</span></td>
+                                        @break
+
+                                        @case("aprobada")
+                                            <td class="text-center "><span class="badge badge-success">{{ ucfirst($compra->estado) }}</span></td>
+                                        @break
+
+                                        @case("en proceso")
+                                            <td class="text-center "><span class="badge badge-warning">{{ ucfirst($compra->estado) }}</span></td>
+                                        @break
+                                    @endswitch
 
                                   <td width="10px">
                                       <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
@@ -86,8 +103,10 @@
                                     </div>
                                    
                                   </td>
-                              </tr>
-                          @endforeach
+                                  </tr>
+                            @endforeach
+                            
+                            @endforeach
                       @else
                           <tr>
                               <td colspan="10">

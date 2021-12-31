@@ -229,6 +229,12 @@
     import vue2Dropzone from 'vue2-dropzone';
     import 'vue2-dropzone/dist/vue2Dropzone.min.css';
 
+    const urlArray = window.location.href.split("/");
+    var tipoPlan = urlArray[urlArray.length - 1];
+    var subservicio = urlArray[urlArray.length - 2];
+    //var p = document.getElementById("p")
+    //p.innerText = p.innerText+" And this is addon."
+
     export default {
         data(){
             return {

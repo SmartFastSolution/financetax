@@ -2440,6 +2440,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 
 
+var urlArray = window.location.href.split("/");
+var tipoPlan = urlArray[urlArray.length - 1];
+var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementById("p")
+//p.innerText = p.innerText+" And this is addon."
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3288,6 +3293,8 @@ function myFunction(idElemento) {
     elemento.style.display = "block";
 }*/
 
+var valorIngreso = 0;
+
 function validaFormulario() {
   var respuesta = true;
   var arrayCampos = ['fecha', 'tipo', 'categoria', 'cuenta', 'tarifacero', 'tarifadifcero', 'iva', 'importe', 'detalle', 'inputFile'];
@@ -3312,10 +3319,25 @@ function validaFormulario() {
   });
   return respuesta;
 }
+/*var observer = new IntersectionObserver(function(entries) {
+	if(entries[0].isIntersecting === true)
+		console.log('Element is fully visible in screen');
+}, { threshold: [1] });
+
+observer.observe(document.querySelector("#main-container"));*/
+
+
+var elements = document.getElementsByClassName('applyBtn');
+var requiredElement = elements[0];
+console.log(elements);
+/*requiredElement.addEventListener('click', function(e) {
+    console.log("CLK");
+}, false);*/
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos'],
   data: function data() {
+    valorIngreso = parseFloat(this.sumaIngresos);
     var arrayComprobantes = [];
 
     if (this.listaTransacciones.indexOf('},{') > -1) {
@@ -3339,7 +3361,7 @@ function validaFormulario() {
       imagenMiniatura: '',
       imgFactura: '',
       comprobante: {
-        fecha: moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY/MM/DD'),
+        fecha: moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY-MM-DD'),
         tipo_transaccion: '',
         cuenta: '',
         tarifacero: 0,
@@ -3361,7 +3383,7 @@ function validaFormulario() {
           data: [{
             name: 'INGRESOS',
             color: '#28a745',
-            y: parseFloat(this.sumaIngresos)
+            y: valorIngreso
           }, {
             name: 'EGRESOS',
             color: '#dc3545',
@@ -3535,7 +3557,11 @@ function validaFormulario() {
             "opens": "center"
           }
         }, function (start, end, label) {
-          //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          console.log(" ***** ");
+          console.log(this.chartOptions.series);
+          console.log(valorIngreso);
+          valorIngreso = 10000;
+          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
           maxDateFilter = end;
           minDateFilter = start;
           tabla.draw();
@@ -3751,7 +3777,7 @@ function validaFormulario() {
       }))();
     },
     resetForm: function resetForm() {
-      this.comprobante.fecha = moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY/MM/DD');
+      this.comprobante.fecha = moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY-MM-DD');
       this.comprobante.tipo_transaccion = '';
       this.comprobante.cuenta = '';
       this.comprobante.tarifacero = 0;
@@ -84934,6 +84960,8 @@ var render = function() {
           ]),
           _c("br"),
           _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
           _c(
             "table",
             {
@@ -84942,7 +84970,7 @@ var render = function() {
               attrs: { id: "tblTransacciones" }
             },
             [
-              _vm._m(0),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -85067,7 +85095,7 @@ var render = function() {
                 [
                   _c("div", { staticClass: "modal-body" }, [
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c("input", {
@@ -85099,7 +85127,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85156,7 +85184,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85213,7 +85241,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(4),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85270,7 +85298,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(5),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85327,7 +85355,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(6),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85351,7 +85379,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(7),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85375,7 +85403,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(8),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85399,7 +85427,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(9),
+                      _vm._m(10),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85423,7 +85451,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(10),
+                      _vm._m(11),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c("input", {
@@ -85457,7 +85485,7 @@ var render = function() {
                     _c("hr"),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(11),
+                      _vm._m(12),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8 text-right" }, [
                         _c(
@@ -85534,7 +85562,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(12)
+                  _vm._m(13)
                 ]
               )
             ])
@@ -85545,6 +85573,34 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "form-group col-6 col-md-3" }, [
+        _c("label", [_c("b", [_vm._v("Filtrar por fecha: ")])]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group input-group-sm" }, [
+          _c("input", {
+            staticClass: "form-control form-control-sm inputDateRange",
+            attrs: { type: "text" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-prepend" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-info resetDateFilter",
+                attrs: { type: "button" }
+              },
+              [_c("i", { staticClass: "fa fa-retweet" })]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

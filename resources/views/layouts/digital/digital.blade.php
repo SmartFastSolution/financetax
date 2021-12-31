@@ -84,7 +84,7 @@
                     <div class="col-md-4 col-sm-3 col-xs-4">
                         <div class="footer-logo">
                             <p><a href="#"> <img class="nav_logo_img img-fluid top-left"
-                                        src="digital/images/logo1.png"></a></p>
+                                        src="digital/images/solutionlogo1.png"></a></p>
                         </div>
                     </div>
                     <div class="col-md-4 col-sm-4 col-xs-2">

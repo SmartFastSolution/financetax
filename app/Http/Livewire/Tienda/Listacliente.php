@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Tienda;
 
 use App\Tienda\Shop;
 use App\Accion;
+use App\UserEmpresa;
 use App\Servicios\ServicioAccion;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -46,6 +47,7 @@ class Listacliente extends Component
         $rutas = [];
         $acciones = [];
         $nombres = [];
+        $dataEmpresas = [];
         $data = Shop::where('user_id', $this->uid)
         ->join('users','shops.especialista_id', '=','users.id')
         ->join('subservices','shops.subservice_id', '=','subservices.id')
@@ -60,7 +62,8 @@ class Listacliente extends Component
          ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
          ->paginate($this->perPage);
 
-         $rutasNombre = Accion::pluck('descripcion','ruta');
+        $rutasNombre    = Accion::pluck('descripcion','ruta');
+        $EmpresasNombre = UserEmpresa::where('user_id', $this->uid)->pluck('razon_social', 'id');
 
         foreach ($data as $key => $value) {
             $servicioAccion = ServicioAccion::where('shop_id', $value->id)
@@ -74,7 +77,24 @@ class Listacliente extends Component
             }
         }
 
-        return view('livewire.tienda.listacliente', compact('data', 'acciones', 'rutasNombre'));
+        foreach ($EmpresasNombre as $keyEn => $valueEn) {
+            $dataEmpresas[$valueEn] = Shop::where('user_id', $this->uid)
+                    ->join('users','shops.especialista_id', '=','users.id')
+                    ->join('subservices','shops.subservice_id', '=','subservices.id')
+                    ->join('tipoplans','shops.tipoplan_id','=','tipoplans.id')
+                    ->where(function($query){
+                        $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
+                        ->orWhere('users.name', 'like', '%' . $this->search . '%');
+                    })
+                    ->where('shops.estado','!=','pendiente')
+                    ->where('user_empresas_id', $keyEn)
+                    ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
+                            'subservices.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan')
+                    ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
+                    ->paginate($this->perPage);
+        }
+
+        return view('livewire.tienda.listacliente', compact('data', 'acciones', 'rutasNombre', 'EmpresasNombre', 'dataEmpresas'));
     }
 
 

@@ -13,9 +13,9 @@
                         Gr&aacute;ficos &nbsp;<i class="fas fa-chart-bar"></i>
                     </button>
                 </div></br>
-                <!--div class="row justify-content-center">
+                <div class="row justify-content-center">
                     <div class="form-group col-6 col-md-3">
-                        <label>Fecha: </label>
+                        <label><b>Filtrar por fecha: </b></label>
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control form-control-sm inputDateRange">
                             <div class="input-group-prepend">
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                     </div>
-                </div-->
+                </div>
                 <table id="tblTransacciones" class="table table-striped table-bordered table-sm" style="width:100%;">
                     <thead style="font-size:9.0pt;">
                         <tr>
@@ -197,7 +197,6 @@ import {Money} from 'v-money'
 import Tesseract from 'tesseract.js';
 import {Chart} from 'highcharts-vue'
 
-
 /*var elemento = document.getElementById('btnDetalle');
 elemento.addEventListener("click", function() {
    alert("You clicked me");
@@ -217,7 +216,7 @@ function myFunction(idElemento) {
     elemento.style.display = "block";
 }*/
 
-
+var valorIngreso = 0;
 
 function validaFormulario(){
     let respuesta = true;
@@ -253,9 +252,24 @@ function validaFormulario(){
     return respuesta;
 }
 
+/*var observer = new IntersectionObserver(function(entries) {
+	if(entries[0].isIntersecting === true)
+		console.log('Element is fully visible in screen');
+}, { threshold: [1] });
+
+observer.observe(document.querySelector("#main-container"));*/
+
+var elements = document.getElementsByClassName('applyBtn');
+var requiredElement = elements[0];
+console.log(elements);
+/*requiredElement.addEventListener('click', function(e) {
+    console.log("CLK");
+}, false);*/
+
 export default {
     props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos'],
     data() {
+        valorIngreso = parseFloat(this.sumaIngresos);
         let arrayComprobantes = [];
         if (this.listaTransacciones.indexOf('},{') > -1)
         {
@@ -277,7 +291,7 @@ export default {
             imagenMiniatura: '',
             imgFactura: '',
             comprobante: {
-                fecha: moment().format('YYYY/MM/DD'),
+                fecha: moment().format('YYYY-MM-DD'),
                 tipo_transaccion: '',
                 cuenta: '',
                 tarifacero: 0,
@@ -300,7 +314,7 @@ export default {
                             {
                                 name: 'INGRESOS',
                                 color: '#28a745',
-                                y: parseFloat(this.sumaIngresos)
+                                y: valorIngreso
                             },
                             {
                                 name: 'EGRESOS',
@@ -500,7 +514,11 @@ export default {
                         "opens": "center",
                     }
                 }, function(start, end, label) {
-                    //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                    console.log(" ***** ");
+                    console.log(this.chartOptions.series);
+                    console.log(valorIngreso);
+                    valorIngreso = 10000;
+                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                     maxDateFilter = end;
                     minDateFilter = start;
                     tabla.draw();
@@ -611,7 +629,7 @@ export default {
             this.empresa = respuestaEmpresas.data;
         },
         resetForm(){
-            this.comprobante.fecha = moment().format('YYYY/MM/DD');
+            this.comprobante.fecha = moment().format('YYYY-MM-DD');
             this.comprobante.tipo_transaccion = '';
             this.comprobante.cuenta = '';
             this.comprobante.tarifacero = 0;

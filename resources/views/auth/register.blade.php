@@ -32,7 +32,7 @@
                         <div class="card card-info">
                             <div class="card-header">
 
-                                <img class="nav_logo_img img-fluid top-right" src="digital/images/logo1.png">
+                                <img class="nav_logo_img img-fluid top-right" src="digital/images/solutionlogo1.png">
 
                             </div>
                             <h4 class="text-center">REGISTRO</h4>
