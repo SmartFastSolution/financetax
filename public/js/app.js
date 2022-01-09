@@ -3267,6 +3267,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 
@@ -3335,10 +3337,18 @@ console.log(elements);
 }, false);*/
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos'],
+  props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias'],
   data: function data() {
-    valorIngreso = parseFloat(this.sumaIngresos);
     var arrayComprobantes = [];
+    var resultado = [];
+    var listaCategorias = JSON.parse(this.categorias);
+
+    for (var key in listaCategorias) {
+      resultado.push({
+        name: key,
+        y: parseFloat(listaCategorias[key])
+      });
+    }
 
     if (this.listaTransacciones.indexOf('},{') > -1) {
       var jsonstring = this.listaTransacciones.replace('[', '').replace(']', '').replaceAll('},{', '}**STRINGSPLIT**{').replaceAll("'", "");
@@ -3383,7 +3393,7 @@ console.log(elements);
           data: [{
             name: 'INGRESOS',
             color: '#28a745',
-            y: valorIngreso
+            y: parseFloat(this.sumaIngresos)
           }, {
             name: 'EGRESOS',
             color: '#dc3545',
@@ -3394,7 +3404,7 @@ console.log(elements);
           type: 'column'
         },
         title: {
-          text: 'Gráfico Barras'
+          text: 'Resumen general'
         },
         plotOptions: {
           bar: {
@@ -3421,28 +3431,20 @@ console.log(elements);
         },
         tooltip: {
           formatter: function formatter() {
-            return parseFloat(this.y).toFixed(2);
+            return "<b>$" + this.y + "</b>";
           }
         }
       },
       chartOptionsPie: {
         series: [{
           color: '#21618c',
-          data: [{
-            name: 'INGRESOS',
-            color: '#28a745',
-            y: parseFloat(this.sumaIngresos)
-          }, {
-            name: 'EGRESOS',
-            color: '#dc3545',
-            y: parseFloat(this.sumaEgresos)
-          }]
+          data: resultado
         }],
         chart: {
           type: 'pie'
         },
         title: {
-          text: 'Gráfico Pastel'
+          text: 'Resumen por categorías'
         },
         plotOptions: {
           bar: {
@@ -3452,21 +3454,21 @@ console.log(elements);
           },
           column: {
             pointWidth: 125,
-            borderWidth: 1
+            borderWidth: 2
           }
         },
         legend: {
-          enabled: false
+          enabled: true
         },
         yAxis: {
-          allowDecimals: false,
+          allowDecimals: true,
           title: {
-            text: ''
+            text: 'categoría'
           }
         },
         tooltip: {
           formatter: function formatter() {
-            return parseFloat(this.y).toFixed(2);
+            return "<b>$" + this.y + "</b>";
           }
         }
       }
@@ -3557,11 +3559,7 @@ console.log(elements);
             "opens": "center"
           }
         }, function (start, end, label) {
-          console.log(" ***** ");
-          console.log(this.chartOptions.series);
-          console.log(valorIngreso);
-          valorIngreso = 10000;
-          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+          //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
           maxDateFilter = end;
           minDateFilter = start;
           tabla.draw();
@@ -85008,6 +85006,8 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.categoria))]),
+                    _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(item.detalle))]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-right pr-4" }, [
@@ -85616,6 +85616,8 @@ var staticRenderFns = [
         _c("th", { staticStyle: { width: "150px" } }, [
           _vm._v("Tipo Transacción")
         ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center" }, [_vm._v("Categoría ")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-center" }, [_vm._v("Detalle")]),
         _vm._v(" "),

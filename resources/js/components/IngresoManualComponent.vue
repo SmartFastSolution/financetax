@@ -31,6 +31,7 @@
                         <tr>
                             <th class="text-center" style="width:100px;">Fecha de creaci&oacute;n</th>
                             <th style="width:150px;">Tipo Transacci&oacute;n</th>
+                            <th class="text-center">Categor&iacute;a </th>
                             <th class="text-center">Detalle</th>
                             <th class="text-center" style="width:60px;">IVA</th>
                             <th class="text-center" style="width:60px;">Importe</th>
@@ -45,6 +46,7 @@
                             <td v-if="item.tipo == 'INGRESOS'">
                                 <i class="fas fa-plus-square" style="color: green;"></i>&nbsp;&nbsp;{{ item.tipo }}
                             </td>
+                            <td>{{ item.categoria }}</td>
                             <td>{{ item.detalle }}</td>
                             <td class="text-right pr-4">${{ item.iva }}</td>
                             <td class="text-right pr-4">${{ item.importe }}</td>
@@ -267,10 +269,19 @@ console.log(elements);
 }, false);*/
 
 export default {
-    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos'],
+    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias'],
     data() {
-        valorIngreso = parseFloat(this.sumaIngresos);
         let arrayComprobantes = [];
+        var resultado = [];
+        let listaCategorias = JSON.parse(this.categorias);
+
+        for (const key in listaCategorias){
+            resultado.push({
+                name: key,
+                y: parseFloat(listaCategorias[key]),
+            });
+        }
+
         if (this.listaTransacciones.indexOf('},{') > -1)
         {
             let jsonstring = this.listaTransacciones.replace('[','').replace(']','').replaceAll('},{','}**STRINGSPLIT**{').replaceAll("'","");
@@ -311,10 +322,11 @@ export default {
                     series: [{
                         color: '#21618c',
                         data: [
+
                             {
                                 name: 'INGRESOS',
                                 color: '#28a745',
-                                y: valorIngreso
+                                y: parseFloat(this.sumaIngresos)
                             },
                             {
                                 name: 'EGRESOS',
@@ -327,7 +339,7 @@ export default {
                         type: 'column'
                     },
                     title: {
-                        text: 'Gráfico Barras'
+                        text: 'Resumen general'
                     },
                     plotOptions: {
                         bar: {
@@ -354,7 +366,7 @@ export default {
                     },
                     tooltip: {
                         formatter: function () {
-                        return parseFloat(this.y).toFixed(2);
+                        return "<b>$"+this.y+"</b>";
                         }
                     },
                 },
@@ -362,47 +374,37 @@ export default {
                 chartOptionsPie: {
                     series: [{
                         color: '#21618c',
-                        data: [
-                            {
-                            name: 'INGRESOS',
-                            color: '#28a745',
-                            y: parseFloat(this.sumaIngresos)
-                            }, {
-                            name: 'EGRESOS',
-                            color: '#dc3545',
-                            y: parseFloat(this.sumaEgresos)
-                            }
-                        ],
+                        data: resultado,
                     }],
                     chart: {
                         type: 'pie'
                     },
                     title: {
-                        text: 'Gráfico Pastel'
+                        text: 'Resumen por categorías'
                     },
                     plotOptions: {
                         bar: {
                             dataLabels: {
-                                enabled: false,
+                                enabled: false
                             },
                         },
                         column: {
                             pointWidth: 125,
-                            borderWidth: 1
+                            borderWidth: 2
                         },
                     },
                     legend: {
-                        enabled: false
+                        enabled: true
                     },
                     yAxis: {
-                        allowDecimals: false,
+                        allowDecimals: true,
                         title: {
-                            text: ''
+                            text: 'categoría'
                         }
                     },
                     tooltip: {
                         formatter: function () {
-                        return parseFloat(this.y).toFixed(2);
+                        return "<b>$"+this.y+"</b>";
                         }
                     },
                 },
@@ -514,11 +516,7 @@ export default {
                         "opens": "center",
                     }
                 }, function(start, end, label) {
-                    console.log(" ***** ");
-                    console.log(this.chartOptions.series);
-                    console.log(valorIngreso);
-                    valorIngreso = 10000;
-                    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                    //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
                     maxDateFilter = end;
                     minDateFilter = start;
                     tabla.draw();

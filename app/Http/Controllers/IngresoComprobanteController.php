@@ -31,18 +31,30 @@ class IngresoComprobanteController extends Controller
         $transacciones = [];
         $plan = Plan::where('tipoplan_id', $tipoplan)->where('subservice_id', $id)->first();
         $shop = Shop::where('tipoplan_id', $tipoplan)->where('subservice_id', $id)->where('plan_id', $plan->id)->where('user_id', $user_id)->pluck('id');
+        $mesActual = date('m');
 
         $transacciones = TransaccionDiaria::join('tipotransaccion', 'tipotransaccion.id', '=', 'transacciondiaria.tipotransaccion_id')
                                     ->join('proyeccions', 'proyeccions.id', '=', 'transacciondiaria.proyeccions_id')
                                     ->where('transacciondiaria.estado','=','activo')
                                     ->selectRaw('transacciondiaria.id as id, transacciondiaria.created_at as fecha, UPPER(tipotransaccion.nombre) as tipo,
                                                 transacciondiaria.detalle as detalle, transacciondiaria.iva as iva, transacciondiaria.importe as importe,
-                                                transacciondiaria.usuarioplan_id as usuarioplan_id')
+                                                transacciondiaria.usuarioplan_id as usuarioplan_id, transacciondiaria.tarifacero, transacciondiaria.tarifadifcero,
+                                                proyeccions.descripcion as categoria')
                                     /*->select('transacciondiaria.id as id', 'transacciondiaria.fecha_registro as fecha', 'tipotransaccion.nombre as tipo',
                                              'transacciondiaria.detalle as detalle', 'transacciondiaria.iva as iva', 'transacciondiaria.importe as importe',
                                              'transacciondiaria.usuarioplan_id as usuarioplan_id')*/
                                     ->whereIn('transacciondiaria.usuarioplan_id', $shop)
+                                    ->whereMonth('transacciondiaria.created_at', $mesActual)
                                     ->get();
+
+        $categorias =TransaccionDiaria::join('tipotransaccion', 'tipotransaccion.id', '=', 'transacciondiaria.tipotransaccion_id')
+                                ->join('proyeccions', 'proyeccions.id', '=', 'transacciondiaria.proyeccions_id')
+                                ->where('transacciondiaria.estado','=','activo')
+                                ->groupBy('proyeccions.descripcion')
+                                ->selectRaw('(SUM(transacciondiaria.iva) + SUM(transacciondiaria.importe) + SUM(transacciondiaria.tarifadifcero)+ SUM(transacciondiaria.tarifacero)) as sum, proyeccions.descripcion as categoria')
+                                ->whereIn('transacciondiaria.usuarioplan_id', $shop)
+                                ->whereMonth('transacciondiaria.created_at', $mesActual)
+                                ->pluck('sum','categoria');
 
         $sumaIngresos = 0;
         $sumaEgresos = 0;
@@ -58,10 +70,7 @@ class IngresoComprobanteController extends Controller
         $subservicio = $id;
         $planid = $plan->id;
 
-        //$infoGrafico["ingresos"] = $sumaIngresos;
-        //$infoGrafico["egresos"] = $sumaEgresos;
-
-        return view('admin.ingreso_facturas.ingreso_manual.index', compact('transacciones', 'subservicio', 'planid', 'tipoplan', 'sumaIngresos', 'sumaEgresos'));
+        return view('admin.ingreso_facturas.ingreso_manual.index', compact('transacciones', 'subservicio', 'planid', 'tipoplan', 'sumaIngresos', 'sumaEgresos', 'categorias'));
     }
 
     public function listarComprobantes()
