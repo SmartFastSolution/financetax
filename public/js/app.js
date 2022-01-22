@@ -2211,6 +2211,42 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2439,12 +2475,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 
+
+
+function validaFormulario() {
+  var validaVacio = false;
+  var tablaFacturas = document.getElementById('tablaFacturas');
+  var colorInput = '#e4e6fc';
+  var display = "none";
+
+  var _iterator = _createForOfIteratorHelper(tablaFacturas.rows),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var row = _step.value;
+      var cont = 0;
+      var arrayCells = [];
+
+      var _iterator2 = _createForOfIteratorHelper(row.cells),
+          _step2;
+
+      try {
+        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+          var cell = _step2.value;
+
+          if (cont == 3 || cont == 4) {
+            if (cell.firstChild.value === "") {
+              validaVacio = true;
+            }
+          }
+
+          cont++;
+        }
+      } catch (err) {
+        _iterator2.e(err);
+      } finally {
+        _iterator2.f();
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (validaVacio) {
+    colorInput = 'red';
+    display = "block";
+  }
+
+  var campos = document.getElementsByClassName('inputValida');
+
+  for (var i = 0; i < campos.length; i++) {
+    campos[i].style.borderColor = colorInput;
+  }
+
+  document.getElementById('alertaValida').style.display = display;
+  return validaVacio;
+}
 
 var urlArray = window.location.href.split("/");
 var tipoPlan = urlArray[urlArray.length - 1];
-var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementById("p")
-//p.innerText = p.innerText+" And this is addon."
-
+var subservicio = urlArray[urlArray.length - 2];
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2454,7 +2546,7 @@ var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementBy
         maxFilesize: 1,
         maxFiles: 1,
         parallelUploads: 1,
-        dictDefaultMessage: 'Solo se permite archivo .txt',
+        dictDefaultMessage: "<i class='fas fa-cloud-upload-alt fa-lg' style='font-size: 2rem;'></i> Solo se permiten archivos .txt",
         dictRemoveFile: 'Quitar',
         dictMaxFilesExceeded: 'Solo 1 archivo',
         dictFileTooBig: 'Archivo excede el tamaño permitido',
@@ -2471,7 +2563,12 @@ var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementBy
       notas_debito: [],
       retenciones: [],
       liquidaciones: [],
+      categoria: [],
+      tipoTransaccion: [],
       errores: [],
+      inputTipoPlan: document.getElementById('inputTipoPlan').value,
+      inputSubservicio: document.getElementById('inputSubservicio').value,
+      inputUsuarioEmpresa: document.getElementById('inputUsuarioEmpresa').value,
       ocultarDropZone: false,
       ocultarCarga: true,
       ocultarTabla: true,
@@ -2489,14 +2586,66 @@ var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementBy
   components: {
     vueDropzone: vue2_dropzone__WEBPACK_IMPORTED_MODULE_1___default.a
   },
+  created: function created() {
+    this.listarCategoria();
+    this.listarTipoTransaccion();
+  },
   mounted: function mounted() {},
   methods: {
-    archivoProcesado: function () {
-      var _archivoProcesado = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(response) {
-        var resp;
+    listarCategoria: function listarCategoria() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var respuestaCategoria;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return axios.get('/admin/ingreso_facturas/listar_categoria');
+
+              case 2:
+                respuestaCategoria = _context.sent;
+                _this.categoria = respuestaCategoria.data;
+
+              case 4:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    listarTipoTransaccion: function listarTipoTransaccion() {
+      var _this2 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var respuesta;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return axios.get('/admin/ingreso_facturas/listar_tipo_transaccion');
+
+              case 2:
+                respuesta = _context2.sent;
+                _this2.tipoTransaccion = respuesta.data;
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2);
+      }))();
+    },
+    archivoProcesado: function () {
+      var _archivoProcesado = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(response) {
+        var resp;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 resp = JSON.parse(response.xhr.response);
 
@@ -2533,10 +2682,10 @@ var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementBy
 
               case 2:
               case "end":
-                return _context.stop();
+                return _context3.stop();
             }
           }
-        }, _callee, this);
+        }, _callee3, this);
       }));
 
       function archivoProcesado(_x) {
@@ -2559,27 +2708,27 @@ var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementBy
       this.$refs.dropzone.removeFile(file);
     },
     exportarExcel: function exportarExcel() {
-      var _this = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _this.postForm('/comprobante_electronicos/exportarExcel', {
-                  facturas: JSON.stringify(_this.facturas),
-                  notasCredito: JSON.stringify(_this.notas_credito),
-                  notasDebito: JSON.stringify(_this.notas_debito),
-                  retenciones: JSON.stringify(_this.retenciones),
-                  liquidaciones: JSON.stringify(_this.liquidaciones)
+                _this3.postForm('/comprobante_electronicos/exportarExcel', {
+                  facturas: JSON.stringify(_this3.facturas),
+                  notasCredito: JSON.stringify(_this3.notas_credito),
+                  notasDebito: JSON.stringify(_this3.notas_debito),
+                  retenciones: JSON.stringify(_this3.retenciones),
+                  liquidaciones: JSON.stringify(_this3.liquidaciones)
                 });
 
               case 1:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2);
+        }, _callee4);
       }))();
     },
     postForm: function postForm(path, params, method) {
@@ -2609,6 +2758,150 @@ var subservicio = urlArray[urlArray.length - 2]; //var p = document.getElementBy
     reiniciar: function reiniciar() {
       //Object.assign(this.$data, this.$options.data());
       window.location.href = "/admin/ingreso_facturas/sri";
+    },
+    guardarRegistrosAuto: function guardarRegistrosAuto() {
+      var respuestaValidacion = validaFormulario();
+
+      if (!respuestaValidacion) {
+        var tablaFacturas = document.getElementById('tablaFacturas');
+        var jsonFacturas = [];
+        document.getElementById('mensajeGuardando').style.display = "block";
+
+        var _iterator3 = _createForOfIteratorHelper(tablaFacturas.rows),
+            _step3;
+
+        try {
+          for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+            var row = _step3.value;
+            var cont = 0;
+            var arrayCells = [];
+
+            var _iterator4 = _createForOfIteratorHelper(row.cells),
+                _step4;
+
+            try {
+              for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                var cell = _step4.value;
+
+                switch (cont) {
+                  case 0:
+                    arrayCells["key"] = cell.innerText;
+                    break;
+
+                  case 1:
+                    arrayCells["fechaEmision"] = cell.innerText;
+                    break;
+
+                  case 2:
+                    arrayCells["tipo"] = cell.innerText;
+                    break;
+
+                  case 3:
+                    arrayCells["categoria"] = cell.firstChild.value;
+                    break;
+
+                  case 4:
+                    arrayCells["tipoTransaccion"] = cell.firstChild.value;
+                    break;
+
+                  case 7:
+                    arrayCells["tarifaDifCero"] = cell.innerText.replace('$', '');
+                    break;
+
+                  case 8:
+                    arrayCells["tarifaCero"] = cell.innerText.replace('$', '');
+                    break;
+
+                  case 9:
+                    arrayCells["iva"] = cell.innerText.replace('$', '');
+                    break;
+
+                  case 10:
+                    arrayCells["total"] = cell.innerText.replace('$', '');
+                    break;
+                }
+
+                cont++;
+              }
+            } catch (err) {
+              _iterator4.e(err);
+            } finally {
+              _iterator4.f();
+            }
+
+            jsonFacturas.push({
+              key: arrayCells["key"],
+              fechaEmision: arrayCells["fechaEmision"],
+              tipo: arrayCells["tipo"],
+              categoria: arrayCells["categoria"],
+              tipoTransaccion: arrayCells["tipoTransaccion"],
+              tarifaDifCero: arrayCells["tarifaDifCero"],
+              tarifaCero: arrayCells["tarifaCero"],
+              iva: arrayCells["iva"],
+              total: arrayCells["total"]
+            });
+          }
+          /*console.log("/////////////////////////////");
+          console.log(jsonFacturas);
+          console.log(this.inputTipoPlan);
+              console.log(this.inputSubservicio);
+              console.log(this.inputUsuarioEmpresa);*/
+
+          /*this.postForm( '/admin/guardarRegistrosAuto', {
+                                                          facturas: JSON.stringify(this.facturas),
+                                                          notasCredito: JSON.stringify(this.notas_credito),
+                                                          notasDebito: JSON.stringify(this.notas_debito),
+                                                          retenciones: JSON.stringify(this.retenciones),
+                                                          liquidaciones: JSON.stringify(this.liquidaciones),
+                                                          });*/
+          //let respuestaValidacion = validaFormulario();
+          //if(respuestaValidacion){
+          //document.getElementsByClassName('msjGuardando')[0].style.display = "block";
+          //let set = this;
+
+        } catch (err) {
+          _iterator3.e(err);
+        } finally {
+          _iterator3.f();
+        }
+
+        var url = '/admin/guardarRegistrosAuto';
+        var config = {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        };
+        var data = new FormData();
+        data.append('facturas', JSON.stringify(jsonFacturas)); //JSON.stringify(this.facturas));
+
+        data.append('notasCredito', JSON.stringify(this.notas_credito));
+        data.append('notasDebito', JSON.stringify(this.notas_debito));
+        data.append('retenciones', JSON.stringify(this.retenciones));
+        data.append('liquidaciones', JSON.stringify(this.liquidaciones));
+        data.append('tipoPlan', this.inputTipoPlan);
+        data.append('subservicio', this.inputSubservicio);
+        data.append('usuarioEmpresa', this.inputUsuarioEmpresa);
+        var datos = {
+          url: url,
+          config: config,
+          data: data
+        };
+        axios.post(datos.url, datos.data, datos.config).then(function (res) {
+          //this.buttonDisable = true;
+          //document.getElementsByClassName('msjGuardando')[0].style.display = "none";
+          //let link = "/admin/ingreso_facturas/ingreso_manual/"+this.subServicio+"/"+this.tipoPlan+"/";
+          //window.location = link;
+          document.getElementById('mensajeGuardando').style.display = "none";
+          document.getElementById('alertaGuardado').style.display = 'block';
+          setTimeout(function () {
+            window.location.href = window.location.href;
+          }, 2000); //window.location.href="/admin/ingreso_facturas/sri/"+this.inputSubservicio+"/"+this.inputTipoPlan+"/"+this.inputUsuarioEmpresa;
+        })["catch"](function (error) {//if (error.response.status == 422) {
+          //set.errors.record(error.response.datos.errors);
+          //}
+          //set.buttonDisable = false;
+        }); //}
+      }
     }
   },
   computed: {
@@ -83447,6 +83740,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("vue-dropzone", {
                       ref: "dropzone",
+                      staticClass: "customDropzone",
                       attrs: { id: "dropzone", options: _vm.dropzoneOptions },
                       on: {
                         "vdropzone-success": _vm.archivoProcesado,
@@ -83473,7 +83767,7 @@ var render = function() {
                   },
                   [
                     _c("span", { staticClass: "h4" }, [
-                      _vm._v("Procesando archivo, espere ")
+                      _vm._v("Procesando archivo, espere por favor")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "spinner-grow spinner-grow-sm" }),
@@ -83483,6 +83777,10 @@ var render = function() {
                     _c("div", { staticClass: "spinner-grow spinner-grow-sm" })
                   ]
                 ),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._m(1),
                 _vm._v(" "),
                 _c(
                   "div",
@@ -83512,6 +83810,11 @@ var render = function() {
                               attrs: {
                                 disabled: _vm.disabledGuardar,
                                 title: "Guardar Comprobantes"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.guardarRegistrosAuto()
+                                }
                               }
                             },
                             [
@@ -83543,6 +83846,8 @@ var render = function() {
                         ]
                       )
                     ]),
+                    _vm._v(" "),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("ul", { staticClass: "nav nav-tabs" }, [
                       _c("li", { staticClass: "nav-item" }, [
@@ -83687,10 +83992,11 @@ var render = function() {
                                 {
                                   staticClass:
                                     "table  table-striped table-condensed table-bordered table-sm table-hover",
-                                  staticStyle: { width: "100%" }
+                                  staticStyle: { width: "100%" },
+                                  attrs: { id: "tablaFacturas" }
                                 },
                                 [
-                                  _vm._m(0),
+                                  _vm._m(3),
                                   _vm._v(" "),
                                   _c(
                                     "paginate",
@@ -83718,25 +84024,108 @@ var render = function() {
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._v(_vm._s(item.subTotal))
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass:
+                                                "form-control form-control-sm inputValida",
+                                              attrs: {
+                                                id: "categoria",
+                                                required: ""
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "" } },
+                                                [
+                                                  _vm._v(
+                                                    "Seleccionar categoría"
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._l(_vm.categoria, function(
+                                                item
+                                              ) {
+                                                return _c("option", {
+                                                  key: item.id,
+                                                  domProps: {
+                                                    value: item.id,
+                                                    textContent: _vm._s(
+                                                      item.descripcion
+                                                    )
+                                                  }
+                                                })
+                                              })
+                                            ],
+                                            2
+                                          )
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._v(_vm._s(item.descuento))
+                                          _c(
+                                            "select",
+                                            {
+                                              staticClass:
+                                                "form-control form-control-sm inputValida",
+                                              attrs: {
+                                                id: "tipoTransaccion",
+                                                required: ""
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "option",
+                                                { attrs: { value: "" } },
+                                                [_vm._v("Seleccionar tipo")]
+                                              ),
+                                              _vm._v(" "),
+                                              _vm._l(
+                                                _vm.tipoTransaccion,
+                                                function(item) {
+                                                  return _c("option", {
+                                                    key: item.id,
+                                                    domProps: {
+                                                      value: item.id,
+                                                      textContent: _vm._s(
+                                                        item.nombre
+                                                      )
+                                                    }
+                                                  })
+                                                }
+                                              )
+                                            ],
+                                            2
+                                          )
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._v(_vm._s(item.tarifaDifCero))
+                                          _vm._v("$" + _vm._s(item.subTotal))
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._v(_vm._s(item.tarifaCero))
+                                          _vm._v("$" + _vm._s(item.descuento))
                                         ]),
                                         _vm._v(" "),
-                                        _c("td", [_vm._v(_vm._s(item.iva))]),
+                                        _c("td", [
+                                          _vm._v(
+                                            "$" + _vm._s(item.tarifaDifCero)
+                                          )
+                                        ]),
                                         _vm._v(" "),
                                         _c("td", [
-                                          _vm._v(_vm._s(item.importeTotal))
+                                          _vm._v("$" + _vm._s(item.tarifaCero))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v("$" + _vm._s(item.iva))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(
+                                            "$" + _vm._s(item.importeTotal)
+                                          )
                                         ])
                                       ])
                                     }),
@@ -83780,7 +84169,7 @@ var render = function() {
                                     "table table-striped table-condensed table-bordered table-sm table-hover"
                                 },
                                 [
-                                  _vm._m(1),
+                                  _vm._m(4),
                                   _vm._v(" "),
                                   _c(
                                     "paginate",
@@ -83862,7 +84251,7 @@ var render = function() {
                                     "table table-striped table-condensed table-bordered table-sm table-hover"
                                 },
                                 [
-                                  _vm._m(2),
+                                  _vm._m(5),
                                   _vm._v(" "),
                                   _c(
                                     "paginate",
@@ -83944,7 +84333,7 @@ var render = function() {
                                     "table table-striped table-condensed table-bordered table-sm table-hover"
                                 },
                                 [
-                                  _vm._m(3),
+                                  _vm._m(6),
                                   _vm._v(" "),
                                   _c(
                                     "paginate",
@@ -84028,7 +84417,7 @@ var render = function() {
                                     "table table-striped table-condensed table-bordered table-sm table-hover"
                                 },
                                 [
-                                  _vm._m(4),
+                                  _vm._m(7),
                                   _vm._v(" "),
                                   _c(
                                     "paginate",
@@ -84118,7 +84507,7 @@ var render = function() {
                                     "table table-striped table-condensed table-bordered table-sm table-hover"
                                 },
                                 [
-                                  _vm._m(5),
+                                  _vm._m(8),
                                   _vm._v(" "),
                                   _c(
                                     "paginate",
@@ -84181,12 +84570,109 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-success",
+        staticStyle: { display: "none" },
+        attrs: { id: "mensajeGuardando" }
+      },
+      [
+        _c("span", { staticClass: "h4" }, [
+          _vm._v("Guardando información, espere por favor")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "spinner-grow spinner-grow-sm" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "spinner-grow spinner-grow-sm" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "spinner-grow spinner-grow-sm" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-success text-left alert-dismissible",
+        staticStyle: { display: "none" },
+        attrs: { role: "alert", id: "alertaGuardado" }
+      },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            attrs: {
+              type: "button",
+              "data-dismiss": "alert",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        ),
+        _vm._v(" "),
+        _c("h4", [
+          _c("i", {
+            staticClass: "fas fa-check-circle",
+            staticStyle: { "font-size": "18px" }
+          }),
+          _vm._v(" Información ingresada exitosamente.")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-danger text-left alert-dismissible",
+        staticStyle: { display: "none" },
+        attrs: { role: "alert", id: "alertaValida" }
+      },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "close",
+            attrs: {
+              type: "button",
+              "data-dismiss": "alert",
+              "aria-label": "Close"
+            }
+          },
+          [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+        ),
+        _vm._v(" "),
+        _c("i", { staticClass: "fas fa-exclamation-circle" }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Error:")]),
+        _vm._v(
+          "\n                                    Ingresar información correspondiente a: categoría, tipo de transacción.\n                                "
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("th", [_vm._v("N°")]),
       _vm._v(" "),
       _c("th", [_vm._v("Fecha Emisión")]),
       _vm._v(" "),
       _c("th", [_vm._v("T. Comprobante")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Categoría")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Tipo de transacción")]),
       _vm._v(" "),
       _c("th", [_vm._v("SubTotal")]),
       _vm._v(" "),

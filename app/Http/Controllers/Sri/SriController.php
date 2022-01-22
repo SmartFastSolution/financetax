@@ -6,12 +6,36 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Exception;
 use SoapClient;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use App\TipoTransaccion;
+use App\TransaccionDiaria;
+use App\UserEmpresa;
+use App\Role;
+use App\UserRole;
+use App\Servicios\Proyeccion;
+use App\Servicios\Plancontable;
+use App\Servicios\Tiposervicio;
+use App\Servicios\Service;
+use App\Servicios\Subservice;
+use App\Servicios\Plan;
+use App\Tienda\Shop;
 
 class SriController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function index($id, $tipoplan, $usuarioEmpresa)
+    {
+        $user_id = Auth::id();
+        $userEmpresa = UserEmpresa::where('id', $usuarioEmpresa)->first();
+        $ruc = $userEmpresa->ruc;
+        $razonSocial = $userEmpresa->razon_social;
+
+        return view('admin.ingreso_facturas.sri.index', compact('ruc', 'razonSocial'));
     }
 
     public function procesarComprobanteSRI(Request $request)
@@ -344,5 +368,68 @@ class SriController extends Controller
         $response = array();
 
         return $result;
+    }
+
+    public function guardarResgistrosAutomaticos(Request $request)
+    {
+        $facturas = json_decode($request->get('facturas'), true);
+        $user_id = Auth::id();
+
+        /*
+            key: arrayCells["key"],
+                                fechaEmision: arrayCells["fechaEmision"],
+                                tipo: arrayCells["tipo"],
+                                categoria: arrayCells["categoria"],
+                                tipoTransaccion: arrayCells["tipoTransaccion"],
+                                tarifaDifCero: arrayCells["tarifaDifCero"],
+                                tarifaCero: arrayCells["tarifaCero"],
+                                iva: arrayCells["iva"],
+                                total: arrayCells["total"],
+        */
+
+        $plan = Plan::where('tipoplan_id', $request->get('tipoPlan'))->where('subservice_id', $request->get('subservicio'))->first();
+
+        $shop = Shop::where('tipoplan_id', $request->get('tipoPlan'))->where('subservice_id', $request->get('subservicio'))->where('plan_id', $plan->id)
+                        ->where('user_id', $user_id)->first();
+
+        $empresa = UserEmpresa::where('id', $request->get('usuarioEmpresa'))->first();
+
+        foreach ($facturas as $key => $value) {
+            //$value[""]
+            $transaccion = new TransaccionDiaria();
+            $transaccion->usuarioempresa_id = $request->get('usuarioEmpresa');
+            $transaccion->usuarioplan_id = $shop->id;
+            $transaccion->tipotransaccion_id = $value["tipoTransaccion"];
+            //$transaccion->plancuenta_id = $request->get('cuenta');
+            $transaccion->proyeccions_id = $value["categoria"];
+            $fecha = strtotime($value["fechaEmision"]);
+            $transaccion->fecha_registro = date('Y-m-d',$fecha);
+            $transaccion->detalle = "FACTURA #".$value["tipoTransaccion"]." - ".$empresa->razon_social;
+            $transaccion->tarifacero = $value["tarifaCero"];
+            $transaccion->tarifadifcero = $value["tarifaDifCero"];
+            $transaccion->iva = $value["iva"];
+            $transaccion->importe = $value["total"];
+            $transaccion->estado = "activo";//$request->get('estado');
+            //$transaccion->archivo = $request->get('nombreFactura');
+
+            /*$image =  $request->get('imagenBase64');
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
+            $imageName = $request->get('nombreFactura') . '.png';
+            file_put_contents(public_path().'/documentos/'.$imageName, base64_decode($image));*/
+
+            $result = $transaccion->save();
+        }
+        
+        return response()->json($result, 201);
+    }
+
+    public function getInfoEmpresa(Request $request)
+    {
+
+        //$empresa = UserEmpresa::where('id', $request->get('usuarioEmpresa'))->first();
+        dd($request);
+        return UserEmpresa::where('id', $request->get('usuarioEmpresa'))->first();
+
     }
 }

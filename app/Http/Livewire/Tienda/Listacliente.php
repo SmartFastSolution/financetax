@@ -89,7 +89,7 @@ class Listacliente extends Component
                     ->where('shops.estado','!=','pendiente')
                     ->where('user_empresas_id', $keyEn)
                     ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
-                            'subservices.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan')
+                            'subservices.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan', 'shops.user_empresas_id as userEmpresa')
                     ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
         }

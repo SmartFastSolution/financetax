@@ -96,7 +96,11 @@
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     @isset($acciones[$compra->id])
                                         @foreach ($acciones[$compra->id] as $accion)
-                                            <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}">{{$rutasNombre[$accion]}}</a>
+                                            @if($accion == "/admin/ingreso_facturas/sri")
+                                                <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}/{{ $compra->userEmpresa }}">{{$rutasNombre[$accion]}}</a>
+                                            @else
+                                                <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}">{{$rutasNombre[$accion]}}</a>
+                                            @endif
                                         @endforeach
                                     @endisset
                                     </div>
