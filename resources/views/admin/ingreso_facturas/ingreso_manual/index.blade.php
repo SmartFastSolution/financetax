@@ -23,7 +23,8 @@
 --}}
 <div id="app">
     <h2 class="text-center font-weight-bold">Ingreso Manual de Comprobantes Electronicos</h2>
-    <ingreso-manual-component lista-transacciones="'{{ json_encode($transacciones) }}'" sub-servicio="{{ $subservicio }}" plan="{{ $planid }}" tipo-plan="{{ $tipoplan }}" suma-ingresos="{{ $sumaIngresos }}" suma-egresos="{{ $sumaEgresos }}" categorias="{{ $categorias }}"/>
+    <h4 class="text-center font-weight-bold">{{ $empresa }}</h4>
+    <ingreso-manual-component lista-transacciones="'{{ json_encode($transacciones) }}'" sub-servicio="{{ $subservicio }}" plan="{{ $planid }}" tipo-plan="{{ $tipoplan }}" suma-ingresos="{{ $sumaIngresos }}" suma-egresos="{{ $sumaEgresos }}" categorias="{{ $categorias }}" user-empresa="{{ $userEmpresa }}" empresa="{{ $empresa }}"/>
 </div>
 @endsection
 @section('style')

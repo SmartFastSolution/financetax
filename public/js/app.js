@@ -3558,10 +3558,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -3624,13 +3620,12 @@ observer.observe(document.querySelector("#main-container"));*/
 
 var elements = document.getElementsByClassName('applyBtn');
 var requiredElement = elements[0];
-console.log(elements);
 /*requiredElement.addEventListener('click', function(e) {
     console.log("CLK");
 }, false);*/
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias'],
+  props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias', 'userEmpresa', 'empresa'],
   data: function data() {
     var arrayComprobantes = [];
     var resultado = [];
@@ -3679,7 +3674,9 @@ console.log(elements);
       categoria: [],
       transacciones: arrayComprobantes,
       cuentas: [],
-      empresa: [],
+      flagCuenta: true,
+      buttonDisable: false,
+      //empresa: [],
       chartOptions: {
         series: [{
           color: '#21618c',
@@ -3770,8 +3767,8 @@ console.log(elements);
   created: function created() {
     this.listarTipoTransaccion();
     this.listarCategoria();
-    this.listarCuentas();
-    this.listarEmpresas(); //this.$tablaGlobal("#tblTransacciones");
+    this.listarCuentas(); //this.listarEmpresas();
+    //this.$tablaGlobal("#tblTransacciones");
 
     this.generarDataTable();
   },
@@ -4029,13 +4026,19 @@ console.log(elements);
             switch (_context4.prev = _context4.next) {
               case 0:
                 _context4.next = 2;
-                return axios.get('/admin/ingreso_facturas/listar_cuentas');
+                return axios.get('/admin/ingreso_facturas/listar_cuentas/' + _this5.userEmpresa);
 
               case 2:
                 respuestaCuentas = _context4.sent;
+                console.log("--LISTA CUENTA--");
+                console.log(respuestaCuentas.data.length);
                 _this5.cuentas = respuestaCuentas.data;
 
-              case 4:
+                if (respuestaCuentas.data.length == 0) {
+                  _this5.flagCuenta = false;
+                }
+
+              case 7:
               case "end":
                 return _context4.stop();
             }
@@ -4043,30 +4046,11 @@ console.log(elements);
         }, _callee4);
       }))();
     },
-    listarEmpresas: function listarEmpresas() {
-      var _this6 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
-        var respuestaEmpresas;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
-          while (1) {
-            switch (_context5.prev = _context5.next) {
-              case 0:
-                _context5.next = 2;
-                return axios.get('/admin/ingreso_facturas/listar_empresas');
-
-              case 2:
-                respuestaEmpresas = _context5.sent;
-                _this6.empresa = respuestaEmpresas.data;
-
-              case 4:
-              case "end":
-                return _context5.stop();
-            }
-          }
-        }, _callee5);
-      }))();
-    },
+    /*async listarEmpresas(){
+        const respuestaEmpresas = await axios.get('/admin/ingreso_facturas/listar_empresas');
+        this.empresa = respuestaEmpresas.data;
+    },*/
     resetForm: function resetForm() {
       this.comprobante.fecha = moment__WEBPACK_IMPORTED_MODULE_4___default()().format('YYYY-MM-DD');
       this.comprobante.tipo_transaccion = '';
@@ -4079,7 +4063,12 @@ console.log(elements);
       this.imagenMiniatura = '';
       this.comprobante.detalle = '';
       this.comprobante.tipo_categoria = '';
-      this.comprobante.empresa_transaccion = '';
+      this.comprobante.empresa_transaccion = ''; //let flagCuenta = true;
+
+      if (!this.flagCuenta) {
+        document.getElementById("alertaCuenta").style.display = "block";
+        this.buttonDisable = true;
+      }
     },
     storeService: function storeService() {
       var respuestaValidacion = validaFormulario();
@@ -4110,7 +4099,7 @@ console.log(elements);
         data.append('importe', this.comprobante.importe);
         data.append('detalle', this.comprobante.detalle);
         data.append('tipo_categoria', this.comprobante.tipo_categoria);
-        data.append('empresa_transaccion', this.comprobante.empresa_transaccion);
+        data.append('empresa_transaccion', this.userEmpresa);
         data.append('estado', 'activo');
         data.append('subServicio', this.subServicio);
         data.append('plan', this.plan);
@@ -85623,63 +85612,6 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.comprobante.empresa_transaccion,
-                                expression: "comprobante.empresa_transaccion"
-                              }
-                            ],
-                            staticClass: "form-control form-control-sm",
-                            attrs: { id: "empresa" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.comprobante,
-                                  "empresa_transaccion",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("Seleccionar")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.empresa, function(item) {
-                              return _c("option", {
-                                key: item.id,
-                                domProps: {
-                                  value: item.id,
-                                  textContent: _vm._s(item.razon_social)
-                                }
-                              })
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(4),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-8" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
                                 value: _vm.comprobante.tipo_transaccion,
                                 expression: "comprobante.tipo_transaccion"
                               }
@@ -85727,7 +85659,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(5),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85784,7 +85716,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(6),
+                      _vm._m(5),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c(
@@ -85841,7 +85773,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(7),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85865,7 +85797,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(8),
+                      _vm._m(7),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85889,7 +85821,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(9),
+                      _vm._m(8),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85913,7 +85845,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(10),
+                      _vm._m(9),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -85937,7 +85869,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(11),
+                      _vm._m(10),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8" }, [
                         _c("input", {
@@ -85971,7 +85903,7 @@ var render = function() {
                     _c("hr"),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row mb-2" }, [
-                      _vm._m(12),
+                      _vm._m(11),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-8 text-right" }, [
                         _c(
@@ -86048,7 +85980,20 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(13)
+                  _vm._m(12),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-footer" }, [
+                    _vm._m(13),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-sm",
+                        attrs: { type: "submit", disabled: _vm.buttonDisable }
+                      },
+                      [_vm._v("Guardar Registro")]
+                    )
+                  ])
                 ]
               )
             ])
@@ -86129,16 +86074,6 @@ var staticRenderFns = [
       "label",
       { staticClass: "col-4 col-form-label", attrs: { for: "fecha" } },
       [_c("b", [_vm._v("Fecha")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "col-4 col-form-label", attrs: { for: "empresa" } },
-      [_c("b", [_vm._v("Empresa")])]
     )
   },
   function() {
@@ -86235,26 +86170,42 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "span",
-        { staticClass: "msjGuardando", staticStyle: { display: "none" } },
-        [
-          _c("span", [_vm._v("Guardando registro...")]),
-          _vm._v(" "),
-          _c("div", {
-            staticClass: "spinner-grow spinner-grow-lg text-secondary",
-            attrs: { role: "status" }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary btn-sm", attrs: { type: "submit" } },
-        [_vm._v("Guardar Registro")]
-      )
-    ])
+    return _c(
+      "div",
+      {
+        staticClass: "alert alert-danger text-left",
+        staticStyle: { margin: "10px", display: "none" },
+        attrs: { role: "alert", id: "alertaCuenta" }
+      },
+      [
+        _c("h6", { staticClass: "alert-heading" }, [
+          _c("i", {
+            staticClass: "fas fa-exclamation-triangle",
+            staticStyle: { "font-size": "15px" }
+          }),
+          _vm._v(
+            " \r\n                            No existen cuentas configuradas para el usuario y empresa.\r\n                        "
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "msjGuardando", staticStyle: { display: "none" } },
+      [
+        _c("span", [_vm._v("Guardando registro...")]),
+        _vm._v(" "),
+        _c("div", {
+          staticClass: "spinner-grow spinner-grow-lg text-secondary",
+          attrs: { role: "status" }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true

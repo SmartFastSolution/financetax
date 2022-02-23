@@ -86,15 +86,6 @@
                             </div>
                         </div>
                         <div class="form-group row mb-2">
-                            <label for="empresa" class="col-4 col-form-label"><b>Empresa</b></label>
-                            <div class="col-8">
-                                <select v-model="comprobante.empresa_transaccion" class="form-control form-control-sm" id="empresa">
-                                    <option value="">Seleccionar</option>
-                                    <option v-for="item in empresa" :key="item.id" :value="item.id" v-text="item.razon_social"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-2">
                             <label for="tipo" class="col-4 col-form-label"><b>Tipo de Transacción</b></label>
                             <div class="col-8">
                                 <select v-model="comprobante.tipo_transaccion" class="form-control form-control-sm" id="tipo">
@@ -175,13 +166,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="alert alert-danger text-left" role="alert" id="alertaCuenta" style="margin: 10px; display:none;">
+                        <h6 class="alert-heading"><i class="fas fa-exclamation-triangle" style="font-size: 15px;"></i>&nbsp;
+                            No existen cuentas configuradas para el usuario y empresa.
+                        </h6>
+                    </div>
                     <div class="modal-footer">
                         <span class="msjGuardando" style="display:none">
                             <span>Guardando registro...</span>
                             <div class="spinner-grow spinner-grow-lg text-secondary" role="status">
                             </div>
                         </span>
-                        <button type="submit" class="btn btn-primary btn-sm">Guardar Registro</button>
+                        <button type="submit" class="btn btn-primary btn-sm" :disabled="buttonDisable">Guardar Registro</button>
                     </div>
                     </form>
                 </div>
@@ -263,13 +259,13 @@ observer.observe(document.querySelector("#main-container"));*/
 
 var elements = document.getElementsByClassName('applyBtn');
 var requiredElement = elements[0];
-console.log(elements);
+
 /*requiredElement.addEventListener('click', function(e) {
     console.log("CLK");
 }, false);*/
 
 export default {
-    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias'],
+    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias', 'userEmpresa', 'empresa'],
     data() {
         let arrayComprobantes = [];
         var resultado = [];
@@ -317,7 +313,9 @@ export default {
             categoria: [],
             transacciones:arrayComprobantes,
             cuentas: [],
-            empresa: [],
+            flagCuenta: true,
+            buttonDisable: false,
+            //empresa: [],
             chartOptions: {
                     series: [{
                         color: '#21618c',
@@ -414,7 +412,7 @@ export default {
         this.listarTipoTransaccion();
         this.listarCategoria();
         this.listarCuentas();
-        this.listarEmpresas();
+        //this.listarEmpresas();
         //this.$tablaGlobal("#tblTransacciones");
         this.generarDataTable();
     },
@@ -619,13 +617,18 @@ export default {
             this.categoria = respuestaCategoria.data;
         },
         async listarCuentas(){
-            const respuestaCuentas= await axios.get('/admin/ingreso_facturas/listar_cuentas');
+            const respuestaCuentas= await axios.get('/admin/ingreso_facturas/listar_cuentas/'+this.userEmpresa);
+            console.log("--LISTA CUENTA--");
+            console.log(respuestaCuentas.data.length);
             this.cuentas = respuestaCuentas.data;
+            if(respuestaCuentas.data.length == 0){
+                this.flagCuenta = false;
+            }
         },
-        async listarEmpresas(){
+        /*async listarEmpresas(){
             const respuestaEmpresas = await axios.get('/admin/ingreso_facturas/listar_empresas');
             this.empresa = respuestaEmpresas.data;
-        },
+        },*/
         resetForm(){
             this.comprobante.fecha = moment().format('YYYY-MM-DD');
             this.comprobante.tipo_transaccion = '';
@@ -639,6 +642,13 @@ export default {
             this.comprobante.detalle = '';
             this.comprobante.tipo_categoria = '';
             this.comprobante.empresa_transaccion = '';
+
+            //let flagCuenta = true;
+
+            if(!this.flagCuenta){
+                document.getElementById("alertaCuenta").style.display = "block";
+                this.buttonDisable = true;
+            }
         },
         storeService() {
             let respuestaValidacion = validaFormulario();
@@ -669,7 +679,7 @@ export default {
                 data.append('importe', this.comprobante.importe);
                 data.append('detalle', this.comprobante.detalle);
                 data.append('tipo_categoria', this.comprobante.tipo_categoria);
-                data.append('empresa_transaccion', this.comprobante.empresa_transaccion);
+                data.append('empresa_transaccion', this.userEmpresa);
                 data.append('estado', 'activo');
                 data.append('subServicio',this.subServicio);
                 data.append('plan',this.plan);

@@ -16,7 +16,11 @@
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
 
 </head>
-
+<style type="text/css">
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(digital/images/background-logo-blanco.jpg) fixed center center;
+    }
+</style>
 <body>
     <div class="loader"></div>
     <div id="app">
@@ -24,12 +28,12 @@
             <div class="container mt-5">
                 <div class="row">
                     <div  class="col-12 col-sm-8 offset-sm-2 col-md-6 offset-md-3 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-                        <div class="card card-info">
+                        <div class="card card-primary">
                            
                             <div class="card-header justify-content-center">
                                 <img class="nav_logo_img img-fluid" src="digital/images/solutionlogo1.png">
                             </div>
-                            <h4 class="text-center">INGRESO</h4>
+                            <h4 class="text-center">INICIO DE SESI&Oacute;N</h4>
                             <div class="card-body">
                                 @if (Session::has('message'))
                                     <div class="alert alert-danger alert-dismissible" role="alert">
@@ -41,7 +45,7 @@
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="email">Correo Electrónico</label>
+                                        <label for="email">Correo Electr&oacute;nico</label>
                                         <input id="email" type="email" class="form-control" name="email" tabindex="1"
                                             @error('email') is-invalid @enderror" value="{{ old('email') }}" required
                                             autocomplete="email" autofocus="">
@@ -57,7 +61,7 @@
                                             <div class="float-right">
                                                 @if (Route::has('password.request'))
                                                     <a class="btn btn-link" href="{{ route('forget.password.get') }}">
-                                                        {{ __('Olvidaste Tu Contraseña?') }}
+                                                        {{ __('¿ Olvidaste tu contraseña ?') }}
                                                     </a>
                                                 @endif
                                             </div>
@@ -76,22 +80,22 @@
                                                 id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                             <label class="form-check-label" for="remember">
-                                                {{ __('Recordar ') }}
+                                                {{ __('Recordar sesión') }}
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-info btn-lg btn-block" tabindex="4">
+                                        <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                             {{ __('Ingresar') }}
                                         </button>
                                       
                                     </div>
                                 </form>
                                 <div class="mb-4 text-muted text-center">
-                                    No te has Registrado? <a  href="{{ url('/register') }}">Crea  Tu Cuenta</a>
+                                    ¿ No te has registrado ? <a  href="{{ url('/register') }}">Crear cuenta aqu&iacute;</a>
                                 </div>
                                 <div class="mb-4 text-muted text-center">
-                                      <a  href="{{ url('/page') }}">Volver Página Principal</a>
+                                      <a  href="{{ url('/page') }}">Volver a p&aacute;gina principal</a>
                                 </div>
 
                             </div>

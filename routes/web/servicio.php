@@ -16,7 +16,7 @@ Route::prefix('servicios')->group(function(){
             Route::get('/planes', 'Servicios\PlanController@Planes')->name('servicios.planes'); //indice de los planes
             Route::get('/crear-plan', 'Servicios\PlanController@Plan')->name('servicios.planes.create');// crud de creacion de un plan
             Route::post('/store-plan', 'Servicios\PlanController@Store')->name('servicios.planes.store'); //crud de almacenamiento de un plan
-
+            Route::get('/acciones-plan', 'Servicios\PlanController@AccionesPlan')->name('servicios.planes.accionesPlan');
        });
 
        Route::group(['middleware'=>['role_or_permission:super-admin|m-tiposervicio']], function(){

@@ -18,3 +18,28 @@
 {
     background-color: #cce0ff !important;
 }
+
+.btn-inicio:hover{
+    opacity: 75%;
+    cursor: pointer;
+}
+
+.article-bottom{
+    position: absolute;
+    bottom: 1rem;
+}
+
+#jumbotron-home{
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(../img/jumbo.png) fixed center center;
+    background-size: cover;
+    color: white;
+}
+
+.progress-bar {
+    border-radius: 0.4rem;
+    transition: width 2s ease;
+  }
+
+.font-15{
+    font-size: 15px !important;
+}

@@ -99,6 +99,13 @@
                     "url"   : "servicios/proyeccion-gastos-personales",
                     "name"  : "Lista de Proyección Gastos",
                     "can"   : "m-proyecciones"
+                },
+                {
+
+                    "route" : "servicios.planes.accionesPlan",
+                    "url"   : "servicios/acciones-plan",
+                    "name"  : "Lista de Acciones por Plan",
+                    "can"   : "m-plan"
                 }
             ]
 

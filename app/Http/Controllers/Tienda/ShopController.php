@@ -52,7 +52,8 @@ class ShopController extends Controller
     public function access2($id)
     {
 
-
+        $user_id = Auth::id();
+        $empresas = UserEmpresa::where('user_id',$user_id)->get();
 
         $data  = Subservice::join('services', 'subservices.service_id', '=', 'services.id')
             ->join('tiposervicios', 'services.tiposervicio_id', '=', 'tiposervicios.id')
@@ -75,9 +76,7 @@ class ShopController extends Controller
 
             ->get();
 
-        //dd($tipoplan);
-
-        return view('cruds.Tienda.paginacompra', compact('data', 'plans', 'tipoplan'));
+        return view('cruds.Tienda.paginacompra', compact('data', 'plans', 'tipoplan', 'empresas'));
     }
 
 
@@ -148,7 +147,7 @@ class ShopController extends Controller
             }
 
         ])->find($id);
-        $empresasUser = UserEmpresa::where('user_id', $compra->especialista->id)->get();
+        $empresasUser = UserEmpresa::where('user_id', $compra->cliente->id)->get();
 
         return view('cruds.Tienda.adminplan.show.showplanindividual', compact('compra', 'empresasUser'));
     }
@@ -237,5 +236,36 @@ class ShopController extends Controller
         
         return view('cruds.Tienda.adminplan.especialistainteraccion', compact('compra'));
         /* return view('cruds.Tienda.adminplan.especialistainteraccion'); */
+    }
+
+    public function consultaEmpresa(Request $request){
+
+        $user_id = Auth::id();
+        $flagEmpresa = false;
+        $empresa_id = $request->empresa;
+        
+        if($request->empresa == 0){
+            $userEmpresa = UserEmpresa::where('user_id',$user_id)->first();
+            $empresa_id = $userEmpresa->id;
+        }
+
+        $compra = Shop::select('*')
+                        ->where('user_id', $user_id)
+                        ->where('tipoplan_id', $request->tipoplan_id)
+                        ->where('plan_id', $request->plan_id)
+                        ->where('subservice_id', $request->subservice_id)
+                        ->where('user_empresas_id', $empresa_id)
+                        ->get();
+
+        $empresa = UserEmpresa::where('id',$empresa_id)->first();
+
+        if($compra->count() > 0)
+        {
+            $flagEmpresa = true;
+        }
+
+        $result = array("flag" => $flagEmpresa, "empresa" => $empresa->razon_social);
+
+        return response()->json($result, 201);
     }
 }

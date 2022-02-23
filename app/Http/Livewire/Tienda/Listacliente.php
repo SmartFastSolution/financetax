@@ -66,7 +66,7 @@ class Listacliente extends Component
         $EmpresasNombre = UserEmpresa::where('user_id', $this->uid)->pluck('razon_social', 'id');
 
         foreach ($data as $key => $value) {
-            $servicioAccion = ServicioAccion::where('shop_id', $value->id)
+            $servicioAccion = ServicioAccion::where('plan_id', $value->plan_id)
                             ->join('acciones','servicio_accion.accion_id', '=','acciones.id')
                             ->select('servicio_accion.*','acciones.ruta as ruta', 'acciones.descripcion as nombreRuta')->get();
             if(!$servicioAccion->isEmpty()){

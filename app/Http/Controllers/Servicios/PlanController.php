@@ -7,6 +7,7 @@ use App\Http\Requests\PlanRequest;
 use App\Servicios\Plan;
 use App\Servicios\Subservice;
 use App\Servicios\Tipoplan;
+use App\Servicios\ServicioAccion;
 use App\Traits\PlanTrait;
 use Illuminate\Http\Request;
 
@@ -54,7 +55,13 @@ class PlanController extends Controller
         return response()->json($result, 201);
     }
 
-
+    public function AccionesPlan(){
+        return view('cruds.Servicios.TipoPlanes.AccionesPlan');
+        /*return ServicioAccion::join('plans', 'servicio_accion.plan_id', '=', 'plans.id')
+            ->join('acciones', 'servicio_accion.accion_id', '=', 'acciones.id')
+            ->select('servicio_accion.*', 'plans.descripcion as nombre_plan', 'acciones.descripcion as nombre_accion')
+            ->get();*/
+    }
 
 
 }

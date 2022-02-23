@@ -40,13 +40,7 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header-transparent">
     <div class="container">
-
-      <div id="logo" class="pull-left">
-     
-        <a href="{{ url('/page') }}"> <p style="color: white">SolutionFinanceTax</p> </a>
-       
-      </div>
-
+        <a href="{{ url('/page') }}"><img class="img-fluid" style="width: 10rem;" src="images/icons/tax_finance_header.png"></a>
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="{{ url('/page') }}">Inicio</a></li>
@@ -95,6 +89,8 @@
     <div class="hero-container" data-aos="zoom-in" data-aos-delay="100">
       <h1>Bienvenido a SolutionFinanceTax</h1>
       <h2>Compartir el mismo objetivo es el primer paso para el Éxito</h2>
+      <span id="span-scroll"><div class="mouse"></div></span>
+      <span id="text-scroll"><b>Deslizar hacia abajo</b></span>
       {{-- <a href="#about" class="btn-get-started">Conócenos</a> --}}
     </div>
   </section><!-- End Hero Section -->

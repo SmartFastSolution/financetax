@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class ServicioAccion extends Model
 {
     protected $table = 'servicio_accion';
+    public $timestamps = false;
 
     protected $fillable =[
-        'shop_id',
+        'plan_id',
         'accion_id',
        ];
 }

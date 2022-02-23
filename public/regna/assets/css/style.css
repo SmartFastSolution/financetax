@@ -1193,3 +1193,109 @@ section {
   font-size: 13px;
   color: #ccc;
 }
+
+.btn-inicio:hover{
+  opacity: 75%;
+  cursor: pointer;
+}
+
+.mouse {
+  width: 40px;
+  height: 80px;
+  border: 4px solid white;
+  border-radius: 60px;
+  position: relative;
+  opacity: 85%;
+  }
+  .mouse::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-radius: 50%;
+  opacity: 2;
+  animation: wheel 2s infinite;
+  -webkit-animation: wheel 2s infinite;
+  }
+
+  @keyframes wheel {
+  to {
+      opacity: 0;
+      top: 60px;
+  }
+  }
+  @-webkit-keyframes wheel {
+  to {
+      opacity: 0;
+      top: 60px;
+  }
+  }
+
+  #span-scroll{
+      position: absolute;
+      top: 89%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+  }
+
+  #text-scroll{
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      opacity: 80%;
+  }
+
+  .lista-servicios {
+    counter-reset: li;
+    list-style: none;
+    padding: 1rem;
+    /*text-shadow: 0 1px 0 rgba(255,255,255,.5);*/
+    text-align: left;
+  }
+  
+  .lista-servicios li {
+    position: relative;
+    display: block;
+    padding: .2em .2em .2em 2em;
+    margin: .5em 0;
+    background: #d8d8d8;
+    color: black;
+    text-decoration: none;
+    border-radius: .3em;
+    transition: .3s ease-out;
+  }
+  
+  .lista-servicios li:hover { background: #d8d8d86b; }
+  /*.lista-servicios li:hover:before { transform: rotate(360deg); }*/
+  .lista-servicios li:before {
+    font-family: FontAwesome;
+    content: "\f00c";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    /*content: counter(li);
+    counter-increment: li;*/
+    position: absolute;
+    left: -1.3em;
+    top: 50%;
+    margin-top: -1.3em;
+    background: #2dc997;
+    height: 2em;
+    width: 2em;
+    line-height: 2em;
+    border: .3em solid #2dc997;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 2em; 
+    transition: all .3s ease-out;
+    color: white;
+  }

@@ -15,6 +15,8 @@ Route::prefix('tienda')->group(function(){
         Route::post('/storeplan', 'Tienda\ShopController@Storee')->name('store.plan.cliente'); //crud de almacenamiento de un plan
         Route::post('/upload', 'Tienda\ShopController@store')->name('documentos.files.stores'); //para subir requisitos en la interaccion
 
+        Route::post('/consultaEmpresa', 'Tienda\ShopController@consultaEmpresa')->name('tienda.consultaEmpresa');
+
     });
 
     Route::group(['middleware'=>['role_or_permission:super-admin|c-misservicios']], function(){

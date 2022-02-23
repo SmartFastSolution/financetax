@@ -428,7 +428,6 @@ class SriController extends Controller
     {
 
         //$empresa = UserEmpresa::where('id', $request->get('usuarioEmpresa'))->first();
-        dd($request);
         return UserEmpresa::where('id', $request->get('usuarioEmpresa'))->first();
 
     }

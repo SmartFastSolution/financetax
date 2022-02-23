@@ -22,8 +22,8 @@
         }
 
         .menu-text{
-            font-size: 0.70rem;
-            font-family: monospace;
+            font-size: 0.60rem;
+            font-family: "Nunito", "Segoe UI", arial;
         }
 
         .menu-item,
@@ -52,7 +52,7 @@
         .lines {
         width: 25px;
         height: 3px;
-        background: lightgray;
+        background: white;
         display: block;
         position: absolute;
         top: 50%;
@@ -397,38 +397,92 @@
         .switch-button-checkbox + .switch-button-label .switch-button-label-span {
         position: relative;
         }
+        
+        .btn-inicio:hover{
+            opacity: 75%;
+            cursor: pointer;
+        }
 
+        .mouse {
+        width: 40px;
+        height: 80px;
+        border: 4px solid white;
+        border-radius: 60px;
+        position: relative;
+        opacity: 85%;
+        }
+        .mouse::before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        border-radius: 50%;
+        opacity: 2;
+        animation: wheel 2s infinite;
+        -webkit-animation: wheel 2s infinite;
+        }
+
+        @keyframes wheel {
+        to {
+            opacity: 0;
+            top: 60px;
+        }
+        }
+        @-webkit-keyframes wheel {
+        to {
+            opacity: 0;
+            top: 60px;
+        }
+        }
+
+        #span-scroll{
+            position: absolute;
+            top: 89%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #text-scroll{
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            margin-right: -50%;
+            transform: translate(-50%, -50%);
+            color: #155FFF;
+            opacity: 70%;
+        }
     </style>
   
 </head>
-
 <body>
     <header>
-           
-                <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active video-container">
-                            <video class="embed-responsive-item " height="" id="videoInicio" loop="" autoplay muted>
-                                <source src="digital/mp4/video.mp4" type="video/mp4">
-                                Su navegador no soporta este elemento.
-                            </video>
-                            <div class="switch-button">
-                                <input class="switch-button-checkbox" type="checkbox" id="input-audio-video"></input>
-                                <label class="switch-button-label" for=""><span class="switch-button-label-span">AUDIO OFF</span></label>
-                            </div>
-
-
-                    
-                            {{--<div class="carousel-caption d-none d-md-block">
-                                <h5>SOLUTIONFINANCETAX</h5>
-                                <a href="{{ url('/page') }}" class="btn btn-dark btn-lg btn-block" role="button"
-                                aria-pressed="true">EMPIEZA AHORA</a>
-                            </div>
-                            --}}
-                        </div>
+        <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active video-container">
+                    <video class="embed-responsive-item " height="" id="videoInicio" loop="" autoplay muted>
+                        <source src="digital/mp4/video.mp4" type="video/mp4">
+                        Su navegador no soporta este elemento.
+                    </video>
+                    <div class="switch-button">
+                        <input class="switch-button-checkbox" type="checkbox" id="input-audio-video"></input>
+                        <label class="switch-button-label" for=""><span class="switch-button-label-span">AUDIO OFF</span></label>
                     </div>
+                    <span id="span-scroll"><div class="mouse"></div></span>
+                    <span class="badge badge-pill badge-light" id="text-scroll"><b>Deslizar hacia abajo</b></span>
+                    {{--<div class="carousel-caption d-none d-md-block">
+                        <h5>SOLUTIONFINANCETAX</h5>
+                        <a href="{{ url('/page') }}" class="btn btn-dark btn-lg btn-block" role="button"
+                        aria-pressed="true">EMPIEZA AHORA</a>
+                    </div>
+                    --}}
                 </div>
-            
+            </div>
+        </div>
     </header>
 
     <section class="my-5">
@@ -457,13 +511,14 @@
             <br>
             <br>
             <br>
-            <div class="d-grid gap-2 col-6 mx-auto">
-            {{-- <h5 align="center">
-                    SOLUTIONFINANCETAX
-                </h5>
-            --}}
-                 <a href="{{ url('/page') }}" class="btn btn-lg btn-block" role="button"
-                    aria-pressed="true" style="background: #8130b4; color: white">CONOCE NUESTROS SERVICIOS AQU&iacute;</a>
+            <br>
+            <div class="d-grid gap-2 col-6 mx-auto" align="center">
+                <a class="btn btn-inicio" role="button" aria-pressed="true" style="background: #c22a5e; color: white" id="descargarPwa">
+                    <i class="fas fa-cloud-download-alt" style="font-size: 18px"></i>&nbsp;&nbsp;Descargar aplicaci&oacute;n
+                </a>
+                <br><br>
+                <a href="{{ url('/page') }}" class="btn btn-lg btn-block btn-inicio" role="button"
+                aria-pressed="true" style="background: #8130b4; color: white">CONOCE NUESTROS SERVICIOS <u>AQU&iacute;</u></a>
             </div>
         </div>
     </section>
@@ -480,7 +535,7 @@
                             <div class="carousel-caption d-none d-md-block">
                                 <h5>SOLUTIONFINANCETAX</h5>
                                 <a href="{{ url('/page') }}" class="btn btn-dark btn-lg btn-block" role="button"
-                                aria-pressed="true">CONOCE NUESTROS SERVICIOS AQU&iacute;</a>
+                                aria-pressed="true">CONOCE NUESTROS SERVICIOS <u>AQU&iacute;</u></a>
                             </div>
                         </div>
                     </div>
@@ -504,6 +559,33 @@
                 vid.muted = true;
             }
         });
+
+        let deferredPrompt;
+            window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent the mini-infobar from appearing on mobile
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            // Update UI notify the user they can install the PWA
+            //showInstallPromotion();
+        });
+
+        let buttonInstall = document.getElementById("descargarPwa");
+        buttonInstall.addEventListener('click', (e) => {
+            // Hide the app provided install promotion
+            //hideMyInstallPromotion();
+            // Show the install prompt
+            deferredPrompt.prompt();
+            // Wait for the user to respond to the prompt
+            deferredPrompt.userChoice.then((choiceResult) => {
+                /*if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+                } else {
+                console.log('User dismissed the install prompt');
+                }*/
+            });
+        });
+
 
         document.getElementById("menu-open").click();
     </script>

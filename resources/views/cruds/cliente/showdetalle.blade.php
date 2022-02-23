@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-center font-weight-bold">Vista Cliente</h1>
+    <h1 class="text-center font-weight-bold">Detalle Cliente</h1>
 
     <section class="section">
         <div class="section-body">
@@ -9,14 +9,14 @@
             <div class="row mt-sm-4">
                 <div class="col-12 col-md-12 col-lg-4">
                     <div class="card">
-                        <div class="card-header">
-                            <h4>Datos de Compra</h4>
+                        <div class="card-header bg-primary">
+                            <h4 class="text-white">Datos de Compra</h4>
                         </div>
                         <div class="card-body">
                             <div class="py-4">
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Especialista a Cargo:
+                                        <b>Especialista a Cargo:</b>
                                     </span>
                                     <span class="float-right text-muted">
                                       <strong>{{ $compra->especialista->name }}</strong>
@@ -24,7 +24,7 @@
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Fecha de Compra
+                                        <b>Fecha de Compra:</b>
                                     </span>
                                     <span class="float-right text-muted">
                                         {{ $compra->created_at->diffForHumans() }}
@@ -32,15 +32,15 @@
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Estado
+                                        <b>Estado:</b>
                                     </span>
-                                    <span class="float-right  badge badge-danger">
+                                    <span class="float-right  badge badge-info">
                                         {{ $compra->estado }}
                                     </span>
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Tipo Plan
+                                        <b>Tipo de Plan:</b>
                                     </span>
                                     <span class="float-right text-muted">
                                         {{ $compra->tipoplan->nombre }}
@@ -48,7 +48,7 @@
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Costo del Plan
+                                        <b>Costo de Plan:</b>
                                     </span>
                                     <span class="float-right ">
                                         <strong>${{ $compra->costo }}</strong>

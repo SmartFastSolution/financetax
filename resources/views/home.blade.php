@@ -2,9 +2,14 @@
 
 @section('content')
     <div class="row justify-content-center">
-        <div class="col-md-10">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+        <div class="col-md-12">
+        <div class="jumbotron text-center" id="jumbotron-home">
+            <br>
+            <h3>{{ __('Bienvenido') }} {{$usuario->name}}</h3>
+            <p>&Uacute;ltima sesi&oacute;n:&nbsp;{{date_format(date_create($usuario->access_at),"d/m/Y H:i")}}</p>
+        </div>
+            {{--<div class="card">
+                <div class="card-header"><b></b></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -15,7 +20,7 @@
 
                     {{ __('You are logged in!') }}
                 </div>
-            </div>
+                </div>--}}
         </div>
     </div>
 @endsection

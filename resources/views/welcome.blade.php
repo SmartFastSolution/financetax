@@ -80,11 +80,11 @@
                 <div class="icon"><a href=""><i class="fa fa-bar-chart"></i></a></div>
                 <h4 class="title"><a href="">FINANZAS</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; ">Elaboración de Declaraciones mensuales 104 y 103</li>
-                    <li style="color: black; text-align: left; "> Subidas de Anexos tributarios en el año</li>
-                    <li style="color: black; text-align: left; ">Elaboración del Balance anual al SRI</li>
-                    <li style="color: black; text-align: left; ">Análisis proyectado de valores a pagar tributariamente y asesoría de correctivos y mejoras</li> <br>
+                  <ul class="lista-servicios">
+                      <li class="">Elaboraci&oacute;n de Declaraciones mensuales 104 y 103</li>
+                      <li class="">Subidas de Anexos tributarios en el año</li>
+                      <li class="">Elaboraci&oacute;n del Balance anual al <img class="img-fluid" style="width: 2rem;" src="images/icons/sri_icon.png"></li>
+                      <li class="">An&aacute;lisis proyectado de valores a pagar tributariamente y asesor&iacute;a de correctivos y mejoras</li>
                   </ul>
                 </p>
               </div>
@@ -94,12 +94,12 @@
               <div class="box">
                 <div class="icon"><a href=""><i class="fa fa-desktop"></i></a></div>
                 <h4 class="title"><a href="">PÁGINA WEB</a></h4>
-                <p class="description"   ">
-                  <ul style="color: black; text-align: center; ">
-                    <li  >Creación de Pagina Web</li>
-                    <li  >Dominio</li>
-                    <li >Seguridad SSl</li>
-                    <li >Correo Empresarial</li>
+                <p class="description">
+                  <ul class="lista-servicios">
+                      <li class="">Creaci&oacute;n de Pagina Web</li>
+                      <li class="">Dominio</li>
+                      <li class="">Seguridad SSL</li>
+                      <li class="">Correo Empresarial</li>
                   </ul>
 
                 </p>
@@ -114,11 +114,11 @@
                 <div class="icon"><a href=""><i class="fa fa-money" aria-hidden="true"></i></a></div>
                 <h4 class="title"><a href="">IMPUESTOS</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; ">Elaboración de Declaraciones mensuales 104 y 103</li>
-                    <li style="color: black; text-align: left; "> Subidas de Anexos tributarios en el año</li>
-                    <li style="color: black; text-align: left; ">Elaboración del Balance anual al SRI</li>
-                    <li style="color: black; text-align: left; ">Análisis proyectado de valores a pagar tributariamente y asesoría de correctivos y mejoras</li> 
+                  <ul class="lista-servicios">
+                      <li class="">Elaboraci&oacute;n de Declaraciones mensuales 104 y 103</li>
+                      <li class="">Subidas de Anexos tributarios en el año</li>
+                      <li class="">Elaboraci&oacute;n del Balance anual al <img class="img-fluid" style="width: 2rem;" src="images/icons/sri_icon.png"></li>
+                      <li class="">An&aacute;lisis proyectado de valores a pagar tributariamente y asesoría de correctivos y mejoras</li>
                   </ul>
                 </p>
               </div>
@@ -129,11 +129,10 @@
                 <div class="icon"><a href=""><i class="fa fa-address-card-o" aria-hidden="true"></i></a></div>
                 <h4 class="title"><a href="">SERVICIOS CONTABLE</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; ">Análisis de los registros contables cuentas por cobrar</li>
-                    <li style="color: black; text-align: left; ">Conciliaciones Bancarias</li>
-                    <li style="color: black; text-align: left; ">Análisis de manejos de activos fijo y su registro de depreciaciones</li>
-                    <li style="color: black; text-align: left; ">etc</li> 
+                  <ul class="lista-servicios">
+                      <li class="">An&aacute;lisis de los registros contables cuentas por cobrar</li>
+                      <li class="">Conciliaciones Bancarias</li>
+                      <li class="">An&aacute;lisis de manejos de activos fijo y su registro de depreciaciones</li>
                   </ul>
                 </p>
               </div>
@@ -147,11 +146,10 @@
                 <div class="icon"><a href=""><i class="fa fa-money" aria-hidden="true"></i></a></div>
                 <h4 class="title"><a href="">MARKETING</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; ">Elaboración de Post</li>
-                    <li style="color: black; text-align: left; "> Elaboración de Logo</li>
-                    <li style="color: black; text-align: left; ">Tarjetas de Presentación</li>
-                    <li style="color: black; text-align: left; ">Otros</li> 
+                  <ul class="lista-servicios">
+                      <li class="">Elaboraci&oacute;n de Posts</li>
+                      <li class="">Elaboraci&oacute;n de Logo</li>
+                      <li class="">Tarjetas de Presentaci&oacute;n</li>
                   </ul>
                 </p>
               </div>
@@ -162,11 +160,10 @@
                 <div class="icon"><a href=""><i class="fa fa-address-card-o" aria-hidden="true"></i></a></div>
                 <h4 class="title"><a href="">SERVICIOS PARA EMPRENDEDORES</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; "> Servicios Contable Personas Naturales</li>
-                    <li style="color: black; text-align: left; "> Asesoria de Manejos anual de sus ingresos y gastos</li>
-                    <li style="color: black; text-align: left; "> Constitución de CIA</li>
-                    <li style="color: black; text-align: left; ">etc</li> 
+                  <ul class="lista-servicios">
+                      <li class="">Servicios Contable Personas Naturales</li>
+                      <li class="">Asesoria de Manejos anual de sus ingresos y gastos</li>
+                      <li class="">Constituci&oacute;n de CIA</li>
                   </ul>
                 </p>
               </div>
@@ -180,11 +177,10 @@
                 <div class="icon"><a href=""><i class="fa fa-line-chart" aria-hidden="true"></i></a></div>
                 <h4 class="title"><a href="">INDICADORES DE GESTIÓN</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; ">Indicadores de Ratios Financiero</li>
-                    <li style="color: black; text-align: left; "> Examen de la situación real de la empresa</li>
-                    <li style="color: black; text-align: left; ">Evaluación de indicadores por departamento</li>
-                    <li style="color: black; text-align: left; ">Otros</li> 
+                  <ul class="lista-servicios">
+                      <li class="">Indicadores de Ratios Financiero</li>
+                      <li class="">Ex&aacute;men de la situaci&oacute;n real de la empresa</li>
+                      <li class="">Evaluaci&oacute;n de indicadores por departamento</li>
                   </ul>
                 </p>
               </div>
@@ -195,11 +191,9 @@
                 <div class="icon"><i class="fa fa-file-text-o" aria-hidden="true"></i></i></a></div>
                 <h4 class="title"><a href="">CONTRATOS</a></h4>
                 <p class="description">
-                  <ul>
-                    <li style="color: black; text-align: left; "> Formato de Contrato de laboral</li>
-                    <li style="color: black; text-align: left; "> Contrato de constitución de empresa</li>
-                    <li style="color: black; text-align: left; "> Contrato de constitución de empresa</li>
-                    <li style="color: black; text-align: left; ">Otros</li> 
+                  <ul class="lista-servicios">
+                      <li class="">Formato de Contrato de laboral</li>
+                      <li class="">Contrato de constituci&oacute;n de empresa</li>
                   </ul>
                 </p>
               </div>
@@ -405,6 +399,20 @@
   
         </div>
       </section><!-- End Team Section -->
+
+      <div class="container">
+        <div class="row" data-aos="zoom-in">
+          <div class="col-lg-6 text-center text-lg-center">
+            <h3 class="cta-title">Instala nuestra aplicaci&oacute;n <i class="fa fa-hand-o-right" aria-hidden="true"></i></h3>
+            <p class="cta-text"> </p>
+          </div>
+          <div class="col-lg-6 cta-btn-container text-center">
+            <a class="btn btn-inicio" role="button" aria-pressed="true" style="background: #2dc997; color: white" id="descargarPwa">
+                <i class="fa fa-cloud-download" style="font-size: 18px"></i>&nbsp;&nbsp;Descargar aplicaci&oacute;n
+            </a>
+          </div>
+        </div>
+      </div>
   
       <!-- ======= Contact Section ======= -->
       {{-- <section id="contact">

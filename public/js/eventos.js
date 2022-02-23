@@ -52,13 +52,13 @@ Livewire.on('warning', function(data) {
 Livewire.on('eliminarRegistro', function (title, metodo, id) {
     Swal.fire({
             title: title,
-            text: "Esta accion ya no se puede revertir!",
+            text: "Esta acción ya no se puede revertir.",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si, Eliminar!',
-            cancelButtonText: 'Cancelar!'
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
           }).then((result) => {
             if (result.isConfirmed) {
               Livewire.emit(metodo,id)

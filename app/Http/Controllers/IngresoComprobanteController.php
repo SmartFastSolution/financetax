@@ -25,13 +25,15 @@ class IngresoComprobanteController extends Controller
         $this->middleware('auth');
     }
 
-    public function index($id, $tipoplan)
+    public function index($id, $tipoplan, $userEmpresa)
     {
         $user_id = Auth::id();
         $transacciones = [];
         $plan = Plan::where('tipoplan_id', $tipoplan)->where('subservice_id', $id)->first();
         $shop = Shop::where('tipoplan_id', $tipoplan)->where('subservice_id', $id)->where('plan_id', $plan->id)->where('user_id', $user_id)->pluck('id');
         $mesActual = date('m');
+        $dataUserEmpresa = UserEmpresa::where('id',$userEmpresa)->first();
+        $empresa = $dataUserEmpresa->razon_social;
 
         $transacciones = TransaccionDiaria::join('tipotransaccion', 'tipotransaccion.id', '=', 'transacciondiaria.tipotransaccion_id')
                                     ->join('proyeccions', 'proyeccions.id', '=', 'transacciondiaria.proyeccions_id')
@@ -70,7 +72,7 @@ class IngresoComprobanteController extends Controller
         $subservicio = $id;
         $planid = $plan->id;
 
-        return view('admin.ingreso_facturas.ingreso_manual.index', compact('transacciones', 'subservicio', 'planid', 'tipoplan', 'sumaIngresos', 'sumaEgresos', 'categorias'));
+        return view('admin.ingreso_facturas.ingreso_manual.index', compact('transacciones', 'subservicio', 'planid', 'tipoplan', 'sumaIngresos', 'sumaEgresos', 'categorias', 'userEmpresa', 'empresa'));
     }
 
     public function listarComprobantes()
@@ -88,7 +90,12 @@ class IngresoComprobanteController extends Controller
 
     public function listarTipoTransaccion()
     {
-        return TipoTransaccion::where('estado','=','activo')->get();
+        return TipoTransaccion::where('estado','=','activo')
+                                ->selectRaw('tipotransaccion.id as id,
+                                            UPPER(tipotransaccion.nombre) as nombre,
+                                            tipotransaccion.accion as accion,
+                                            tipotransaccion.estado as estado')
+                                ->get();
     }
 
     public function listarCategoria()
@@ -96,10 +103,10 @@ class IngresoComprobanteController extends Controller
         return Proyeccion::where('estado','=','activo')->get();
     }
 
-    public function listarCuentas()
+    public function listarCuentas($id)
     {
-        $user_id = Auth::id();
-        $empresa = UserEmpresa::where('user_id',$user_id)->pluck('id')->toArray();
+        //$user_id = Auth::id();
+        $empresa = UserEmpresa::where('id',$id)->pluck('id')->toArray();
 
         return Plancontable::where('estado','=','activo')->whereIn('user_empresa_id', $empresa)->get();
     }

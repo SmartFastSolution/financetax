@@ -146,12 +146,12 @@
                                     </div>
                                     <div class="card-body">
 
-                                    <table class="table-responsive">
+                                    <table class="table table-responsive table-striped">
                                         <thead>
-                                            <tr>
-                                                <th scope="col">RUC</th>
-                                                <th scope="col">Raz&oacute;n Social</th>
-                                                <th scope="col">Clave de Acceso</th>
+                                            <tr class="text-center bg-primary">
+                                                <th class="text-white">RUC</th>
+                                                <th class="text-white">Raz&oacute;n Social</th>
+                                                <th class="text-white">Clave de Acceso</th>
                                             </tr>
                                         </thead>
                                         <tbody>

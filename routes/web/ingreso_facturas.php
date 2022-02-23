@@ -14,11 +14,11 @@ Route::post('/admin/guardarRegistrosAuto',[SriController::class,'guardarResgistr
 //Route::get('/admin/getInfoEmpresa',[SriController::class,'getInfoEmpresa'])->name('admin.getInfoEmpresa');
 
 //Route::view('/admin/ingreso_facturas/ingreso_manual', 'admin.ingreso_facturas.ingreso_manual.index')->name('admin.ingreso_facturas.ingreso_manual.index');
-Route::get('/admin/ingreso_facturas/ingreso_manual/{id}/{tipoplan}', [IngresoComprobanteController::class,'index'])->name('admin.ingreso_facturas.ingreso_manual.index');
+Route::get('/admin/ingreso_facturas/ingreso_manual/{id}/{tipoplan}/{usuarioEmpresa}', [IngresoComprobanteController::class,'index'])->name('admin.ingreso_facturas.ingreso_manual.index');
 Route::get('/admin/ingreso_facturas/listar_tipo_transaccion', [IngresoComprobanteController::class,'listarTipoTransaccion'])->name('admin.ingreso_facturas.listar_tipo_transaccion');
 Route::get('/admin/ingreso_facturas/listar_comprobantes', [IngresoComprobanteController::class,'listarComprobantes'])->name('admin.ingreso_facturas.listar_comprobantes');
 Route::get('/admin/ingreso_facturas/listar_categoria', [IngresoComprobanteController::class,'listarCategoria'])->name('admin.ingreso_facturas.listar_categoria');
-Route::get('/admin/ingreso_facturas/listar_cuentas', [IngresoComprobanteController::class,'listarCuentas'])->name('admin.ingreso_facturas.listar_cuentas');
+Route::get('/admin/ingreso_facturas/listar_cuentas/{id}', [IngresoComprobanteController::class,'listarCuentas'])->name('admin.ingreso_facturas.listar_cuentas');
 Route::get('/admin/ingreso_facturas/listar_empresas', [IngresoComprobanteController::class,'listarEmpresas'])->name('admin.ingreso_facturas.listar_empresas');
 Route::get('/admin/ingreso_facturas/listar_empresas', [IngresoComprobanteController::class,'listarEmpresas'])->name('admin.ingreso_facturas.listar_empresas');
 Route::post('/admin/ingreso_facturas/store', [IngresoComprobanteController::class,'store'])->name('admin.ingreso_facturas.store');

@@ -19,15 +19,17 @@
          
           </div>
         </div>
-        <div class="article-details">
+        <div class="article-details" style="height: 250px;">
           <div class="article-title">
-            <h2><a href="#">{{$p->nombre}}</a></h2>
+            <h2><b><a href="{{route('subservicios', $p->slug)}}">{{$p->nombre}}</a></b></h2>
           </div>
           <p>
             {!!htmlspecialchars_decode($p->descripcion)!!}
           </p>
-          <div class="article-cta">
-            <a href="{{route('subservicios', $p->slug)}}"> Leer Más <i class="fas fa-chevron-right"></i></a>
+          <div class="article-cta article-bottom">
+            <a class="btn btn-outline-primary" role="button" aria-pressed="true" href="{{route('subservicios', $p->slug)}}">
+              Mostrar Subservicios&nbsp;<i class="fas fa-arrow-right"></i>
+            </a>
           </div>
         </div>
       </article>
