@@ -33,7 +33,6 @@ class LoginController extends Controller
 
     //validar el estado del Usuario activo o inactivo
     public function ValidateState($user){
-
         $data = User::selectRaw('timestapdiff(DAY, activated_at, curdate()) as dato')->where('id', $user->id)->first();
 
         if ($data-> dato >= 12) {
@@ -48,7 +47,7 @@ class LoginController extends Controller
         if ($user->estado =='inactivo') {
             Auth::guard()->logout();
           $request->session()->invalidate();
-          return redirect('/login')->withInput()->with('message', 'Tu cuenta esta desactivada, por favor comunicate con el administrador');
+          return redirect('/login')->withInput()->with('message', 'Tu cuenta esta desactivada, por favor comunicate con el administrador.');
         }
 
         $user->access_at = Carbon::now();

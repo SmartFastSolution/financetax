@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class RedirectIfAuthenticated
 {
@@ -20,6 +23,13 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             return redirect(RouteServiceProvider::HOME);
+        }else{
+            if($request->email == "")
+            {}else{
+                $usuario = User::where('email', $request->email)->first();
+                if(!Hash::check($request->password, $usuario->password))
+                    return redirect('/login')->withInput()->with('message', 'Contraseña incorrecta.');
+            }
         }
 
         return $next($request);

@@ -327,6 +327,10 @@
             #videoInicio {
                 height: 30vh;
             }
+
+            #span-scroll, #text-scroll{
+                display: none;
+            }
         }
 
         .switch-button {

@@ -20,7 +20,11 @@
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
 
 </head>
-
+<style type="text/css">
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(digital/images/background-logo-blanco.jpg) fixed center center;
+    }
+</style>
 <body>
     <div class="loader"></div>
     <div id="app">
@@ -29,20 +33,20 @@
                 <div class="row">
                     <div
                         class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                        <div class="card card-info">
+                        <div class="card card-primary">
                             <div class="card-header">
 
                                 <img class="nav_logo_img img-fluid top-right" src="digital/images/solutionlogo1.png">
 
                             </div>
-                            <h4 class="text-center">REGISTRO</h4>
+                            <h4 class="text-center">REGISTRO DE USUARIO</h4>
                             <div class="card-body">
                                 <form method="POST" action="{{ route('register') }}">
                                     @csrf
 
                                     <div class="form-group row">
                                         <label for="name"
-                                            class="col-md-4 col-form-label text-md-right">{{ __('Nombres') }}</label>
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Nombres y Apellidos') }}</label>
 
                                         <div class="col-md-6">
                                             <input id="name" type="text"
@@ -77,11 +81,11 @@
 
                                     <div class="form-group row">
                                         <label for="genero"
-                                            class="col-md-4 col-form-label text-md-right">{{ __('Genero') }}</label>
+                                            class="col-md-4 col-form-label text-md-right">{{ __('Género') }}</label>
                                         <div class="col-md-6">
                                             <select class="form-control select @error('genero') is-invalid @enderror"
                                                 name="genero" id="genero" >
-                                                <option selected disabled>Seleccione un Genero</option>
+                                                <option selected disabled>Seleccione su G&eacute;nero</option>
                                                 <option value="Masculino">Masculino</option>
                                                 <option value="Femenino">Femenino</option>
                                             </select>
@@ -117,8 +121,7 @@
                                         <div class="col-md-6">
                                             <input id="password" type="password"
                                                 class="form-control @error('password') is-invalid @enderror"
-                                                name="password" required autocomplete="new-password">
-
+                                                name="password" required autocomplete="new-password" onkeyup='validaContraseñas();'>
                                             @error('password')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -133,24 +136,29 @@
 
                                         <div class="col-md-6">
                                             <input id="password-confirm" type="password" class="form-control"
-                                                name="password_confirmation" required autocomplete="new-password">
+                                                name="password_confirmation" required autocomplete="new-password" onkeyup='validaContraseñas();'>
+                                                <span><i class="fas fa-check text-success" id="validaOk" style="display: none;"></i><i class="fas fa-times text-danger" id="validaNo" style="display: none;"></i>
+                                                &nbsp;<span id="msg-password"></span></span>
+                                                <br>
+                                                <span><i class="fas fa-check text-success" id="validaOkLong" style="display: none;"></i><i class="fas fa-times text-danger" id="validaNoLong" style="display: none;"></i>
+                                                &nbsp;<span id="msg-password-long"></span></span>
                                         </div>
                                     </div>
 
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                            <button type="submit" class="btn btn-info btn-lg btn-block">
-                                                {{ __('Registrar') }}
+                                            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-registrarse" disabled>
+                                                <h6>{{ __('Registrarse') }}</h6>
                                             </button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="mb-4 text-muted text-center">
-                                Ya te has Registrado? <a href="{{ url('/login') }}">Accede a Tu Cuenta</a>
+                                ¿Ya te has registrado? <a href="{{ url('/login') }}">Accede a tu cuenta</a>
                             </div>
                             <div class="mb-4 text-muted text-center">
-                                <a href="{{ url('/page') }}">Volver Página Principal</a>
+                                <a href="{{ url('/page') }}">Volver a Página Principal</a>
                             </div>
                         </div>
                     </div>
@@ -173,6 +181,45 @@
         $(document).ready(function() {
             $('.select2').select2();
         });
+
+        var validaContraseñas = function() {
+
+            if ((document.getElementById('password').value == document.getElementById('password-confirm').value)){
+                document.getElementById('btn-registrarse').disabled = false;
+                document.getElementById('msg-password').style.color = 'green';
+                document.getElementById('password').style.color = 'green';
+                document.getElementById('password').style.borderColor = 'green';
+                document.getElementById('password-confirm').style.color = 'green';
+                document.getElementById('password-confirm').style.borderColor = 'green';
+                document.getElementById('validaNo').style.display = 'none';
+                document.getElementById('validaOk').style.display = 'inline-block';
+                document.getElementById('msg-password').textContent = 'Contraseñas coinciden.';
+            } else {
+                document.getElementById('btn-registrarse').disabled = true;
+                document.getElementById('msg-password').style.color = 'red';
+                document.getElementById('password').style.color = 'red';
+                document.getElementById('password').style.borderColor = 'red';
+                document.getElementById('password-confirm').style.color = 'red';
+                document.getElementById('password-confirm').style.borderColor = 'red';
+                document.getElementById('validaOk').style.display = 'none';
+                document.getElementById('validaNo').style.display = 'inline-block';
+                document.getElementById('msg-password').textContent = 'Las contraseñas NO coinciden.';
+            }
+
+            if(document.getElementById('password').value.length >= 8){
+                document.getElementById('btn-registrarse').disabled = false;
+                document.getElementById('validaNoLong').style.display = 'none';
+                document.getElementById('validaOkLong').style.display = 'inline-block';
+                document.getElementById('msg-password-long').style.color = 'green';
+                document.getElementById('msg-password-long').textContent = 'La contraseña debe tener un mínimo de 8 caracteres.';
+            } else {
+                document.getElementById('btn-registrarse').disabled = true;
+                document.getElementById('validaOkLong').style.display = 'none';
+                document.getElementById('validaNoLong').style.display = 'inline-block';
+                document.getElementById('msg-password-long').style.color = 'red';
+                document.getElementById('msg-password-long').textContent = 'La contraseña debe tener un mínimo de 8 caracteres.';
+            }
+        }
     </script>
 </body>
 
