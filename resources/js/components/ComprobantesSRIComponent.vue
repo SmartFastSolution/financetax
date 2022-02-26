@@ -84,9 +84,9 @@
                                                         <th>Iva</th>
                                                         <th>Total</th>
                                                     </thead>
-                                                    <paginate name="facturas" :list="facturas" :per="numPagination" tag="tbody">
-                                                        <tr v-for="(item,index) in paginated('facturas') " :key="item.key">
-                                                            <td>{{ index + 1 }}</td>
+                                                    <tbody>
+                                                        <tr v-for="item in facturas" :key="item.key">
+                                                            <td>{{ item.key + 1 }}</td>
                                                             <td>{{ item.fechaEmision }}</td>
                                                             <td>{{ item.tipoComprobante }}</td>
                                                             <td>
@@ -108,9 +108,9 @@
                                                             <td>${{ item.iva }}</td>
                                                             <td>${{ item.importeTotal }}</td>
                                                         </tr>
-                                                    </paginate>
+                                                    </tbody>
                                                 </table>
-                                                <paginate-links for="facturas" :classes="{'ul': 'pagination', 'li': 'page-item', 'a': 'page-link'}"></paginate-links>
+                                                
                                             </div>
                                         </div>
                                         <div class="tab-pane container fade px-0 pt-2" id="nota_credito">
@@ -347,8 +347,8 @@
                 contLiquidaciones: 0,
                 contErrores: 0,
                 disabledGuardar: true,
-                paginate: ['facturas','notas_credito','notas_debito','retenciones','liquidaciones','errores'],
-                numPagination: 10,
+                paginate: [/*'facturas',*/'notas_credito','notas_debito','retenciones','liquidaciones','errores'],
+                numPagination: 25,
             }
         },
         components: {

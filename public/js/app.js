@@ -2579,8 +2579,10 @@ var subservicio = urlArray[urlArray.length - 2];
       contLiquidaciones: 0,
       contErrores: 0,
       disabledGuardar: true,
-      paginate: ['facturas', 'notas_credito', 'notas_debito', 'retenciones', 'liquidaciones', 'errores'],
-      numPagination: 10
+      paginate: [
+      /*'facturas',*/
+      'notas_credito', 'notas_debito', 'retenciones', 'liquidaciones', 'errores'],
+      numPagination: 25
     };
   },
   components: {
@@ -83972,171 +83974,135 @@ var render = function() {
                           attrs: { id: "factura" }
                         },
                         [
-                          _c(
-                            "div",
-                            { staticClass: "table-responsive" },
-                            [
-                              _c(
-                                "table",
-                                {
-                                  staticClass:
-                                    "table  table-striped table-condensed table-bordered table-sm table-hover",
-                                  staticStyle: { width: "100%" },
-                                  attrs: { id: "tablaFacturas" }
-                                },
-                                [
-                                  _vm._m(3),
-                                  _vm._v(" "),
-                                  _c(
-                                    "paginate",
-                                    {
-                                      attrs: {
-                                        name: "facturas",
-                                        list: _vm.facturas,
-                                        per: _vm.numPagination,
-                                        tag: "tbody"
-                                      }
-                                    },
-                                    _vm._l(_vm.paginated("facturas"), function(
-                                      item,
-                                      index
-                                    ) {
-                                      return _c("tr", { key: item.key }, [
-                                        _c("td", [_vm._v(_vm._s(index + 1))]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(item.fechaEmision))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(item.tipoComprobante))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "select",
-                                            {
-                                              staticClass:
-                                                "form-control form-control-sm inputValida",
-                                              attrs: {
-                                                id: "categoria",
-                                                required: ""
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "option",
-                                                { attrs: { value: "" } },
-                                                [
-                                                  _vm._v(
-                                                    "Seleccionar categoría"
+                          _c("div", { staticClass: "table-responsive" }, [
+                            _c(
+                              "table",
+                              {
+                                staticClass:
+                                  "table  table-striped table-condensed table-bordered table-sm table-hover",
+                                staticStyle: { width: "100%" },
+                                attrs: { id: "tablaFacturas" }
+                              },
+                              [
+                                _vm._m(3),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  _vm._l(_vm.facturas, function(item) {
+                                    return _c("tr", { key: item.key }, [
+                                      _c("td", [_vm._v(_vm._s(item.key + 1))]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.fechaEmision))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v(_vm._s(item.tipoComprobante))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "select",
+                                          {
+                                            staticClass:
+                                              "form-control form-control-sm inputValida",
+                                            attrs: {
+                                              id: "categoria",
+                                              required: ""
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "option",
+                                              { attrs: { value: "" } },
+                                              [_vm._v("Seleccionar categoría")]
+                                            ),
+                                            _vm._v(" "),
+                                            _vm._l(_vm.categoria, function(
+                                              item
+                                            ) {
+                                              return _c("option", {
+                                                key: item.id,
+                                                domProps: {
+                                                  value: item.id,
+                                                  textContent: _vm._s(
+                                                    item.descripcion
                                                   )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _vm._l(_vm.categoria, function(
-                                                item
-                                              ) {
+                                                }
+                                              })
+                                            })
+                                          ],
+                                          2
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _c(
+                                          "select",
+                                          {
+                                            staticClass:
+                                              "form-control form-control-sm inputValida",
+                                            attrs: {
+                                              id: "tipoTransaccion",
+                                              required: ""
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "option",
+                                              { attrs: { value: "" } },
+                                              [_vm._v("Seleccionar tipo")]
+                                            ),
+                                            _vm._v(" "),
+                                            _vm._l(
+                                              _vm.tipoTransaccion,
+                                              function(item) {
                                                 return _c("option", {
                                                   key: item.id,
                                                   domProps: {
                                                     value: item.id,
                                                     textContent: _vm._s(
-                                                      item.descripcion
+                                                      item.nombre
                                                     )
                                                   }
                                                 })
-                                              })
-                                            ],
-                                            2
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _c(
-                                            "select",
-                                            {
-                                              staticClass:
-                                                "form-control form-control-sm inputValida",
-                                              attrs: {
-                                                id: "tipoTransaccion",
-                                                required: ""
                                               }
-                                            },
-                                            [
-                                              _c(
-                                                "option",
-                                                { attrs: { value: "" } },
-                                                [_vm._v("Seleccionar tipo")]
-                                              ),
-                                              _vm._v(" "),
-                                              _vm._l(
-                                                _vm.tipoTransaccion,
-                                                function(item) {
-                                                  return _c("option", {
-                                                    key: item.id,
-                                                    domProps: {
-                                                      value: item.id,
-                                                      textContent: _vm._s(
-                                                        item.nombre
-                                                      )
-                                                    }
-                                                  })
-                                                }
-                                              )
-                                            ],
-                                            2
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v("$" + _vm._s(item.subTotal))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v("$" + _vm._s(item.descuento))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "$" + _vm._s(item.tarifaDifCero)
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v("$" + _vm._s(item.tarifaCero))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v("$" + _vm._s(item.iva))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(
-                                            "$" + _vm._s(item.importeTotal)
-                                          )
-                                        ])
+                                            )
+                                          ],
+                                          2
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v("$" + _vm._s(item.subTotal))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v("$" + _vm._s(item.descuento))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v("$" + _vm._s(item.tarifaDifCero))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v("$" + _vm._s(item.tarifaCero))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v("$" + _vm._s(item.iva))
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", [
+                                        _vm._v("$" + _vm._s(item.importeTotal))
                                       ])
-                                    }),
-                                    0
-                                  )
-                                ],
-                                1
-                              ),
-                              _vm._v(" "),
-                              _c("paginate-links", {
-                                attrs: {
-                                  for: "facturas",
-                                  classes: {
-                                    ul: "pagination",
-                                    li: "page-item",
-                                    a: "page-link"
-                                  }
-                                }
-                              })
-                            ],
-                            1
-                          )
+                                    ])
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ])
                         ]
                       ),
                       _vm._v(" "),
