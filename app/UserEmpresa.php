@@ -12,7 +12,9 @@ class UserEmpresa extends Model
         'ruc',
         'razon_social',
         'clave_acceso',
+        'actividad',
         'user_id',
+        'periodo_declaracion_id',
        ];
 
 }

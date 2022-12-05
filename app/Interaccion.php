@@ -8,6 +8,7 @@ class Interaccion extends Model
 {
    protected $table = "interaccions";
         protected $fillable = [
+        "tipo",
         "detalle",
         "observacion",
         'fecha',

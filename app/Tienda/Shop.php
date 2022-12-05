@@ -13,7 +13,7 @@ class Shop extends Model
         'user_id',
         'tipoplan_id',
         'plan_id',
-        'subservice_id',
+        'service_id',
         'estado',
         'especialista_id',
         'accion_id',
@@ -26,7 +26,7 @@ class Shop extends Model
     }
 
     public function subservicio(){
-        return $this->belongsTo('App\Servicios\Subservice','subservice_id','id');
+        return $this->belongsTo('App\Servicios\Service','service_id','id');
     }
 
     public function tipoplan(){

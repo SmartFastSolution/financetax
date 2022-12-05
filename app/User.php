@@ -21,7 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password','genero','city_id','telefono',
-        'domicilio','fecha_n','cedula','edad'
+        'domicilio','fecha_n','cedula','edad', 'tipo_contribuyente_id',
     ];
 
     /**
@@ -49,6 +49,10 @@ class User extends Authenticatable
 
     public function city (){
         return $this->belongsTo('App\City');
+    }
+
+    public function tipo_contribuyente (){
+        return $this->belongsTo('App\TipoContribuyente');
     }
 
     /**

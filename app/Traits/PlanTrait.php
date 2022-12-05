@@ -13,9 +13,10 @@ trait PlanTrait
         $p                   = new Plan();
         $p->descripcion      = $request->descripcion;
         $p->costo            = $request->costo;
-        $p->fecha_vigencia   = $request->fecha_vigencia;
-        $p->subservice_id    = $request->subservice_id;
+        $p->cantidad_meses   = $request->cantidad_meses;
+        $p->service_id       = $request->service_id;
         $p->tipoplan_id      = $request->tipoplan_id;
+        $p->slug             = $request->costo.$request->tipoplan_id.$request->subservice_id;
         $p->estado           = $request->estado;
         $p->save();
 
@@ -40,8 +41,8 @@ trait PlanTrait
         $p                   =  Plan::find($request->plan_id);
         $p->descripcion      = $request->descripcion;
         $p->costo            = $request->costo;
-        $p->fecha_vigencia   = $request->fecha_vigencia;
-        $p->subservice_id    = $request->subservice_id;
+        $p->cantidad_meses   = $request->cantidad_meses;
+        $p->service_id       = $request->service_id;
         $p->tipoplan_id      = $request->tipoplan_id;
         $p->estado           = $request->estado;
         $p->save();
