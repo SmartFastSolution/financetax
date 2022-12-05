@@ -7,7 +7,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
     <title>INICIO</title>
     <!-- General CSS Files -->
-    @laravelPWA
+
     <link rel="stylesheet" href=" {{ asset('aegis/source/light/assets/css/app.min.css') }}">
     <link rel="stylesheet" href="{{ asset('aegis/source/light/assets/css/style.css') }}">
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
@@ -461,7 +461,7 @@
             opacity: 70%;
         }
     </style>
-  
+    @laravelPWA
 </head>
 <body>
     <header>
@@ -517,15 +517,38 @@
             <br>
             <br>
             <div class="d-grid gap-2 col-6 mx-auto" align="center">
-                <a class="btn btn-inicio" role="button" aria-pressed="true" style="background: #c22a5e; color: white" id="descargarPwa">
+                <a class="btn btn-inicio" role="button" aria-pressed="true" style="background: #c22a5e; color: white" data-toggle="modal" data-target="#exampleModal">
                     <i class="fas fa-cloud-download-alt" style="font-size: 18px"></i>&nbsp;&nbsp;Descargar aplicaci&oacute;n
                 </a>
                 <br><br>
+                <!-- Button trigger modal -->
+
                 <a href="{{ url('/page') }}" class="btn btn-lg btn-block btn-inicio" role="button"
                 aria-pressed="true" style="background: #8130b4; color: white">CONOCE NUESTROS SERVICIOS <u>AQU&iacute;</u></a>
             </div>
         </div>
     </section>
+
+    <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Instalar Aplicaci&oacute;n</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ¿ Desea instalar la app?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+        <button type="button" class="btn btn-primary"  id="descargarPwa">Instalar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     {{-- <section>
         <div class="card">
@@ -564,7 +587,7 @@
             }
         });
 
-        let deferredPrompt;
+        /*let deferredPrompt;
             window.addEventListener('beforeinstallprompt', (e) => {
             // Prevent the mini-infobar from appearing on mobile
             e.preventDefault();
@@ -572,26 +595,71 @@
             deferredPrompt = e;
             // Update UI notify the user they can install the PWA
             //showInstallPromotion();
-        });
+        });*/
+        // Inicializa deferredPrompt para su uso más tarde.
+        
+        /*var deferredPrompt;
 
-        let buttonInstall = document.getElementById("descargarPwa");
-        buttonInstall.addEventListener('click', (e) => {
-            // Hide the app provided install promotion
-            //hideMyInstallPromotion();
-            // Show the install prompt
-            deferredPrompt.prompt();
-            // Wait for the user to respond to the prompt
-            deferredPrompt.userChoice.then((choiceResult) => {
-                /*if (choiceResult.outcome === 'accepted') {
-                console.log('User accepted the install prompt');
-                } else {
-                console.log('User dismissed the install prompt');
-                }*/
-            });
-        });
+window.addEventListener('beforeinstallprompt', function(e) {
+  console.log('beforeinstallprompt Event fired');
+  e.preventDefault();
+
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+
+  return false;
+});
+
+document.getElementById("descargarPwa").addEventListener('click', function() {
+  if(deferredPrompt !== undefined) {
+    // The user has had a postive interaction with our app and Chrome
+    // has tried to prompt previously, so let's show the prompt.
+    deferredPrompt.prompt();
+
+    // Follow what the user has done with the prompt.
+    deferredPrompt.userChoice.then(function(choiceResult) {
+
+      if(choiceResult.outcome == 'dismissed') {
+      }
+      else {
+
+      }
+
+      // We no longer need the prompt.  Clear it up.
+      deferredPrompt = null;
+    });
+  }
+});*/
+//descargarPwa
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  console.log(e);
+  deferredPrompt = e;
+  // Update UI notify the user they can install the PWA
+  //showInstallPromotion();
+});
+
+const buttonInstall = document.getElementById("descargarPwa");
+buttonInstall.addEventListener('click', async () => {
+    console.log("click");
+    console.log(deferredPrompt);
+    if (deferredPrompt !== null) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') {
+            deferredPrompt = null;
+        }
+    }
+});
 
 
-        document.getElementById("menu-open").click();
+
+
+    document.getElementById("menu-open").click();
     </script>
 </body>
 

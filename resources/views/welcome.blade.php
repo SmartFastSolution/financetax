@@ -33,7 +33,7 @@
   
               <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
                 <div class="icon"><i class="fa fa-id-card-o" aria-hidden="true"></i></div>
-                <h4 class="title"><a href="">CONTACTO AGIL</a></h4>
+                <h4 class="title"><a href="">CONTACTO &Aacute;GIL</a></h4>
                 <p class="description" style="color: black; text-align: justify;">A través de email, chat, teléfono o videoconferencia</p>
               </div>
   
@@ -56,6 +56,10 @@
 
             </p>
           </div>
+          <div class="row d-flex justify-content-center">
+            <img src="../regna/assets/img/mision-vision.jpg" alt="">
+          </div>
+          <br><br>
           <div class="section-header">
             <h3 class="section-title">Visión</h3>
             <p class="section-description" style="color: black; text-align: justify;">
