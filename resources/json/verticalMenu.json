@@ -156,7 +156,7 @@
 
                     "route" : "admin.tienda.index",
                     "url"   : "tienda/admin-planes",
-                    "name"  : "Administracion Planes",
+                    "name"  : "Bandeja de Entrada Planes",
                     "can"   : "c-admtienda"
 
                 },
@@ -216,6 +216,14 @@
                     "url"   : "reportes/reporte-usuario-email",
                     "name"  : "Reporte Correo Electrónico Usuarios",
                     "can"   : "r-usuarios-email"
+
+                },
+                {
+
+                    "route" : "reportes.formulario104",
+                    "url"   : "reportes/formulario104",
+                    "name"  : "Formulario 104",
+                    "can"   : "r-formulario104"
 
                 }
 

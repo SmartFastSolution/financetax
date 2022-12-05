@@ -74,6 +74,7 @@
                                                     <thead>
                                                         <th>N°</th>
                                                         <th>Fecha Emisión</th>
+                                                        <th>Raz&oacute;n Social Emisor</th>
                                                         <th>T. Comprobante</th>
                                                         <th>Categor&iacute;a</th>
                                                         <th>Tipo de transacci&oacute;n</th>
@@ -88,6 +89,7 @@
                                                         <tr v-for="item in facturas" :key="item.key">
                                                             <td>{{ item.key + 1 }}</td>
                                                             <td>{{ item.fechaEmision }}</td>
+                                                            <td>{{ item.razonSocial }}</td>
                                                             <td>{{ item.tipoComprobante }}</td>
                                                             <td>
                                                                 <select class="form-control form-control-sm inputValida" id="categoria" required>
@@ -509,11 +511,7 @@
                                     total: arrayCells["total"],
                         });
                     }
-                    /*console.log("/////////////////////////////");
-                    console.log(jsonFacturas);
-                    console.log(this.inputTipoPlan);
-                        console.log(this.inputSubservicio);
-                        console.log(this.inputUsuarioEmpresa);*/
+
                     /*this.postForm( '/admin/guardarRegistrosAuto', {
                                                                     facturas: JSON.stringify(this.facturas),
                                                                     notasCredito: JSON.stringify(this.notas_credito),

@@ -1,10 +1,11 @@
 <template>
 <div>
-    <button @click="modalNuevoRegistro = true,resetForm()" class="btn btn-primary btn-sm mb-2" style="width: fit-content;">Nuevo Registro</button>
+    <button @click="modalNuevoRegistro = true,resetForm()" class="btn btn-primary btn-sm mb-2" style="width: fit-content;"><i class="fa fa-plus"></i>&nbsp;Nuevo Registro</button>
     <div class="card">
         <div class="card-body">
             <div class="col-lg-12 col-md-10">
-                <div class="row justify-content-left">
+                <div class="row">
+                    <div class="col-lg-6 justify-content-left">
                     <button class="floated btn btn-success btn-sm" @click="mostrarElementos('tblTransacciones_wrapper')">
                         Detalle &nbsp;<i class="fas fa-table"></i>
                     </button>
@@ -12,10 +13,15 @@
                     <button class="floated btn btn-success btn-sm" id="btnGraficos" @click="mostrarElementos('divGraficos')">
                         Gr&aacute;ficos &nbsp;<i class="fas fa-chart-bar"></i>
                     </button>
+                    </div>
+
+                    <div class="col-lg-6 text-right">
+                        <a type="button" class="btn btn-success" :href="'/admin/exportarDocumentos/'+this.servicioUsuario" id="btnExportar"><i class="far fa-file-excel font-15"></i>&nbsp;Exportar a Excel</a>
+                    </div>
                 </div></br>
                 <div class="row justify-content-center">
                     <div class="form-group col-6 col-md-3">
-                        <label><b>Filtrar por fecha: </b></label>
+                        <label><b>Filtrar por Fecha: </b></label>
                         <div class="input-group input-group-sm">
                             <input type="text" class="form-control form-control-sm inputDateRange">
                             <div class="input-group-prepend">
@@ -40,11 +46,11 @@
                     <tbody>
                         <tr v-for="item in transacciones" :key="item.id">
                             <td class="text-center">{{ item.fecha }}</td>
-                            <td v-if="item.tipo == 'EGRESOS'">
-                                <i class="fas fa-minus-square" style="color: red;"></i>&nbsp;&nbsp;{{ item.tipo }}
+                            <td class="text-center" v-if="item.accion == 'resta'">
+                                <span class="badge badge-danger">{{ item.tipo }}</span>
                             </td>
-                            <td v-if="item.tipo == 'INGRESOS'">
-                                <i class="fas fa-plus-square" style="color: green;"></i>&nbsp;&nbsp;{{ item.tipo }}
+                            <td class="text-center" v-if="item.accion == 'suma'">
+                                <span class="badge bg-blue">{{ item.tipo }}</span>
                             </td>
                             <td>{{ item.categoria }}</td>
                             <td>{{ item.detalle }}</td>
@@ -80,33 +86,35 @@
                     <form @submit.prevent="storeService" enctype="multipart/form-data" ref="form">
                     <div class="modal-body">
                         <div class="form-group row mb-2">
-                            <label for="fecha" class="col-4 col-form-label"><b>Fecha</b></label>
+                            <label for="fecha" class="col-4 col-form-label"><b>Fecha Documento</b></label>
                             <div class="col-8">
-                                <input v-model="comprobante.fecha" type="date" class="form-control form-control-sm" id="fecha">
+                                <input v-model="comprobante.fecha" type="date" class="form-control" id="fecha">
                             </div>
                         </div>
                         <div class="form-group row mb-2">
                             <label for="tipo" class="col-4 col-form-label"><b>Tipo de Transacción</b></label>
                             <div class="col-8">
-                                <select v-model="comprobante.tipo_transaccion" class="form-control form-control-sm" id="tipo">
+                                <select v-model="comprobante.tipo_transaccion" class="form-control" id="tipo">
                                     <option value="">Seleccionar</option>
                                     <option v-for="item in tipoTransaccion" :key="item.id" :value="item.id" v-text="item.nombre"></option>
                                 </select>
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
                         <div class="form-group row mb-2">
                             <label for="tipo" class="col-4 col-form-label"><b>Categor&iacute;a</b></label>
                             <div class="col-8">
-                                <select v-model="comprobante.tipo_categoria" class="form-control form-control-sm" id="categoria">
+                                <select v-model="comprobante.tipo_categoria" class="form-control" id="categoria">
                                     <option value="">Seleccionar</option>
                                     <option v-for="item in categoria" :key="item.id" :value="item.id" v-text="item.descripcion"></option>
                                 </select>
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
-                        <div class="form-group row mb-2">
+                        <div class="form-group row mb-2" id="divCuenta" v-show="flagPermiso">
                             <label for="cuenta" class="col-4 col-form-label"><b>Cuenta</b></label>
                             <div class="col-8">
-                                <select v-model="comprobante.cuenta" class="form-control form-control-sm" id="cuenta">
+                                <select v-model="comprobante.cuenta" class="form-control" id="cuenta">
                                     <option value="">Seleccionar</option>
                                     <option v-for="item in cuentas" :key="item.id" :value="item.id" v-text="item.cuenta"></option>
                                 </select>
@@ -114,55 +122,96 @@
                         </div>
                         <div class="form-group row mb-2">
                             <label for="tarifacero" class="col-4 col-form-label"><b>Tarifa 0%</b></label>
-                            <div class="col-8">
-                                 <money v-model="comprobante.tarifacero" class="form-control form-control-sm text-right" id="tarifacero"></money>
+                            <div class="col-8 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm"><small>$</small></span>
+                                </div>
+                                 <money v-model="comprobante.tarifacero" class="form-control text-right" id="tarifacero"></money>
+                            </div>
+                            <div class="col-8 text-right">
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
                         <div class="form-group row mb-2">
                             <label for="tarifadifcero" class="col-4 col-form-label"><b>Tarifa Dif. de 0%</b></label>
-                            <div class="col-8">
-                                 <money v-model="comprobante.tarifadifcero" class="form-control form-control-sm text-right" id="tarifadifcero"></money>
+                            <div class="col-8 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm"><small>$</small></span>
+                                </div>
+                                 <money v-model="comprobante.tarifadifcero" class="form-control text-right" id="tarifadifcero"></money>
+                            </div>
+                            <div class="col-8 text-right">
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
                         <div class="form-group row mb-2">
-                            <label for="iva" class="col-4 col-form-label"><b>Iva</b></label>
-                            <div class="col-8">
-                                 <money v-model="comprobante.iva" class="form-control form-control-sm text-right" id="iva"></money>
+                            <label for="iva" class="col-4 col-form-label"><b>IVA</b></label>
+                            <div class="col-8 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm"><small>$</small></span>
+                                </div>
+                                 <money v-model="comprobante.iva" class="form-control text-right" id="iva"></money>
+                            </div>
+                            <div class="col-8 text-right">
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
                         <div class="form-group row mb-2">
                             <label for="importe" class="col-4 col-form-label"><b>Importe</b></label>
-                            <div class="col-8">
-                                 <money v-model="comprobante.importe" class="form-control form-control-sm text-right" id="importe"></money>
+                            <div class="col-8 input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-sm"><small>$</small></span>
+                                </div>
+                                 <money v-model="comprobante.importe" class="form-control text-right" id="importe"></money>
+                            </div>
+                            <div class="col-8 text-right">
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
                         <div class="form-group row mb-2">
                             <label for="detalle" class="col-4 col-form-label"><b>Detalle</b></label>
                             <div class="col-8">
-                                <input v-model="comprobante.detalle" type="text" class="form-control form-control-sm" id="detalle">
+                                <input v-model="comprobante.detalle" type="text" class="form-control" id="detalle">
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
                         </div>
                         <hr>
+                        <div id="contenedorCamposImagen">
+                            <span id="camposImagen">
+                            </span>
+                        </div>
                         <div class="form-group row mb-2">
-                            <label for="nota" class="col-4 col-form-label"><b>Nota</b></label>
+                            <label for="nota" class="col-4 col-form-label"><b>Imagen Documento</b></label>
                             <div class="col-8 text-right">
                                 <a href="#" @click="abrirInputFile">
                                     <i class="fa fa-camera fa-2x" aria-hidden="true" id="fileIcon"></i>
                                 </a>
                                 <input type="file" @change="obtenerImagen" class="form-control form-control-sm d-none" id="inputFile" accept="image/*">
+                                <span class="text-danger campo-obligatorio d-none">Campo Obligatorio</span>
                             </div>
+                        </div>
+                        <div class="alert alert-danger text-left" role="alert" id="alertaTipoImagen" style="margin: 10px; display:none;">
+                            <h6 class="alert-heading"><i class="fas fa-exclamation-triangle" style="font-size: 15px;"></i>&nbsp;
+                                Tipo de archivo no permitido. Los formatos permitidos son <b>.JPG</b> o <b>.PNG</b>
+                            </h6>
+                        </div>
+                        <div class="alert alert-info text-left alert-dismissible" role="alert" id="alertaLecturaImagen" style="margin: 10px; display:none;">
+                            <h6 class="alert-heading"><i class="fas fa-info-circle" style="font-size: 15px;"></i>&nbsp;
+                                Si los valores identificados no corresponden a los de la imagen, por favor modificar o ingresar estos valores de forma manual.
+                            </h6>
+                        </div>
+                        <div v-show="procesando" id="procesando"  style="display:none;">
+                            <span><b>PROCESANDO&nbsp;</b></span>
+                            <div class="spinner-grow spinner-grow-sm"></div>
+                            <div class="spinner-grow spinner-grow-sm"></div>
+                            <div class="spinner-grow spinner-grow-sm"></div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-12 text-center">
+                                
                                 <figure v-if="imgFactura != ''">
                                     <img width="220" height="240" alt="Imagen" :src="imagen" class="img img-thumbnail">
                                 </figure>
-                                <div v-show="procesando">
-                                    <span>Procesando...</span>
-                                    <div class="spinner-grow spinner-grow-sm"></div>
-                                    <div class="spinner-grow spinner-grow-sm"></div>
-                                    <div class="spinner-grow spinner-grow-sm"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,13 +270,15 @@ function validaFormulario(){
     let arrayCampos = ['fecha',
                         'tipo',
                         'categoria',
-                        'cuenta',
+                        //'cuenta',
                         'tarifacero',
                         'tarifadifcero',
                         'iva',
                         'importe',
                         'detalle',
-                        'inputFile'];
+                        'inputFile',
+                        'TOTAL',
+                        'NUMERO-FACTURA'];
 
     arrayCampos.forEach( function(valor, indice) {
         let valorElemento = document.getElementById(valor).value;
@@ -239,14 +290,19 @@ function validaFormulario(){
             }else{
                 document.getElementById(valor).style.borderColor = "red";
             }
+            document.querySelectorAll(".campo-obligatorio").forEach(el => el.classList.remove("d-none"));
+        }else if(valorElemento == 0 || valorElemento == 0.00){
+            document.getElementById(valor).style.borderColor = "#e2e2e3";
         }else{
             if(valor == "inputFile"){
                 document.getElementById("fileIcon").style.color = "#6777ef";
             }else{
                 document.getElementById(valor).style.borderColor = "#e2e2e3";
             }
+            document.querySelectorAll(".campo-obligatorio").forEach(el => el.classList.add("d-none"));
         }
     });
+
     return respuesta;
 }
 
@@ -265,11 +321,12 @@ var requiredElement = elements[0];
 }, false);*/
 
 export default {
-    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias', 'userEmpresa', 'empresa'],
+    props: ['listaTransacciones', 'subServicio', 'plan', 'tipoPlan', 'sumaIngresos', 'sumaEgresos', 'categorias', 'userEmpresa', 'empresa', 'flagPermisoPlanCuentas', 'servicioUsuario', 'userId'],
     data() {
         let arrayComprobantes = [];
         var resultado = [];
         let listaCategorias = JSON.parse(this.categorias);
+        var flagPermisoCuentas = false;
 
         for (const key in listaCategorias){
             resultado.push({
@@ -292,6 +349,13 @@ export default {
             let jsonstring = this.listaTransacciones.replace('[','').replace(']','').replaceAll("'","");
             arrayComprobantes.push(JSON.parse(jsonstring));
         }
+        //console.log(this.flagPermisoPlanCuentas);
+        if(this.flagPermisoPlanCuentas == "true")
+            flagPermisoCuentas = true;
+        else if(this.flagPermisoPlanCuentas == "false")
+            flagPermisoCuentas = false;
+
+        //console.log(flagPermisoCuentas);
         return {
             modalNuevoRegistro: false,
             procesando: false,
@@ -314,6 +378,7 @@ export default {
             transacciones:arrayComprobantes,
             cuentas: [],
             flagCuenta: true,
+            flagPermiso: flagPermisoCuentas,
             buttonDisable: false,
             //empresa: [],
             chartOptions: {
@@ -323,7 +388,7 @@ export default {
 
                             {
                                 name: 'INGRESOS',
-                                color: '#28a745',
+                                color: '#2196f3',
                                 y: parseFloat(this.sumaIngresos)
                             },
                             {
@@ -360,7 +425,7 @@ export default {
                         }
                     },
                     xAxis: {
-                        categories: ['INGRESOS','EGRESOS'],
+                        categories: ['SUMAS (+)','RESTAS (-)'],
                     },
                     tooltip: {
                         formatter: function () {
@@ -550,6 +615,18 @@ export default {
             });
         },
         cerrarModal(){
+            var camposImagen = document.getElementById("camposImagen");
+            camposImagen.style.display = "none";
+
+            var alertaTipoImagen = document.getElementById("alertaTipoImagen");
+            alertaTipoImagen.style.display = "none";
+
+            var alertaLecturaImagen = document.getElementById("alertaLecturaImagen");
+            alertaLecturaImagen.style.display = "none";
+
+            document.querySelectorAll(".campo-obligatorio").forEach(el => el.classList.add("d-none"));
+            document.querySelectorAll(".form-control").forEach(el => el.style.borderColor = "#e2e2e3");
+
             this.modalNuevoRegistro = false;
         },
         abrirInputFile(){
@@ -557,49 +634,133 @@ export default {
         },
         async obtenerImagen(e){
             var file = e.target.files[0];
-            this.procesando = true;
-            if(this.comprobante.importe == 0){
-                var cero = 0;
-                var difcero = 0;
-                var importe = 0;
-                var iva = 0;
-                await Tesseract.recognize(file,'spa')
-                    .progress(function(data){
-                        //console.log(data.status)
-                    })
-                    .then(function(data){
-                        data.lines.forEach((item,index,array) => {
-                            if(item.text.match(/Tarifa 0.*/)){
-                                var regex = /(\d.+)/g;
-                                var valor = item.text.substr(-8);
-                                cero = parseFloat(valor.match(regex));
-                            }
-                            if(item.text.match(/Tarifa 12.*/)){
-                                var regex = /(\d.+)/g;
-                                var valor = item.text.substr(-8);
-                                difcero = parseFloat(valor.match(regex));
-                            }
-                            if(item.text.match(/IVA.*/)){
-                                var regex = /(\d.+)/g;
-                                var valor = item.text.substr(-8);
-                                iva = parseFloat(valor.match(regex));
-                            }
-                            if(item.text.match(/TOTAL.*/)){
-                                var regex = /(\d.+)/g;
-                                var valor = item.text.substr(-8);
-                                importe = parseFloat(valor.match(regex));
-                            }
-                        });
-                    });
-                this.comprobante.tarifacero = cero;
-                this.comprobante.tarifadifcero = difcero;
-                this.comprobante.importe = importe;
-                this.comprobante.iva = iva;
-            }
 
-            this.procesando = false;
-            this.imgFactura = file;
-            this.cargarImagen(file);
+            var camposImagen = document.getElementById("camposImagen");
+            if(camposImagen)
+                camposImagen.remove();
+
+            let alertaLecturaImagen = document.getElementById("alertaLecturaImagen");
+            alertaLecturaImagen.style.display = "none";
+
+            let alertaTipoImagen = document.getElementById("alertaTipoImagen");
+            alertaTipoImagen.style.display = "none";
+
+            //this.procesando = true;
+            if(file.type.includes("png") || file.type.includes("jpg") || file.type.includes("jpeg"))
+            {
+                var proceso = document.getElementById("procesando");
+                if (proceso.style.display === "none") {
+                    proceso.style.display = "block";
+                } else {
+                    proceso.style.display = "none";
+                }
+
+                let reader = new FileReader();
+                reader.onload = function() {
+
+                    let url = '/admin/ingreso_facturas/leer_factura';
+                    const config = {
+                        headers: {
+                            'content-type': 'multipart/form-data'
+                        }
+                    };
+
+                    let data = new FormData();
+                    data.append('img_factura', reader.result);
+
+                    let datos ={
+                        url : url,
+                        config: config,
+                        data: data
+                    };
+
+                    axios.post(datos.url, datos.data, datos.config)
+                        .then((response) => {
+                            var contenedorPrincipal = document.getElementById("contenedorCamposImagen");
+                            var spanElementos = document.createElement('div');
+                            spanElementos.setAttribute("id", "camposImagen");
+                            contenedorPrincipal.appendChild(spanElementos);
+
+                            var inputContainer = document.getElementById("camposImagen");
+                            var date = new Date();
+                            var fechaActual = date.toISOString().substring(0,10);
+
+                            if (response.data.length === 0){
+                                //var dataImagen = ["TOTAL", "NUMERO-FACTURA", "FECHA-FACTURA", "IVA"];
+                                var dataImagen = [];
+                                dataImagen['TOTAL'] = 0;
+                                dataImagen['NUMERO-FACTURA'] = '';
+                                dataImagen['FECHA-FACTURA'] = fechaActual;
+                                dataImagen['IVA'] = 0;
+                            }else{
+                                var dataImagen = response.data;
+                            }
+
+                                for (const key in dataImagen) {
+                                    if(key == "IVA"){
+                                        let ivaInput = document.getElementById("iva");
+                                        ivaInput.value = dataImagen[key];
+                                    }else if(key == "FECHA-FACTURA"){
+                                        let fechaInput = document.getElementById("fecha");
+                                        fechaInput.value = fechaActual;//dataImagen[key];
+                                    }else{
+                                        var newDiv = document.createElement("div");
+                                        newDiv.classList.add('form-group', 'row', 'mb-2');
+                                        var inputIcono = "";
+                                        var classInputIcono = "";
+
+                                        if(key !== "NUMERO-FACTURA"){
+                                            inputIcono = "<div class='input-group-prepend'><span class='input-group-text' id='inputGroup-sizing-sm'><small>$</small></span></div>";
+                                            classInputIcono = "input-group";
+                                        }
+
+                                        /*let htmlInterno = "<label class='col-4 col-form-label'><b>"+key.replace("-", " ")+"</b></label>"+
+                                                            "<div class='col-8'>"+
+                                                            "<input type='text' class='form-control text-right' value="+dataImagen[key]+">"+
+                                                            "<span class='text-danger campo-obligatorio d-none'>Campo Obligatorio</span></div>";*/
+
+                                        let htmlInterno = "<label class='col-4 col-form-label'><b>"+key.replace("-", " ")+"</b></label>"+
+                                                            "<div class='col-8 "+classInputIcono+"'>"+inputIcono+
+                                                            "<input type='text' class='form-control text-right' id='"+key+"' value="+dataImagen[key]+"/></div>"+
+                                                            "<div class='col-8 text-right'><span class='text-danger campo-obligatorio d-none'>Campo Obligatorio</span></div>"+
+                                                            "</div>";
+
+                                        newDiv.innerHTML = htmlInterno;
+                                        inputContainer.appendChild(newDiv);
+                                    }
+
+                                    /*var newlabel = document.createElement("Label");
+                                    newlabel.innerHTML = key;
+                                    inputContainer.appendChild(newlabel);
+
+                                    var newForm = document.createElement("input");
+                                    newForm.setAttribute("type", "number");
+                                    newForm.setAttribute("id", key);
+                                    newForm.setAttribute("value", response.data[key]);
+                                    inputContainer.appendChild(newForm);
+                                    inputContainer.appendChild(document.createElement("br"));*/
+                                }
+
+                            var proceso = document.getElementById("procesando");
+
+                            if (proceso.style.display === "none") {
+                                proceso.style.display = "block";
+                            }else{
+                                proceso.style.display = "none";
+                            }
+
+                            let alerta = document.getElementById("alertaLecturaImagen");
+                            alerta.style.display = "block";
+                        });
+                }
+                reader.readAsDataURL(file);
+                this.imgFactura = file;
+                this.cargarImagen(file);
+
+            }else{
+                let alerta = document.getElementById("alertaTipoImagen");
+                alerta.style.display = "block";
+            }
         },
         cargarImagen(file){
             let reader = new FileReader();
@@ -618,8 +779,6 @@ export default {
         },
         async listarCuentas(){
             const respuestaCuentas= await axios.get('/admin/ingreso_facturas/listar_cuentas/'+this.userEmpresa);
-            console.log("--LISTA CUENTA--");
-            console.log(respuestaCuentas.data.length);
             this.cuentas = respuestaCuentas.data;
             if(respuestaCuentas.data.length == 0){
                 this.flagCuenta = false;
@@ -645,9 +804,11 @@ export default {
 
             //let flagCuenta = true;
 
-            if(!this.flagCuenta){
-                document.getElementById("alertaCuenta").style.display = "block";
-                this.buttonDisable = true;
+            if(this.flagPermiso){
+                if(!this.flagCuenta){
+                    document.getElementById("alertaCuenta").style.display = "block";
+                    this.buttonDisable = true;
+                }
             }
         },
         storeService() {
@@ -682,6 +843,7 @@ export default {
                 data.append('empresa_transaccion', this.userEmpresa);
                 data.append('estado', 'activo');
                 data.append('subServicio',this.subServicio);
+                data.append('user_id',this.userId);
                 data.append('plan',this.plan);
 
                 let datos ={
