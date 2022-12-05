@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Admin\Empresa;
 
 use App\UserEmpresa;
+use App\Tienda\Shop;
+use App\PeriodoDeclaracion;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,26 +26,29 @@ class MisEmpresas extends Component
         public $editMode        = false;
         public $createMode      = false;
         public $user_empresa_id ='';
+        public $flagShop        = false;
+        public $periodos  =[];
 
-        public  $ruc,  $razon_social, $clave_acceso;
+        public  $ruc,  $razon_social, $clave_acceso, $actividad, $periodo_declaracion_id;
 
     public function render()
     {
+        $this->periodos = PeriodoDeclaracion::get(['id','descripcion']);
+
          $data = UserEmpresa::join('users', 'user_empresas.user_id', '=', 'users.id')
+                   ->leftJoin('periodos_declaracion', 'user_empresas.periodo_declaracion_id', '=', 'periodos_declaracion.id')
                    ->where('user_id', Auth::user()->id)
                 ->where(function($query){
                     $query->where('razon_social', 'like', '%'. $this->search . '%');
                 })
-                
-                ->select('user_empresas.*', 'users.name as nombre')
+
+                ->select('user_empresas.*', 'users.name as nombre', 'periodos_declaracion.descripcion as periodo')
                 ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
                 ->paginate($this->perPage);
 
         return view('livewire.admin.empresa.mis-empresas', compact('data'));
     }
 
-
-    
     public function sortBy($field)
     {
         if ($this->orderBy === $field) {
@@ -58,7 +63,9 @@ class MisEmpresas extends Component
 
         $this->ruc            = "";
 		$this->razon_social   = "";
-		$this->clave_acceso   = "";
+        $this->clave_acceso   = "";
+        $this->actividad   = "";
+        $this->periodo_declaracion_id   = "";
 		$this->editMode  = false;
 
     }
@@ -67,13 +74,17 @@ class MisEmpresas extends Component
     public function CrearEmpresa (){
 
         $this->validate([
-            'ruc' => 'required|max:13',
+            'ruc' => 'required|max:13|unique:user_empresas',
             'razon_social' => 'required',
-            'clave_acceso' => 'required',
+            'actividad' => 'required',
+            'periodo_declaracion_id' => 'required',
+            //'clave_acceso' => 'required',
         ],[
             'ruc.required' => 'No has Agregado el Ruc',
             'razon_social.required' => 'Debe Agregar la Razón Social',
-            'clave_acceso.required' => 'Debe Agregar la Clave de Acceso',
+            'actividad' => 'Debe Agregar la Actividad',
+            'periodo_declaracion_id' => 'Debe Agregar el Período',
+            //'clave_acceso.required' => 'Debe Agregar la Clave de Acceso',
 
         ]);
 
@@ -83,7 +94,9 @@ class MisEmpresas extends Component
         $empresa->ruc  = $this->ruc;
         $empresa->user_id = Auth::id();
         $empresa->razon_social = $this->razon_social;
-        $empresa->clave_acceso = $this->clave_acceso;
+        $empresa->actividad = $this->actividad;
+        $empresa->periodo_declaracion_id = $this->periodo_declaracion_id;
+        //$empresa->clave_acceso = $this->clave_acceso;
         $empresa->save();
         $this->resetInput();
         $this->emit('success',['mensaje' => 'Empresa Registrado Correctamente', 'modal' => '#createEmpresa']);
@@ -99,7 +112,20 @@ class MisEmpresas extends Component
         $this->ruc               = $e->ruc;
         $this->razon_social      = $e->razon_social;
         $this->clave_acceso      = $e->clave_acceso;
+        $this->actividad         = $e->actividad;
+        $this->periodo_declaracion_id = $e->periodo_declaracion_id;
         $this->editMode          = true;
+        $this->flagShop          = false;
+
+        $shop = Shop::where('user_empresas_id', $id)->get();
+
+        foreach ($shop as $key => $value) {
+            if($value->estado == "aprobada"){
+                $this->flagShop = true;
+                break;
+            }
+        }
+
     }
 
 
@@ -121,6 +147,8 @@ class MisEmpresas extends Component
         $e->ruc           = $this->ruc;
         $e->razon_social  =  $this->razon_social;
         $e->clave_acceso  = $this->clave_acceso;
+        $e->actividad     = $this->actividad;
+        $e->periodo_declaracion_id     = $this->periodo_declaracion_id;
         $e->save();
         $this->resetInput();
         $this->emit('info',['mensaje' => 'Empresa Actualizada Correctamente', 'modal' => '#createEmpresa']);
