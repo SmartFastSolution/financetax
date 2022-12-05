@@ -24,7 +24,7 @@ class TiendaRequest extends FormRequest
     public function rules()
     {
         return [
-            'subservice_id' => 'required',
+            'service_id' => 'required',
             'tipoplan_id' => 'required',
             'costo' => 'required',
             
@@ -35,7 +35,7 @@ class TiendaRequest extends FormRequest
     public function messages()
     {
         return [
-            'subservice_id.required'     => 'No has seleccionado el Subservicio',
+            'service_id.required'     => 'No has seleccionado el Servicio',
             'tipoplan_id.required'       => 'No has Añadido el Nombre del TipoPlan',
             'costo.required'             => 'No se ha guardado el costo ',
             ];

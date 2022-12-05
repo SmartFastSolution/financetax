@@ -24,7 +24,7 @@ class PlanRequest extends FormRequest
     public function rules()
     {
         return [
-            'subservice_id' => 'required',
+            'service_id' => 'required',
             'tipoplan_id' => 'required',
             'costo' => 'required',
             'descripcion' => 'required',
@@ -34,7 +34,7 @@ class PlanRequest extends FormRequest
     public function messages()
     {
         return [
-            'subservice_id.required'  => 'No has seleccionado el Sub Servicio',
+            'service_id.required'  => 'No has seleccionado el Sub Servicio',
             'tipoplan_id.required'    => 'No has seleccionado el Tipo PLan',
             'costo.required'          => 'No has Añadido el Precio',
             'descripcion.required'    => 'No has Añadido La Descripción ',

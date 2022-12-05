@@ -27,8 +27,11 @@ class RedirectIfAuthenticated
             if($request->email == "")
             {}else{
                 $usuario = User::where('email', $request->email)->first();
-                if(!Hash::check($request->password, $usuario->password))
-                    return redirect('/login')->withInput()->with('message', 'Contraseña incorrecta.');
+
+                if($usuario !== null){
+                    if(!Hash::check($request->password, $usuario->password))
+                        return redirect('/login')->withInput()->with('message', 'Contraseña incorrecta.');
+                }
             }
         }
 
