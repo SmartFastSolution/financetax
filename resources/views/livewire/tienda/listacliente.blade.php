@@ -78,7 +78,6 @@
                                       <button class="btn btn-icon icon-left btn-primary" data-toggle="modal"
                                           data-target="#Show" wire:click.prevent="Show({{ $compra->id }})">
                                           <i class="fas fa-eye"></i>
-
                                       </button>
                                   </td>
                                   <td width="10px">
@@ -90,20 +89,26 @@
                                   <td width="50px">
                                
                                   <div class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Servicios
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @isset($acciones[$compra->id])
-                                        @foreach ($acciones[$compra->id] as $accion)
-                                            @if($accion == "/admin/ingreso_facturas/sri")
-                                                <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}/{{ $compra->userEmpresa }}">{{$rutasNombre[$accion]}}</a>
-                                            @else
-                                                <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}/{{ $compra->userEmpresa }}">{{$rutasNombre[$accion]}}</a>
-                                            @endif
-                                        @endforeach
-                                    @endisset
-                                    </div>
+                                    @if($compra->diasRestantes == 0 || $compra->diasRestantes < 0)
+                                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="tooltip" data-placement="top" title="Fecha caducidad: {{$compra->fecha_caducidad}}">
+                                            Servicios&nbsp;|&nbsp;<i class="fas fa-hourglass-end"></i>&nbsp;Plan Caducado
+                                        </button>
+                                    @else
+                                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Servicios
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @isset($acciones[$compra->id])
+                                            @foreach ($acciones[$compra->id] as $accion)
+                                                @if($accion == "/admin/ingreso_facturas/sri")
+                                                    <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}/{{ $compra->userEmpresa }}">{{$rutasNombre[$accion]}}</a>
+                                                @else
+                                                    <a class="dropdown-item" href="{{ $accion }}/{{ $compra->id_subservice }}/{{ $compra->id_tipoplan }}/{{ $compra->userEmpresa }}">{{$rutasNombre[$accion]}}</a>
+                                                @endif
+                                            @endforeach
+                                        @endisset
+                                        </div>
+                                    @endif
                                     </div>
                                    
                                   </td>

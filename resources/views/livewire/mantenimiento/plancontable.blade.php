@@ -4,19 +4,27 @@
     @include('cruds.mantenimientos.plancontable.modal.modalplancontable')
 
     <div class="card-body">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCuenta"> Crear Plan Contable</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCuenta"> Crear Cuenta Contable</button>
     </div>
 <div class="card">
     <div class="card-body">
-        <div class="col-lg-6 form-inline ">
-            Filtro por Nivel : &nbsp; 
-             <select wire:model="filternivel" class="form-control form-control-sm">
-                 <option value="">Todas</option>
-                 <option value="1">1</option>
-                 <option value="2">2</option>
-                 <option value="3">3</option>
-                 <option value="4">4</option>
-             </select>
+        <div class="row">
+            <div class="col-lg-6 form-inline ">
+                Filtro por Nivel : &nbsp;
+                <select wire:model="filternivel" class="form-control form-control-sm">
+                    <option value="">Todas</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="4">5</option>
+                    <option value="4">6</option>
+                </select>
+            </div>
+
+            <div class="col-lg-6 text-right">
+                <a type="button" class="btn btn-success" href="/servicios/exportarPlanContable/{{$empresaUsuario}}"><i class="far fa-file-excel font-15"></i>&nbsp;Exportar a Excel</a>
+            </div>
          </div>
     </div>
     
@@ -35,7 +43,7 @@
                 </div>
 
                 <div class="col-lg-3">
-                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar Servicio...">
+                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar...">
                 </div>
             </div>
 
@@ -50,6 +58,7 @@
                                     @include('includes._sort-icon', ['field' => 'empresa'])
                                 </a>
                             </th>
+                            <th class="px-4 py-2 text-center">C&oacute;digo</th>
                             <th class="px-4 py-2 text-center ">
                                Cuenta
                                  <a class="text-primary" wire:click.prevent="sortBy('cuenta')" role="button">
@@ -63,7 +72,15 @@
                     <tbody>
                         @if ($data->isNotEmpty())
                             @foreach ($data as $p)
+                                @if($p->nivel == "1")
+                                <tr style="background-color: #dbdbdb">
+                                @elseif($p->nivel == "2")
+                                <tr style="background-color: #e9e7e7">
+                                @elseif($p->nivel == "3")
+                                <tr style="background-color: #f3efef">
+                                @else
                                 <tr>
+                                @endif
                                     <td class="text-center" >
                                         <button type="button" class="btn btn-primary rounded-circle accordion-toggle-btn accordion-toggle collapsed" 
                                                 onclick="mostrarInfo('infoHide{{ $p->id }}')" id="accordion{{ $p->id }}" data-toggle="collapse" 
@@ -72,7 +89,8 @@
                                         </button>
                                     </td>
                                     <td class="text-center "> {{ $p->empresa }}</td>
-                                    <td class="text-center "> {{ $p->cuenta  }}</td>
+                                    <td class="text-left "> {{ $p->codigo  }}</td>
+                                    <td class="text-left "> {{ $p->cuenta  }}</td>
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"
                                             wire:click.prevent="estadochange('{{ $p->id }}')"
@@ -104,13 +122,18 @@
                                             </div>
                                             <br>
                                             <div class="row">
-                                                <div class="col-2"><b>C&oacute;digo</b></div>
-                                                <div class="col-6">{{ $p->codigo }}</div>
+                                                <div class="col-2"><b>Cuenta Padre</b></div>
+                                                <div class="col-6">{{ $p->cuenta_padre }}</div>
                                             </div>
                                             <br>
                                             <div class="row">
                                                 <div class="col-2"><b>Nivel</b></div>
                                                 <div class="col-6">{{ $p->nivel }}</div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-2"><b>Categor&iacute;a</b></div>
+                                                <div class="col-6">{{ $p->categoria }}</div>
                                             </div>
                                         </div>
                                     </td>

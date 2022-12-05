@@ -25,8 +25,8 @@
             <div class="row table-responsive">
                 <table class="table table-striped">
                     <thead>
-                        <th class="px-4 py-2"></th>
                         <tr>
+                            <th class="px-4 py-2"></th>
                             <th class="px-4 py-2 text-center ">
                                Descripción
                                 <a class="text-primary" wire:click.prevent="sortBy('descripcion')" role="button">

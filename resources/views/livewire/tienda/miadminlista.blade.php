@@ -37,6 +37,7 @@
                                     @include('includes._sort-icon', ['field' => 'tipoplan'])
                                 </a>
                             </th>
+                            <th class="px-4 py-2 text-center">Fecha Asignaci&oacute;n</th>
                             <th class="px-4 py-2 text-center">Estado</th>
                             <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                         </tr>
@@ -52,6 +53,7 @@
                                     </td>
                                     <td >{{ $compra->cliente }}</td>
                                     <td >{{ $compra->tipoplan }}</td>
+                                    <td class="text-center ">{{ date('d/m/y H:i', strtotime($compra->updated_at)) }}</td>
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"
                                             wire:click.prevent="estadochange('{{ $compra->id }}')"
@@ -79,8 +81,8 @@
                                     <td colspan="4" >
                                         <div id="collapse{{ $compra->id }}" class="collapse in p-3">
                                             <div class="row">
-                                                <div class="col-2"><b>SubServicio</b></div>
-                                                <div class="col-6">{{ $compra->sub }}</div>
+                                                <div class="col-2"><b>Servicio</b></div>
+                                                <div class="col-6">{{ $compra->serv }}</div>
                                             </div>
                                             <br>
                                             <div class="row">

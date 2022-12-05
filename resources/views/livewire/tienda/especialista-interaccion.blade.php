@@ -7,29 +7,39 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th class="px-4 py-2 text-center ">
-                                    Detalle
+                                <th class="px-4 py-2 text-center " >
+                                    Tipo
                                 </th>
                                 <th class="px-4 py-2 text-center ">
-                                    Observacion
+                                    Detalle Mensaje
                                 </th>
                                 <th class="px-4 py-2 text-center ">
-                                    Fecha
+                                    Observaci&oacute;n Mensaje
                                 </th>
-                                <th class="px-4 py-2 text-center" colspan="3">Descarga</th>
+                                <th class="px-4 py-2 text-center ">
+                                    Fecha de Env&iacute;o
+                                </th>
+                                <th class="px-4 py-2 text-center" colspan="3">Descarga Adjunto</th>
                             </tr>
                         </thead>
 
                         <tbody>
                             @foreach ($data as $p)
                             <tr>
+                                @if($p->tipo == "C")
+                                <tr>
+                                    <td class="text-center"><span class="badge badge-info">Cliente</span></td>
+                                @elseif($p->tipo == "E")
+                                <tr style="background-color: #f3f5ff !important">
+                                    <td class="text-center"><span class="badge badge-primary">Especialista</span></td>
+                                @endif
                                 <td class="text-center">{{ $p->detalle }}</td>
                                 <td class="text-center">{{ $p->observacion }}</td>
-                                <td class="text-center">{{ $p->fecha }}</td>
+                                <td class="text-center">{{ $p->created_at }}</td>
 
                                 <td class="text-center">
                                     @foreach ($p->docs as $d)
-                                        <a target="_blank" href="/storage/{{$d->url_archivo}}" class="btn btn-primary mt-2 mb-2 mr-3 "> {{$d->documento_interaccion}} <i class="fas fa-download"> </i </a>
+                                        <a target="_blank" href="/documentos_interaccion/{{$d->url_archivo}}" class="btn btn-primary mt-2 mb-2 mr-3 "> {{$d->documento_interaccion}} <i class="fas fa-download"> </i </a>
                                     @endforeach
                                 </td>
 

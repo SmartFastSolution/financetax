@@ -2,7 +2,7 @@
 
     @include('admin.usuarios.modal.modaldatos-personales')
     <div class="card-body">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditUser"> Actualizar Datos
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EditUser" wire:click.prevent="EditDatos()"> <i class="fas fa-edit"></i>&nbsp;Actualizar Datos
             Usuario</button>
     </div>
     <section class="section">
@@ -13,8 +13,7 @@
                         <div class="card-body">
                             <div class="author-box-center">
                                 @if (Auth::user()->image)
-                                    <img src="{{ url(Auth::user()->image) }}" border="1" alt="avatar" width="100px"
-                                        height="100px">
+                                    <img src="{{ url(Auth::user()->image) }}" border="1" alt="avatar" width="50%" height="auto">
                                 @endif
                                 <div class="clearfix"></div>
                                 <div class="author-box-name">
@@ -31,14 +30,14 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header bg-primary text-white">
                             <h4>Detalles</h4>
                         </div>
                         <div class="card-body">
                             <div class="py-4">
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Fecha Nacimiento
+                                        <b>Fecha Nacimiento</b>
                                     </span>
                                     @foreach ($data as $item)
                                         <span class="float-right text-muted">
@@ -49,7 +48,7 @@
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Teléfono
+                                        <b>Tel&eacute;fono</b>
                                     </span>
                                     @foreach ($data as $item)
                                         <span class="float-right text-muted">
@@ -59,11 +58,23 @@
                                 </p>
                                 <p class="clearfix">
                                     <span class="float-left">
-                                        Correo Electronico
+                                        <b>Correo Electr&oacute;nico</b>
                                     </span>
                                     @foreach ($data as $item)
                                         <span class="float-right text-muted">
                                             {{ $item->email }}
+                                        </span>
+                                    @endforeach
+                                </p>
+                                <p class="clearfix">
+                                    <span class="float-left">
+                                    <b>Tipo de Contribuyente</b>
+                                    </span>
+                                    @foreach ($data as $item)
+                                        <span class="float-right text-muted">
+                                            @if(!empty($item->tipo_contribuyente->descripcion))
+                                                {{ $item->tipo_contribuyente->descripcion }}
+                                            @endif
                                         </span>
                                     @endforeach
                                 </p>
@@ -77,15 +88,15 @@
                             <ul class="nav nav-tabs" id="myTab2" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab2" data-toggle="tab" href="#about" role="tab"
-                                        aria-selected="true">Datos Personales</a>
+                                        aria-selected="true"><b>Datos Personales</b></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab2" data-toggle="tab" href="#settings"
-                                        role="tab" aria-selected="false">Contraseña</a>
+                                        role="tab" aria-selected="false"><b>Contraseña</b></a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#imagen"
-                                        role="tab" aria-selected="false">Foto Perfil</a>
+                                        role="tab" aria-selected="false"><b>Foto Perfil</b></a>
                                 </li>
                             </ul>
                             <div class="tab-content tab-bordered" id="myTab3Content">

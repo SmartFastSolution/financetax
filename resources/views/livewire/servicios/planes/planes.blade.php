@@ -6,7 +6,7 @@
 
             <div class="row mb-4 justify-content-between">
                 <div class="col-lg-4 form-inline">
-                    Por Pagina: &nbsp;
+                    Por P&aacute;gina: &nbsp;
                     <select wire:model="perPage" class="form-control form-control-sm">
                         <option>10</option>
                         <option>15</option>
@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="col-lg-3">
-                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar Sub Servicio...">
+                    <input wire:model="search" class="form-control" type="text" placeholder="Buscar Servicio...">
                 </div>
             </div>
 
@@ -25,10 +25,17 @@
                      <tr>
                         <th class="px-4 py-2"></th>
                         <th class="px-4 py-2 text-center ">
-                          Sub Servicio
-                           <a class="text-primary" wire:click.prevent="sortBy('subservicio')" role="button">
+                            Servicio
+                           <a class="text-primary" wire:click.prevent="sortBy('servicio')" role="button">
          
-                               @include('includes._sort-icon', ['field' => 'subservicio'])
+                               @include('includes._sort-icon', ['field' => 'servicio'])
+                           </a>
+                       </th>
+                       <th class="px-4 py-2 text-center ">
+                            Tipo
+                           <a class="text-primary" wire:click.prevent="sortBy('tipoplan')" role="button">
+         
+                               @include('includes._sort-icon', ['field' => 'tipoplan'])
                            </a>
                        </th>
                          {{-- <th class="px-4 py-2 text-center ">
@@ -54,6 +61,7 @@
                             </button>
                         </td>
                         <td class="text-left ">{{ $plan->subservicio }}</td>
+                        <td class="text-left ">{{ $plan->tipoplan }}</td>
                         {{-- <td class="text-center ">{{ $plan->descripcion }}</td> --}}
                         <td class="text-center ">
                            <span style="cursor: pointer;"
@@ -70,7 +78,7 @@
                     </td>
                     <td width="10px">
                         <button class="btn btn-danger"
-                            wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar este Servicio?','eliminarPlan', {{ $plan->id }})">
+                            wire:click.prevent="$emit('eliminarRegistro','Seguro que deseas eliminar este Plan?','eliminarPlan', {{ $plan->id }})">
                             Eliminar
                         </button>
                     </td>
@@ -87,6 +95,11 @@
                                 <div class="row">
                                     <div class="col-2"><b>Precio</b></div>
                                     <div class="col-6">${{ $plan->costo }}</div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-2"><b>Cantidad Meses</b></div>
+                                    <div class="col-6">{{ $plan->cantidad_meses }}</div>
                                 </div>
                             </div>
                         </td>

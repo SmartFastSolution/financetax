@@ -45,6 +45,7 @@
                                     @include('includes._sort-icon', ['field' => 'ti'])
                                 </a>
                             </th>
+                            <th class="px-4 py-2 text-center">Fecha Ingreso</th>
                             <th class="px-4 py-2 text-center">Estado</th>
                             <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                         </tr>
@@ -57,7 +58,7 @@
                                     <td class="text-center ">${{ $p->costo }}</td>
                                     <td class="text-center ">{{ $p->sub }}</td>
                                     <td class="text-center ">{{ $p->ti }}</td>
-
+                                    <td class="text-center ">{{ date('d/m/y H:i', strtotime($p->created_at)) }}</td>
 
                                     <td class="text-center ">
                                         <span style="cursor: pointer;"

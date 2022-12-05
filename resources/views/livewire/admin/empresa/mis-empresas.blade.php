@@ -100,6 +100,8 @@
                                     @include('includes._sort-icon', ['field' => 'razon_social'])
                                 </a>
                             </th>
+                            <th class="px-4 py-2 text-center">Actividad</th>
+                            <th class="px-4 py-2 text-center">Per&iacute;odo Declaraciones</th>
                             <th class="px-4 py-2 text-center">Clave Acceso</th>
                             <th class="px-4 py-2 text-center" colspan="2">Acción</th>
                         </tr>
@@ -110,6 +112,8 @@
                                 <tr>
                                     <td class="text-center ">{{ $e->ruc }}</td>
                                     <td class="text-center ">{{ $e->razon_social }}</td>
+                                    <td class="text-center ">{{ $e->actividad }}</td>
+                                    <td class="text-center ">{{ $e->periodo }}</td>
                                     <td class="text-center ">{{ $e->clave_acceso }}</td>
                                     <td width="10px">
                                         <button class="btn btn-success" data-toggle="modal" data-target="#createEmpresa"
