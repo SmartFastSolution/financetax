@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Servicios\Plan;
 use App\Servicios\Tipoplan;
 use App\Tienda\Shop;
+use App\Tienda\DetallePagoPP;
 use App\Traits\ShopTrait;
 use App\UserEmpresa;
 use Illuminate\Support\Facades\Auth;
@@ -55,28 +56,37 @@ class ShopController extends Controller
         $user_id = Auth::id();
         $empresas = UserEmpresa::where('user_id',$user_id)->get();
 
-        $data  = Subservice::join('services', 'subservices.service_id', '=', 'services.id')
+        /*$data  = Subservice::join('services', 'subservices.service_id', '=', 'services.id')
             ->join('tiposervicios', 'services.tiposervicio_id', '=', 'tiposervicios.id')
             //->where('subservices.id', $id)
             ->where('subservices.slug', $id)
             ->select('subservices.*', 'services.nombre as servicio', 'tiposervicios.nombre as tiposervicio')
+            ->get();*/
+
+        $data  = Service::join('tiposervicios', 'services.tiposervicio_id', '=', 'tiposervicios.id')
+            ->where('services.slug', $id)
+            ->select('services.*', 'services.nombre as servicio', 'tiposervicios.nombre as tiposervicio')
             ->get();
 
         $plans = Plan::where('estado', 'activo')
-            ->with(['subservicio', 'subservicio.nombre'], ['tipoplan', 'tipoplan.nombre'])
+            ->with(['servicio', 'servicio.nombre'], ['tipoplan', 'tipoplan.nombre'])
             //->where('subservice_id', '=', $id)
-            ->where('subservice_id', '=', $data[0]->id)
+            //->where('subservice_id', '=', $data[0]->id)
+            ->where('service_id', '=', $data[0]->id)
             ->get();
 
         $tipoplan = Tipoplan::join('plans', 'plans.tipoplan_id', '=', 'tipoplans.id')
             //->where('plans.subservice_id', $id)
-            ->where('plans.subservice_id', $data[0]->id)
+            ->where('plans.service_id', $data[0]->id)
             ->where('plans.estado', 'activo')
             ->where('tipoplans.estado', 'activo')
-
             ->get();
 
-        return view('cruds.Tienda.paginacompra', compact('data', 'plans', 'tipoplan', 'empresas'));
+        $subservicios = Subservice::where('service_id', $data[0]->id)
+            ->select('subservices.*')
+            ->get();
+
+        return view('cruds.Tienda.paginacompra', compact('data', 'plans', 'tipoplan', 'empresas', 'subservicios'));
     }
 
 
@@ -253,7 +263,7 @@ class ShopController extends Controller
                         ->where('user_id', $user_id)
                         ->where('tipoplan_id', $request->tipoplan_id)
                         ->where('plan_id', $request->plan_id)
-                        ->where('subservice_id', $request->subservice_id)
+                        ->where('service_id', $request->service_id)
                         ->where('user_empresas_id', $empresa_id)
                         ->get();
 
@@ -267,5 +277,46 @@ class ShopController extends Controller
         $result = array("flag" => $flagEmpresa, "empresa" => $empresa->razon_social);
 
         return response()->json($result, 201);
+    }
+
+    public function respuestaPago($transaccion, $client){
+        //Obtener parametros de la URL enviados por PayPhone
+        //$transaccion = $_GET["id"];
+        //$client = $_GET["clientTransactionId"];
+        $respuesta = true;
+        $user_id = Auth::id();
+
+        //Preparar JSON de llamada
+        /*$data_array = array(
+        "id"=> (int)$transaccion,
+        "clientTxId"=>$client );
+
+        $data = json_encode($data_array);
+
+        //Iniciar Llamada
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "https://pay.payphonetodoesposible.com/api/button/V2/Confirm");
+        curl_setopt($curl, CURLOPT_POST, 1);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt_array($curl, array(
+        CURLOPT_HTTPHEADER => array(
+        "Authorization: Bearer TU TOKEN DE AUTENTICACIÓN", "Content-Type:application/json"),
+        ));
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        $result = curl_exec($curl);
+        curl_close($curl);
+
+        //En la variable result obtienes todos los parámetros de respuesta
+        echo $result;*/
+
+        $detalle                        = new DetallePagoPP();
+        $detalle->user_id               = $user_id;
+        $detalle->estado                = "A";
+        $detalle->transactionId         = $transaccion;
+        $detalle->clientTransactionId   = $client;
+        //$detalle->respuesta_detalle             = $request->costo;
+        $detalle->save();
+
+        return $respuesta;
     }
 }
