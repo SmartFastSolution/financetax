@@ -44,20 +44,24 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        return view('auth.register', ["ciudades" => City::all()]);
+        return view('auth.register', ["ciudades" => City::orderBy('nombre', 'asc')->get()]);
     }
     
 
-    protected function validator(array $data)
+    protected function validator($data)
     {
+        //$validator = Validator::make($data, [
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'genero' => ['required'],
+            'name' => 'required|string|max:255',
+            'email' => 'required|email:rfc,dns|unique:App\User,email',//'required|unique:users,email|email',
+            'password' => 'required|string|min:8|confirmed',
+            'genero' => 'required',
             'ciudad' => 'required',
         ]);
-       
+        /*dd($validator->validated());
+        if ($validator->fails()) {
+            dd("--FAIL--");
+        }*/
     }
 
     /**
@@ -68,16 +72,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        //dd($data);
+        // Se asigna el rol de Invitado ya que solo cuenta con el permiso de sus configuraciones y adquirir servicios
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'genero' => $data['genero'],
             'city_id' => $data['ciudad'],
             'password' => Hash::make($data['password']),
-        ])->assignRole('cliente');
+        ])->assignRole('invitado');
 
-        // Le asignamos el rol de Cliente
-       
+    }
+
+    public function validaEmail($email){
+        $emailLimpio = trim(str_replace('"@"',"@", $email));
+
+        $usuario = User::where('email', $emailLimpio)->get();
+
+        if($usuario->count())
+            return true;
+        else
+            return false;
+
+        //return "ok";
     }
 }

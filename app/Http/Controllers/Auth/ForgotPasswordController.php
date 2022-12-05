@@ -52,7 +52,7 @@ class ForgotPasswordController extends Controller
         $token = Str::random(64);
 
         DB::table('password_resets')->insert([
-            'email' => $request->email, 
+            'email' => $request->email,
             'token' => $token, 
             'created_at' => Carbon::now()
         ]);
