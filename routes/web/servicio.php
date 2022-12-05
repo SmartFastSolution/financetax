@@ -43,9 +43,12 @@ Route::prefix('servicios')->group(function(){
               Route::get('/tipo-cuenta', 'Servicios\ServicioController@Tipocuenta')->name('tipocuenta.index'); //ruta de tipo cuenta 
        });
 
-       Route::group(['middleware'=>['role_or_permission:super-admin|m-plancontable']], function(){
+       Route::group(['middleware'=>['role_or_permission:super-admin|m-plancontable|c-servicios']], function(){
               //RUTAS DE PLAN CONTABLE
               Route::get('/plan-contable', 'Servicios\ServicioController@Plancontable')->name('plancontable.index'); //ruta de plan contable
+              Route::get('/plan-contable-empresa/{id}', 'Servicios\ServicioController@ShowPlancontable');
+              Route::get('/consultaCodigoCuenta/{id}', 'Servicios\ServicioController@consultaCodigoCuenta');
+              Route::get('/exportarPlanContable/{id}', 'Servicios\ServicioController@exportarPlanContable');
        });
 
        Route::group(['middleware'=>['role_or_permission:super-admin|m-impuesto']], function(){
@@ -54,7 +57,8 @@ Route::prefix('servicios')->group(function(){
        });
        Route::group(['middleware'=>['role_or_permission:super-admin|m-proyecciones']], function(){
               //RUTAS DE PROYECCIONES
-            Route::get('/proyeccion-gastos-personales', 'Servicios\ServicioController@ProyeccionGasto')->name('proyecciongasto.index'); //ruta de proyeccion de gasto personales
+              Route::get('/proyeccion-gastos-personales', 'Servicios\ServicioController@ProyeccionGasto')->name('proyecciongasto.index');
+              //Route::get('/proyeccion-gastos-personales/{id}', 'Servicios\ServicioController@ShowProyeccionGasto');
        });
        Route::view('servicios/contabilidad', 'grafico.contabilidad.index')->name('servicios.contabilidad.index'); //Interface Grafica Servicio Contabilidad
 });

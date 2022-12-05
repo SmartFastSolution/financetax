@@ -12,7 +12,12 @@ Route::prefix('reportes')->group(function(){
         Route::get('/reporte-generos', 'Reportes\ReporteController@ReporteGenero')->name('reportes.genero'); //reporte por genero usuarios
         Route::get('/reporte-usuario-telefono', 'Reportes\ReporteController@ReporteTelefono')->name('reportes.usuario.telefono'); //reporte por telefono usuarios
         Route::get('/reporte-usuario-email', 'Reportes\ReporteController@ReporteEmail')->name('reportes.usuario.email'); //reporte por telefono usuarios
- });
+
+        Route::get('/formulario104', 'Reportes\FormulariosController@Formulario104')->name('reportes.formulario104');
+        Route::get('/formulario104/consultar/{shop}', 'Reportes\FormulariosController@Consultar104')->name('reportes.formulario104.consultar');
+        Route::get('/formulario104/detalle/{empresa}/{anio}/{mes}', 'Reportes\FormulariosController@Detalle104')->name('reportes.formulario104.detalle');
+        Route::get('/formulario104/generarXML/{empresa}/{anio}/{mes}', 'Reportes\FormulariosController@generarXML')->name('reportes.generarXML');
+    });
 
 
 });

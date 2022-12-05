@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\RegisterController;
 
 
 
@@ -50,8 +51,11 @@ Route::post('send-password', [ForgotPasswordController::class, 'submitForgetPass
 Route::get('reset-password/{token}', [ForgotPasswordController::class, 'showResetPasswordForm'])->name('reset.password.get');
 Route::post('reset-password', [ForgotPasswordController::class, 'submitResetPasswordForm'])->name('reset.password.post');
 
+Route::get('/annotate', 'AnnotationController@displayForm');
+Route::post('/annotate', 'AnnotationController@annotateImage');
 
 
+Route::get('validaEmail/{email}', [RegisterController::class, 'validaEmail']);
 /*Guardando los documentos temporalmente*/
 /* /* para filepond */
 /* Route::post('/upload/{id}', 'Tienda\ClienteController@store')->name('documentos.files.stores');

@@ -22,4 +22,10 @@ Route::get('/admin/ingreso_facturas/listar_cuentas/{id}', [IngresoComprobanteCon
 Route::get('/admin/ingreso_facturas/listar_empresas', [IngresoComprobanteController::class,'listarEmpresas'])->name('admin.ingreso_facturas.listar_empresas');
 Route::get('/admin/ingreso_facturas/listar_empresas', [IngresoComprobanteController::class,'listarEmpresas'])->name('admin.ingreso_facturas.listar_empresas');
 Route::post('/admin/ingreso_facturas/store', [IngresoComprobanteController::class,'store'])->name('admin.ingreso_facturas.store');
+
+Route::get('/admin/ingreso_facturas/calendario/{id}/{tipoplan}/{usuarioEmpresa}', [IngresoComprobanteController::class,'listarCalendario'])->name('admin.ingreso_facturas.listarCalendario');
+
+Route::post('/admin/ingreso_facturas/leer_factura', [IngresoComprobanteController::class,'leerFactura'])->name('admin.ingreso_facturas.leer_factura');
+
+Route::get('/admin/exportarDocumentos/{id}', [IngresoComprobanteController::class,'exportarDocumentos']);
 });

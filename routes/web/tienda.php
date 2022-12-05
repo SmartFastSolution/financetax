@@ -47,7 +47,7 @@ Route::prefix('tienda')->group(function(){
     });
 
 
-
+    Route::get('/respuestaPago/{transaccion}/{client}', 'Tienda\ShopController@respuestaPago');
 
 
 
