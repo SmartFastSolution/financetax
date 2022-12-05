@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class Interaccion extends Component
 
@@ -67,11 +68,11 @@ class Interaccion extends Component
         $this->validate([
             'detalle'     => 'required',
             'observacion'      => 'required',
-            'fecha'      => 'required',
+            //'fecha'      => 'required',
         ], [
             'detalle.required'              => 'No has agregado un Detalle ',
             'observacion.required'          => 'No has agregado una Observacion',
-            'fecha.required'                => 'No has selecionado una Fecha',
+            //'fecha.required'                => 'No has selecionado una Fecha',
 
         ]);
 
@@ -81,7 +82,8 @@ class Interaccion extends Component
         $message                       = new AppInteraccion;
         $message->cliente_id           = Auth::user()->id;
         $message->especialista_id      = $this->especialista;
-        $message->fecha                = $this->fecha;
+        $message->tipo                 = "C";
+        $message->fecha                = Carbon::now();
         $message->detalle              = $this->detalle;
         $message->observacion          = $this->observacion;
         $message->shop_id              = $this->shop;
@@ -91,6 +93,8 @@ class Interaccion extends Component
         $this->emit('success', ['mensaje' => 'Mensaje Enviado Correctamente', 'modal' => '#modalInteraccion']);
 
         $this->createMode = false;
+
+        return redirect()->to('/tienda/interaccion-compra/'.$this->shop.'/show');
     }
 
 
@@ -100,8 +104,7 @@ class Interaccion extends Component
             $name[] =  $doc->getClientOriginalName();
             $archivo = Str::slug($doc->getClientOriginalName()) . '.' . $doc->getClientOriginalExtension() ;
 
-
-            if (Storage::putFileAs('/public/'. '/', $doc, $archivo)) {
+            if (Storage::putFileAs('documentos_interaccion', $doc, $archivo)) {
                 DocumentosInteraccion::create([
                     'interaccion_id'            => $message->id,
                     'documento_interaccion'     => $name[$key],
