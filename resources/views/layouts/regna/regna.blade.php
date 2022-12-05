@@ -36,9 +36,21 @@
 </head>
 
 <body>
-
+<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/625a5da3b0d10b6f3e6dd594/1g0ofri4l';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
   <!-- ======= Header ======= -->
-  <header id="header" class="header-transparent">
+  <header id="header" class="header-transparent-primary-color">
     <div class="container">
         <a href="{{ url('/page') }}"><img class="img-fluid" style="width: 10rem;" src="images/icons/tax_finance_header.png"></a>
       <nav id="nav-menu-container">

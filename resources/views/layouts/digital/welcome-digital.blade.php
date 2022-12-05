@@ -404,7 +404,7 @@
                                 </p>
                             </div>
                             <div class="item">
-                                <h4 class="text-center">CONTACTO AGIL</h4>
+                                <h4 class="text-center">CONTACTO &Aacute;GIL</h4>
                                 <p class="text-center" style="text-align: justify;">
                                     A través de email, chat, teléfono o videoconferencia
                                 </p>

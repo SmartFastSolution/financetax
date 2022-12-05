@@ -1,9 +1,10 @@
-<div wire:ignore.self class="modal fade bd-example-modal-lg" id="modalInteraccion" tabindex="-1" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div wire:ignore.self class="modal fade bd-example-modal-lg" id="modalInteraccion" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
 
-                <h5 class="modal-title" id="myLargeModalLabel">Enviar Requisito</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Enviar Mensaje</h5>
 
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" wire:click="resetModal">
@@ -17,16 +18,6 @@
                         <input disabled type="text" class="form-control  wire:model.defer=" especialista_id" placeholder="{{ $compra->especialista->name }}">
 
                     </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group ">
-                            <label for="inputEmail3" class=" text-dark font-weight-bold">Fecha Creacion</label>
-                            <input type="date" wire:model.defer="fecha" class="form-control @error('fecha') is-invalid @enderror" placeholder="">
-                            @error('fecha')
-                            <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
-                            @enderror
-                        </div>
-                    </div>
                 </div>
 
                 <div class="row">
@@ -39,7 +30,7 @@
                     </div>
 
                     <div class="form-group col-md-12">
-                        <label class="font-weight-bold text-dark" for="inputPassword4">Observacion</label>
+                        <label class="font-weight-bold text-dark" for="inputPassword4">Observaci&oacute;n</label>
                         <textarea class="form-control" wire:model.defer="observacion" class="form-control @error('detalle') is-invalid @enderror" id="" cols="30" rows="5"></textarea>
                         @error('observacion')
                         <p class="error-message text-danger font-weight-bold">{{ $message }}</p>
@@ -58,7 +49,7 @@
             </div>
             <div class="modal-footer br">
 
-                <button type="submit" wire:click="enviarMensaje" class="btn btn-success">Enviar </button>
+                <button type="submit"  @if ($createMode) disabled @endif wire:click="enviarMensaje" class="btn btn-success">Enviar Mensaje</button>
             </div>
         </div>
     </div>

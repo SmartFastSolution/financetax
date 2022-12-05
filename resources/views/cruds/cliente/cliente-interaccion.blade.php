@@ -7,5 +7,5 @@
 
 @livewire('cliente.interaccion', ['compra' => $compra], key($compra->id))
 
-@livewire('cliente.cliente-interaccion')
+@livewire('cliente.cliente-interaccion', ['compra' => $compra], key($compra->id))
 @endsection

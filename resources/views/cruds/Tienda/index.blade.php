@@ -21,14 +21,17 @@
         </div>
         <div class="article-details" style="height: 250px;">
           <div class="article-title">
-            <h2><b><a href="{{route('subservicios', $p->slug)}}">{{$p->nombre}}</a></b></h2>
+            <h2><b><a href="{{route('subservicios.detalle', $p->slug)}}">{{$p->nombre}}</a></b></h2>
           </div>
           <p>
             {!!htmlspecialchars_decode($p->descripcion)!!}
           </p>
           <div class="article-cta article-bottom">
-            <a class="btn btn-outline-primary" role="button" aria-pressed="true" href="{{route('subservicios', $p->slug)}}">
+            {{--<a class="btn btn-outline-primary" role="button" aria-pressed="true" href="{{route('subservicios', $p->slug)}}">
               Mostrar Subservicios&nbsp;<i class="fas fa-arrow-right"></i>
+            </a>--}}
+            <a class="btn btn-outline-primary" role="button" aria-pressed="true" href="{{route('subservicios.detalle', $p->slug)}}">
+              Obtener Servicio&nbsp;<i class="fa fa-shopping-cart"></i>
             </a>
           </div>
         </div>

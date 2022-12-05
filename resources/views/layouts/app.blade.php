@@ -122,16 +122,17 @@
                                 <a href="{{ url('/admin/mi-perfil') }}" class="dropdown-item has-icon"> <i class="far
                                             fa-user"></i> Perfil
                                 </a>
+                                @if((Auth::user()->hasRole('invitado') || Auth::user()->hasRole('cliente') || Auth::user()->hasRole('cliente-contable')) && !Auth::user()->hasRole('super-admin'))
                                 <a href="{{ url('/admin/mis-empresas') }}" class="dropdown-item has-icon"> <i class="fas fa-building"></i>
                                     Mis Empresas
-
-                                  </a>
-                                  <a href="{{ url('/admin/mis-tarjetas-credito') }}"  class="dropdown-item has-icon"> <i class="fas fa-money-check"></i>
+                                </a>
+                                @endif
+                                  {{--<a href="{{ url('/admin/mis-tarjetas-credito') }}"  class="dropdown-item has-icon"> <i class="fas fa-money-check"></i>
                                     Tarjeta Credito
                                   </a>
                                   <a href="" class="dropdown-item has-icon"> <i class="fas fa-gem"></i>
                                    Mis Planes
-                                  </a>
+                                  </a>--}}
                                   <div class="dropdown-divider"></div>
                                 <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger"
                                     onclick="event.preventDefault();
@@ -150,14 +151,18 @@
             <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper" >
                     <div class="sidebar-brand">
-                        <a href="{{ url('/') }}"> <img alt="image"
+                        <a href="{{ url('/home') }}"> <img alt="image"
                                 src="{{ asset('aegis/source/light/assets/img/logoo.png') }}" class="header-logo">
                             <span class="logo-name"><font SIZE=1>SOLUTIONFINANCETAX</font></span>
                         </a>
                     </div>
                     <div class="sidebar-user">
                         <div class="sidebar-user-picture">
-                            <img alt="image" src="{{ Avatar::create(Auth::user()->name)->setChars(2) }}">
+                            @if(Auth::user()->image)
+                                <img src="{{ url(Auth::user()->image) }}" border="1" alt="avatar" width="50%" height="auto">
+                            @else
+                                <img alt="image" src="{{ Avatar::create(Auth::user()->name)->setChars(2) }}">
+                            @endif
                         </div>
                         <div class="sidebar-user-details">
                             <div class="user-name"> {{ Auth::user()->name }}</div>

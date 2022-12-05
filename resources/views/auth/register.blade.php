@@ -18,6 +18,7 @@
 
     <!-- Template CSS -->
     <link rel='shortcut icon' type='image/x-icon' href="{{ asset('aegis/source/light/assets/img/icono.ico') }}">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </head>
 <style type="text/css">
@@ -41,7 +42,7 @@
                             </div>
                             <h4 class="text-center">REGISTRO DE USUARIO</h4>
                             <div class="card-body">
-                                <form method="POST" action="{{ route('register') }}">
+                                <form method="POST" action="{{ route('register') }}" id="form-registro">
                                     @csrf
 
                                     <div class="form-group row">
@@ -106,9 +107,13 @@
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
                                                 value="{{ old('email') }}" required autocomplete="email">
 
+                                                <span role="alert">
+                                                    <strong id="mensajeEmail" class="text-danger"></strong>
+                                                </span>
+
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
+                                                    <strong >{{ $message }}</strong>
                                                 </span>
                                             @enderror
                                         </div>
@@ -144,10 +149,22 @@
                                                 &nbsp;<span id="msg-password-long"></span></span>
                                         </div>
                                     </div>
-
+                                    <div class="form-group row mb-0" id="divCaptcha" style="display: none;">
+                                        <div class="col-md-6 offset-md-4">
+                                            <div class="g-recaptcha" data-sitekey="6LcF80UhAAAAADXeUXFHRkTovD_xntzsLECOpf0t"></div>
+                                        </div>
+                                    </div>
+                                    <br>
                                     <div class="form-group row mb-0">
                                         <div class="col-md-6 offset-md-4">
-                                            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-registrarse" disabled>
+                                            <button type="submit" value="Submit" class="btn btn-primary btn-lg btn-block" id="btn-registrarse-submit" hidden>
+                                                <h6>{{ __('Registrarse') }}</h6>
+                                            </button>
+                                            <span id="mensajeCaptcha" style="display: none;" class="text-center">
+                                                <i class="fas fa-exclamation text-danger">&nbsp;Realizar el Captcha para poder registrarse</i>
+                                            </span>
+                                            <br>
+                                            <button class="btn btn-primary btn-lg btn-block" id="btn-registrarse" disabled>
                                                 <h6>{{ __('Registrarse') }}</h6>
                                             </button>
                                         </div>
@@ -180,9 +197,39 @@
     <script>
         $(document).ready(function() {
             $('.select2').select2();
+            $("#mensajeEmail").text("");
+            $("#email").css("border-color", "#bfbfbf");
+            $("#btn-registrarse").click(function(e){
+                e.preventDefault();
+                $("#mensajeEmail").text("");
+                $("#email").css("border-color", "#bfbfbf");
+                let email = $("#email").val();
+                email = email.replace("@", '"@"');
+
+                $.ajax({url: '/validaEmail/'+email, success: function(result){
+                    if(result == "1"){
+                        $("#mensajeEmail").text("El campo email ya se encuentra registrado. Por favor usar email distinto.");
+                        $("#email").css("border-color", "red");
+                    }else{
+                        var response = grecaptcha.getResponse();
+                        if(response.length == 0){
+                            document.getElementById('mensajeCaptcha').style.display = 'block';
+                        }else{
+                            $("#btn-registrarse-submit").trigger("click");
+                        }
+                        //$("#btn-registrarse-submit").trigger("click");
+                    }
+                }});
+            });
         });
 
+        //grecaptcha.getResponse(
+        //opt_widget_id
+        //)
+
         var validaContraseñas = function() {
+            let flagContrasena1 = false;
+            let flagContrasena2 = false;
 
             if ((document.getElementById('password').value == document.getElementById('password-confirm').value)){
                 document.getElementById('btn-registrarse').disabled = false;
@@ -194,6 +241,7 @@
                 document.getElementById('validaNo').style.display = 'none';
                 document.getElementById('validaOk').style.display = 'inline-block';
                 document.getElementById('msg-password').textContent = 'Contraseñas coinciden.';
+                flagContrasena1 = true;
             } else {
                 document.getElementById('btn-registrarse').disabled = true;
                 document.getElementById('msg-password').style.color = 'red';
@@ -204,6 +252,7 @@
                 document.getElementById('validaOk').style.display = 'none';
                 document.getElementById('validaNo').style.display = 'inline-block';
                 document.getElementById('msg-password').textContent = 'Las contraseñas NO coinciden.';
+                flagContrasena1 = false;
             }
 
             if(document.getElementById('password').value.length >= 8){
@@ -212,12 +261,20 @@
                 document.getElementById('validaOkLong').style.display = 'inline-block';
                 document.getElementById('msg-password-long').style.color = 'green';
                 document.getElementById('msg-password-long').textContent = 'La contraseña debe tener un mínimo de 8 caracteres.';
+                flagContrasena2 = true;
             } else {
                 document.getElementById('btn-registrarse').disabled = true;
                 document.getElementById('validaOkLong').style.display = 'none';
                 document.getElementById('validaNoLong').style.display = 'inline-block';
                 document.getElementById('msg-password-long').style.color = 'red';
                 document.getElementById('msg-password-long').textContent = 'La contraseña debe tener un mínimo de 8 caracteres.';
+                flagContrasena2 = false;
+            }
+
+            if(flagContrasena1 && flagContrasena2){
+                document.getElementById('divCaptcha').style.display = 'block';
+            }else if(!flagContrasena1 || !flagContrasena2){
+                document.getElementById('divCaptcha').style.display = 'none';
             }
         }
     </script>

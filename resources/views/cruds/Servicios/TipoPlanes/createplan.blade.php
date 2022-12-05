@@ -12,14 +12,14 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>Planes</h4>
+                                <h4>Plan</h4>
                             </div>
                             <div class="card-body">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label>Sub Servicio</label>
-                                        <model-list-select :list="subservicios" v-model="subservice_id" option-value="id"
-                                            option-text="nombre" placeholder="Seleccione un Sub Servicio">
+                                        <label>Servicio</label>
+                                        <model-list-select :list="servicios" v-model="service_id" option-value="id"
+                                            option-text="nombre" placeholder="Seleccione un Servicio">
                                         </model-list-select>
 
                                     </div>
@@ -44,8 +44,8 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="inputPassword4">fecha Vigencia</label>
-                                        <input type="date" v-model="fecha_vigencia" class="form-control">
+                                        <label for="inputPassword4">Cantidad Meses</label>
+                                        <input type="number" v-model="cantidad_meses" class="form-control" placeholder="Cantidad Meses">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -63,9 +63,9 @@
                                 </div>
                             </div>
                             <div class="card-footer">
+                                <a href="/servicios/planes" class="btn btn-light btn-sm" role="button">Regresar</a>
                                 <button class="btn btn-primary btn-sm" :disabled="buttonDisable"
-                                    @click.prevent="validaciones('activo')">Guardar Plan</button>
-
+                                    @click.prevent="validaciones('activo')">Guardar</button>
                             </div>
                         </div>
                     </div>
@@ -119,16 +119,16 @@
         }
 
 
-        let subservicios = @json($subservicios);
+        let servicios = @json($servicios);
         let tipoplanes = @json($tipoplan);
         const planes = new Vue({
             el: "#planes",
             name: "Planes",
             data: {
 
-                subservicios: subservicios,
+                servicios: servicios,
                 tipoplanes: tipoplanes,
-                subservice_id: '',
+                service_id: '',
                 tipoplan_id: '',
                 descripcion: '',
                 documento: null,
@@ -136,7 +136,7 @@
                 buttonDisable: false,
                 plan_id: '',
                 costo: '',
-                fecha_vigencia: '',
+                cantidad_meses: '',
                 errors: new Errors,
                 config: {
                 toolbar: [
@@ -153,12 +153,12 @@
                     this.documento = event.target.files[0];
                 },  //end almacenamiento de documentos
 
-                //validacion de datos 
+                //validacion de datos
                 validaciones(estado){
-                    if (this.subservice_id === '') {
+                    if (this.service_id === '') {
                         iziToast.error({
                             title: 'SolutionFinanceTax',
-                            message: 'No has seleccionado el Sub Servicio',
+                            message: 'No has seleccionado el Servicio',
                             position: 'topRight'
                          });
                     } else if (this.tipoplan_id === '') {
@@ -184,9 +184,9 @@
                     return this.storePlan(datos);
                     console.log(datos);
                     }
-                },// end validaciones 
+                },// end validaciones
 
-                //creacion de datos para almacenamento 
+                //creacion de datos para almacenamento
                 createData(estado){
                     let set = this;
                     let url ='/servicios/store-plan';
@@ -196,14 +196,14 @@
                         }
                     }
                     let data = new FormData();
-                    data.append('subservice_id' , this.subservice_id);
+                    data.append('service_id' , this.service_id);
                     data.append('tipoplan_id' , this.tipoplan_id);
                     if (this.documento !== null) {
                             data.append('documento', this.documento);
                     }
                     data.append('descripcion', this.descripcion);
                     data.append('costo', this.costo);
-                    data.append('fecha_vigencia', this.fecha_vigencia);
+                    data.append('cantidad_meses', this.cantidad_meses);
                     data.append('estado', estado);
                     if (set.editMode) {
                         data.append('edit', 'si');
@@ -220,7 +220,7 @@
                 }, //end createData
 
 
-                //almacenamiento de la informacion 
+                //almacenamiento de la informacion
                 storePlan(data){
                     let set = this;
                     axios.post(data.url, data.data, data.config)
@@ -242,13 +242,12 @@
 
                 editPlan(plans){
                     this.descripcion     = plans.descripcion;
-                    this.subservice_id   = plans.subservice_id;
+                    this.service_id      = plans.service_id;
                     this.tipoplan_id     = plans.tipoplan_id;
-                    this.fecha_vigencia  = plans.fecha_vigencia;
+                    this.cantidad_meses  = plans.cantidad_meses;
                     this.costo           = plans.costo;
                     this.plan_id         = plans.id;
                     this.editMode        = true;
-                    
                 }
 
 
