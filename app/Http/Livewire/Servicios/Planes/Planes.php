@@ -19,7 +19,7 @@ class Planes extends Component
 
     public $perPage        = 10;
     public $search         = '';
-    public $orderBy        = 'plans.id';
+    public $orderBy        = 'plans.service_id';
     public $orderAsc       = true;
     public $estado         = 'activo';
 
@@ -27,18 +27,17 @@ class Planes extends Component
 
     public function render()
     {
-        $data = Plan::join('subservices','plans.subservice_id','=', 'subservices.id')
+        $data = Plan::join('services','plans.service_id','=', 'services.id')
                     ->join('tipoplans','plans.tipoplan_id','=','tipoplans.id') 
                     ->where(function($query){
-                        $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
+                        $query->where('services.nombre', 'like', '%' . $this->search . '%')
                         ->orWhere('plans.descripcion', 'like', '%' . $this->search . '%')
                         ->orWhere('tipoplans.nombre', 'like', '%' . $this->search . '%');
                     })
-                    ->select('plans.*','subservices.nombre as subservicio', 'tipoplans.nombre as tipoplan')
+                    ->select('plans.*','services.nombre as subservicio', 'tipoplans.nombre as tipoplan')
                     ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
-            // ->get();
-            // dd($data);
+
         return view('livewire.servicios.planes.planes', compact('data'));
     }
 
@@ -56,13 +55,13 @@ class Planes extends Component
 
     public function estadochange($id)
     {
- 
+
         $estado = Plan::find($id);
         $estado->estado = $estado->estado == 'activo' ? 'inactivo' : 'activo';
         $estado->save();
- 
-         $this->emit('info',['mensaje' => $estado->estado == 'activo' ? 'Estado Activado Correctamente' : 'Estado Desactivado Correctamente']);
- 
+
+        $this->emit('info',['mensaje' => $estado->estado == 'activo' ? 'Estado Activado Correctamente' : 'Estado Desactivado Correctamente']);
+
     }
 
     public function editPlan($id){

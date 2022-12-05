@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Livewire\WithFileUploads;
+use Carbon\Carbon;
+use DateTime;
 
 class Listacliente extends Component
 {
@@ -21,7 +23,7 @@ class Listacliente extends Component
         'page' => ['except' => 1]
     ];
 
-    public $perPage         = 10;
+    public $perPage         = 45;
     public $search          = '';
     public $orderBy         = 'shops.id';
     public $orderAsc        = true;
@@ -48,22 +50,28 @@ class Listacliente extends Component
         $acciones = [];
         $nombres = [];
         $dataEmpresas = [];
-        $data = Shop::where('user_id', $this->uid)
+        $usuariosEspecialista = [];
+        $campoQuery = "user_id";
+
+        if(Auth::user()->hasRole('contador')){
+            $campoQuery = "especialista_id";
+        }
+
+        $data = Shop::where('shops.'.$campoQuery, $this->uid)
         ->join('users','shops.especialista_id', '=','users.id')
-        ->join('subservices','shops.subservice_id', '=','subservices.id')
+        ->join('services','shops.service_id', '=','services.id')
         ->join('tipoplans','shops.tipoplan_id','=','tipoplans.id')
         ->where(function($query){
-            $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
+            $query->where('services.nombre', 'like', '%' . $this->search . '%')
             ->orWhere('users.name', 'like', '%' . $this->search . '%');
         })
         ->where('shops.estado','!=','pendiente')
-        ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
-                 'subservices.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan')
-         ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
-         ->paginate($this->perPage);
+        ->select('shops.*','services.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
+                'services.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan')
+        ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
+        ->paginate($this->perPage);
 
         $rutasNombre    = Accion::pluck('descripcion','ruta');
-        $EmpresasNombre = UserEmpresa::where('user_id', $this->uid)->pluck('razon_social', 'id');
 
         foreach ($data as $key => $value) {
             $servicioAccion = ServicioAccion::where('plan_id', $value->plan_id)
@@ -74,24 +82,53 @@ class Listacliente extends Component
                     array_push($rutas, $valueserv->ruta);
                 }
                 $acciones[$value->id] = $rutas;
+                $rutas = [];
+            }
+
+            if(Auth::user()->hasRole('contador')){
+                array_push($usuariosEspecialista, $value->user_id);
             }
         }
 
+        if(Auth::user()->hasRole('contador')){
+            $EmpresasNombre = UserEmpresa::whereIn('user_id', $usuariosEspecialista)->pluck('razon_social', 'id');
+            $EmpresasUsuarios = UserEmpresa::whereIn('user_id', $usuariosEspecialista)->pluck('user_id', 'id');
+        }else{
+            $EmpresasNombre = UserEmpresa::where('user_id', $this->uid)->pluck('razon_social', 'id');
+        }
+
+        $date1 = new DateTime(Carbon::now());
+
         foreach ($EmpresasNombre as $keyEn => $valueEn) {
-            $dataEmpresas[$valueEn] = Shop::where('user_id', $this->uid)
+
+            if(Auth::user()->hasRole('contador'))
+                $userId = $EmpresasUsuarios[$keyEn];
+            else
+                $userId = $this->uid;
+
+            $dataEmpresas[$valueEn] = Shop::where('shops.user_id', $userId)
                     ->join('users','shops.especialista_id', '=','users.id')
-                    ->join('subservices','shops.subservice_id', '=','subservices.id')
+                    ->join('services','shops.service_id', '=','services.id')
                     ->join('tipoplans','shops.tipoplan_id','=','tipoplans.id')
                     ->where(function($query){
-                        $query->where('subservices.nombre', 'like', '%' . $this->search . '%')
+                        $query->where('services.nombre', 'like', '%' . $this->search . '%')
                         ->orWhere('users.name', 'like', '%' . $this->search . '%');
                     })
                     ->where('shops.estado','!=','pendiente')
                     ->where('user_empresas_id', $keyEn)
-                    ->select('shops.*','subservices.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
-                            'subservices.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan', 'shops.user_empresas_id as userEmpresa')
+                    ->select('shops.*','services.nombre as sub','tipoplans.nombre as tipoplan','users.name as especialista',
+                            'services.id as id_subservice', 'tipoplans.id as id_tipoplan', 'tipoplans.id as id_tipoplan', 'shops.user_empresas_id as userEmpresa')
                     ->orderBy($this->orderBy, $this->orderAsc ? 'asc' : 'desc')
                     ->paginate($this->perPage);
+
+            foreach ($dataEmpresas[$valueEn] as $key => $value) {
+                $date2 = new DateTime($dataEmpresas[$valueEn][$key]->fecha_caducidad);
+                $diff = $date2->diff($date1)->format("%a");
+                if($date1 > $date2)
+                    $dataEmpresas[$valueEn][$key]->diasRestantes = (-1 * intval($diff));
+                else
+                    $dataEmpresas[$valueEn][$key]->diasRestantes = intval($diff);
+            }
         }
 
         return view('livewire.tienda.listacliente', compact('data', 'acciones', 'rutasNombre', 'EmpresasNombre', 'dataEmpresas'));
