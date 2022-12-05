@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PlanRequest;
 use App\Servicios\Plan;
 use App\Servicios\Subservice;
+use App\Servicios\Service;
 use App\Servicios\Tipoplan;
 use App\Servicios\ServicioAccion;
 use App\Traits\PlanTrait;
@@ -30,16 +31,16 @@ class PlanController extends Controller
     //crud de creacion de plan y edicion
     public function Plan(Request $request){
 
-        $subservicios = Subservice::where('estado', 'activo')->get();
+        $servicios = Service::where('estado', 'activo')->get();
         $tipoplan  = Tipoplan::where('estado', 'activo')->get();
 
         if ($request->has('plans')) {
-            $plans = Plan::with(['subservicio','subservicio.nombre'],['tipoplan','tipoplan.nombre'])->findOrFail($request->get('plans'));
-           // dd($plans);
-            return view('cruds.Servicios.TipoPlanes.createplan', compact('subservicios', 'tipoplan','plans'));
+            $plans = Plan::with(['servicio','servicio.nombre'],['tipoplan','tipoplan.nombre'])->findOrFail($request->get('plans'));
+
+            return view('cruds.Servicios.TipoPlanes.createplan', compact('servicios', 'tipoplan','plans'));
         }else{
 
-            return view('cruds.Servicios.TipoPlanes.createplan', compact('subservicios', 'tipoplan'));
+            return view('cruds.Servicios.TipoPlanes.createplan', compact('servicios', 'tipoplan'));
 
         }
 
