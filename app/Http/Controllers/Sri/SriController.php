@@ -13,6 +13,7 @@ use App\TransaccionDiaria;
 use App\UserEmpresa;
 use App\Role;
 use App\UserRole;
+use App\User;
 use App\Servicios\Proyeccion;
 use App\Servicios\Plancontable;
 use App\Servicios\Tiposervicio;
@@ -30,12 +31,25 @@ class SriController extends Controller
 
     public function index($id, $tipoplan, $usuarioEmpresa)
     {
-        $user_id = Auth::id();
         $userEmpresa = UserEmpresa::where('id', $usuarioEmpresa)->first();
+        $user_id = $userEmpresa->user_id;
+        $userInfo = User::where('id', $user_id)->first();
         $ruc = $userEmpresa->ruc;
         $razonSocial = $userEmpresa->razon_social;
+        $flagClave = true;
+        $flagTipo = true;
+        $flagPeriodo = true;
 
-        return view('admin.ingreso_facturas.sri.index', compact('ruc', 'razonSocial'));
+        if($userEmpresa->clave_acceso == '')
+            $flagClave = false;
+
+        if($userEmpresa->periodo_declaracion_id == '' || $userEmpresa->periodo_declaracion_id == 0 || empty($userEmpresa->periodo_declaracion_id))
+            $flagPeriodo = false;
+
+        if($userInfo->tipo_contribuyente_id == '' || empty($userInfo->tipo_contribuyente_id))
+            $flagTipo = false;
+
+        return view('admin.ingreso_facturas.sri.index', compact('ruc', 'razonSocial', 'flagClave', 'flagPeriodo', 'flagTipo'));
     }
 
     public function procesarComprobanteSRI(Request $request)
@@ -373,7 +387,8 @@ class SriController extends Controller
     public function guardarResgistrosAutomaticos(Request $request)
     {
         $facturas = json_decode($request->get('facturas'), true);
-        $user_id = Auth::id();
+        $empresa = UserEmpresa::where('id', $request->get('usuarioEmpresa'))->first();
+        $user_id = $empresa->user_id;
 
         /*
             key: arrayCells["key"],
