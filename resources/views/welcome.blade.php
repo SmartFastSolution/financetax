@@ -81,8 +81,8 @@
           <div class="row">
             <div class="col-lg-6 col-md-8" data-aos="zoom-in">
               <div class="box">
-                <div class="icon"><a href=""><i class="fa fa-bar-chart"></i></a></div>
-                <h4 class="title"><a href="">CONTABILIDAD</a></h4>
+                <div class="icon"><a href="/login"><i class="fa fa-bar-chart"></i></a></div>
+                <h4 class="title"><a href="/login">CONTABILIDAD</a></h4>
                 <p class="description">
                   <ul class="lista-servicios">
                       <li class="">Sistematización de la Información en dispositivos móviles</li>
@@ -100,8 +100,8 @@
             <br>
             <div class="col-lg-6 col-md-8" data-aos="zoom-in">
               <div class="box">
-                <div class="icon"><a href=""><i class="fa fa-money"></i></a></div>
-                <h4 class="title"><a href="">FINANCIERO</a></h4>
+                <div class="icon"><a href="/login"><i class="fa fa-money"></i></a></div>
+                <h4 class="title"><a href="/login">FINANCIERO</a></h4>
                 <p class="description">
                   <ul class="lista-servicios">
                       <li class="">Elaboración de Estados Financieros con NIIF</li>
@@ -122,8 +122,8 @@
           <div class="row">
             <div class="col-lg-6 col-md-8" data-aos="zoom-in">
               <div class="box">
-                <div class="icon"><a href=""><i class="fa fa-users" aria-hidden="true"></i></a></div>
-                <h4 class="title"><a href="">RECURSOS HUMANOS</a></h4>
+                <div class="icon"><a href="/login"><i class="fa fa-users" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="/login">RECURSOS HUMANOS</a></h4>
                 <p class="description">
                   <ul class="lista-servicios">
                       <li class="">Avisos de entradas y salidas</li>
@@ -139,8 +139,8 @@
   
             <div class="col-lg-6 col-md-8" data-aos="zoom-in">
               <div class="box">
-                <div class="icon"><a href=""><i class="fa fa-address-card-o" aria-hidden="true"></i></a></div>
-                <h4 class="title"><a href="">TRIBUTACIÓN</a></h4>
+                <div class="icon"><a href="/login"><i class="fa fa-address-card-o" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="/login">TRIBUTACIÓN</a></h4>
                 <p class="description">
                   <ul class="lista-servicios">
                       <li class="">Declaración de Anual 102, Proyección y Declaración de Impuesto a la Renta</li>
@@ -158,8 +158,8 @@
           <div class="row">
             <div class="col-lg-6 col-md-8" data-aos="zoom-in">
               <div class="box">
-                <div class="icon"><a href=""><i class="fa fa-bullhorn" aria-hidden="true"></i></a></div>
-                <h4 class="title"><a href="">MARKETING</a></h4>
+                <div class="icon"><a href="/login"><i class="fa fa-bullhorn" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="/login">MARKETING</a></h4>
                 <p class="description">
                   <ul class="lista-servicios">
                       <li class="">Creación de logo</li>
@@ -173,8 +173,8 @@
             <br>
             <div class="col-lg-6 col-md-8" data-aos="zoom-in">
               <div class="box">
-                <div class="icon"><a href=""><i class="fa fa-gavel" aria-hidden="true"></i></a></div>
-                <h4 class="title"><a href="">LEGAL</a></h4>
+                <div class="icon"><a href="/login"><i class="fa fa-gavel" aria-hidden="true"></i></a></div>
+                <h4 class="title"><a href="/login">LEGAL</a></h4>
                 <p class="description">
                   <ul class="lista-servicios">
                       <li class="">Creación de empresas SAS</li>
@@ -199,7 +199,7 @@
               <p class="cta-text"> </p>
             </div>
             <div class="col-lg-3 cta-btn-container text-center">
-              <a class="cta-btn align-middle" href="{{ url('tienda/tienda-solution') }}">Comenzar</a> 
+              <a class="cta-btn align-middle" href="/login">Comenzar</a> 
           
 
             </div>

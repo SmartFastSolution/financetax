@@ -1,12 +1,20 @@
 @extends('layouts.regna.regna')
 
 @section('content')
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <section id="contact">
     <div class="container">
       <div class="section-header">
-        <h3 class="section-title">CONTACTANOS</h3>
+        <h3 class="section-title">CONT&Aacute;CTANOS</h3>
       </div>
+    </div>
+    
+    <div class="container mt-5">
+        <div id="map" style="height: 400px;"></div>
     </div>
 
     <!-- Uncomment below if you wan to use dynamic maps -->
@@ -75,6 +83,34 @@
 
     </div>
   </section><!-- End Contact Section -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Guayaquil approximate coordinates and bounds
+        /*const guayaquilBounds = {
+            north: -2.0,
+            south: -2.4,
+            east: -79.8,
+            west: -80.0
+        };
 
+        // Generate random latitude and longitude within Guayaquil
+        const randomLat = (Math.random() * (guayaquilBounds.north - guayaquilBounds.south)) + guayaquilBounds.south;
+        const randomLng = (Math.random() * (guayaquilBounds.east - guayaquilBounds.west)) + guayaquilBounds.west;
+        */
+        // Initialize map
+        const map = L.map('map').setView([-2.1481619839730226, -79.88439126400182], 13);
+
+        // Add OpenStreetMap tiles
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add marker at random point
+        L.marker([-2.1481619839730226, -79.88439126400182])
+            .addTo(map)
+            .bindPopup('Solution Finance Tax')
+            .openPopup();
+    });
+</script>
 
 @endsection

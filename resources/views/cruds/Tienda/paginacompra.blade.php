@@ -726,7 +726,7 @@
                         payphone.Button({
 
                         //token obtenido desde la consola de developer
-                        token: "wYUrSjbo5dQts9Jw6xUqtKZu8KImxuhiKb4qpGXE87NiCGdatWQ-EM7Y9Z86Ad7a_SelhV_ScxTks_JCJMJtZ6_lK8hqjr3xVG_0yZ4sx7SPfmzUpnexSXs4Vgeq1qFa1xJkEjztTzctTRlwB-7OujyJtvMgEVW4bGeFewklAcmeouXNO4XLrdNaHKwheMob57N8ua0P0Irg90Ft1hUvu63Pwq1yHIfTU3eEbm511MLpyXiXLtzCNzEuf1ehbgH2y6EtYdawDHSts37WADDeAZxaBFA5q2eYy0rL0CVBJIb6oazotkt5gOrR4ZxvdT40He6TDw",
+                        token: "7W80Up6ZCg5psN6JBQml15cswveCHM41dqV1NhufqOQjbTJUeZk0u-p4DJUqXh8VWY0Fjv9H06ocBr85YsyE-HKkA17WRuhC3lXGU39rXS5iYZ_-qP0fcIkOXcqj3--fbAI8EWZC886lvj3iXXMGxvXiIaUxL9Z_9UmBsZSUmirA9-kx__arPihvoLzYWPvwwYXGWUtLW36v_GLVYGNyQJtauLX8qlpVkcvEJzXjgX3ITEGgHVgn4EVVVWmwBVjMd7zty2Bdmo4GGJrOx3XgQ5zuPxR4oweSMyL2qjalPoDlwFyURzTCu_iMePr4suL44auS6jUK9rx2n1Ff1sLuCyYqHEw",
 
                         //PARÁMETROS DE CONFIGURACIÓN
                         btnHorizontal: true,

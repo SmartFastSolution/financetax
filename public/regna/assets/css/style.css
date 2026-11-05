@@ -55,16 +55,16 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(0, 0, 0, 0.2);
   color: #fff;
   padding: 6px 12px 9px 12px;
-  font-size: 16px;
+  font-size: 20px;
   border-radius: 2px;
-  right: 15px;
-  bottom: 15px;
+  right: 28px;
+  bottom: 98px;
   transition: background 0.5s;
 }
 
 @media (max-width: 768px) {
   .back-to-top {
-    bottom: 15px;
+    bottom: 98px;
   }
 }
 
